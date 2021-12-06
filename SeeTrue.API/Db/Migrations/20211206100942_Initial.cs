@@ -44,8 +44,8 @@ namespace SeeTrue.API.Db.Migrations
                     EmailChange = table.Column<string>(type: "text", nullable: true),
                     EmailChangeSentAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastSignInAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    AppMetaData = table.Column<Dictionary<string, string>>(type: "jsonb", nullable: true),
-                    UserMetaData = table.Column<Dictionary<string, string>>(type: "jsonb", nullable: true),
+                    AppMetaDataJson = table.Column<string>(type: "jsonb", nullable: true),
+                    UserMetaDataJson = table.Column<string>(type: "jsonb", nullable: true),
                     IsSuperAdmin = table.Column<bool>(type: "boolean", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)

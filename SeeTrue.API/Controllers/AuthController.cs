@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SeeTrue.API.RequestModels;
+using SeeTrue.Utils.Extensions;
+using SeeTrue.Utils.Types;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -36,7 +37,7 @@ namespace SeeTrue.API.Controllers
         [HttpPost("signup")]
         public async Task<object> SignUp([FromBody] SignUpData data)
         {
-            return await mediator.Send(new Commands.SignUp.Command(data.Email, data.Password, data.UserMetaData, null));
+            return await mediator.Send(new CQRS.Commands.SignUp.Command(data, null));
         }
 
         [HttpPost("invite")]
@@ -70,9 +71,9 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("token")]
-        public object token()
+        public object token([FromBody] TokenData data)
         {
-            throw new NotImplementedException();
+            return data.Validate();
         }
 
         [HttpGet("user")]

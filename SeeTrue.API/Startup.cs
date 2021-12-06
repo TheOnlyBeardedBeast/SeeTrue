@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SeeTrue.API.Db;
+using SeeTrue.API.Filters;
+using SeeTrue.CQRS;
 using SeeTrue.Models;
 
 namespace SeeTrue.API
@@ -33,7 +36,9 @@ namespace SeeTrue.API
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
-            services.AddMediatR(typeof(Startup).Assembly);
+            services.AddMediatR(typeof(HandlerResponse).Assembly);
+            // services.AddFluentValidation();
+            // services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PersonValidator>());
 
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1",new OpenApiInfo { Title = "SeeTrue", Version = "v1" })
@@ -50,6 +55,8 @@ namespace SeeTrue.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            // Environment.GetEnvironmentVariable
 
             app.UseRouting();
 

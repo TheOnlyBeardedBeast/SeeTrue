@@ -13,7 +13,7 @@ using SeeTrue.API.Db;
 namespace SeeTrue.API.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211205184051_Initial")]
+    [Migration("20211206100942_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace SeeTrue.API.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Dictionary<string, string>>("AppMetaData")
+                    b.Property<string>("AppMetaDataJson")
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Aud")
@@ -108,7 +108,7 @@ namespace SeeTrue.API.Db.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Dictionary<string, string>>("UserMetaData")
+                    b.Property<string>("UserMetaDataJson")
                         .HasColumnType("jsonb");
 
                     b.HasKey("Id");

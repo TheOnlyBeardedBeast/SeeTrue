@@ -49,7 +49,7 @@ namespace SeeTrue.API.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Dictionary<string, string>>("AppMetaData")
+                    b.Property<string>("AppMetaDataJson")
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Aud")
@@ -106,7 +106,7 @@ namespace SeeTrue.API.Db.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Dictionary<string, string>>("UserMetaData")
+                    b.Property<string>("UserMetaDataJson")
                         .HasColumnType("jsonb");
 
                     b.HasKey("Id");
