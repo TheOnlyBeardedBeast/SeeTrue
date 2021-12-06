@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using SeeTrue.Utils.Validators;
 
-namespace SeeTrue.API.RequestModels
+namespace SeeTrue.Utils.Types
 {
     public record SignUpData
     {
-        [Required]
-        [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(8)]
         public string Password { get; set; }
 
-        public Dictionary<string, string> UserMetaData { get; set; }
+        public Dictionary<string, object> UserMetaData { get; set; }
     }
 }

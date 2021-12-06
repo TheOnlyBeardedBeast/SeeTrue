@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SeeTrue.API.Services
+namespace SeeTrue.Utils
 {
     public static class SeeTrueConfig
     {

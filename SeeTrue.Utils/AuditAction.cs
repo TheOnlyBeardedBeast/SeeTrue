@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SeeTrue.API.Utils
+namespace SeeTrue.Utils
 {
     public enum AuditAction
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SeeTrue.API.Utils
+namespace SeeTrue.Utils
 {
     public static class Constants
     {

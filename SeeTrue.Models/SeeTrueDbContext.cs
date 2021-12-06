@@ -13,5 +13,12 @@ namespace SeeTrue.Models
         public SeeTrueDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().Property<string>("AppMetaDataJson");
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

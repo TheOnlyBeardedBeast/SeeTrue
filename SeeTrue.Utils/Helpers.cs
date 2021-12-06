@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using Jose;
+using SeeTrue.Models;
+
 namespace SeeTrue.Utils
 {
-    public class Helpers
+    public static class Helpers
     {
-        public Helpers()
-        {
-        }
+        
     }
 }
