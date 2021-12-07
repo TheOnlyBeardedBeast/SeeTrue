@@ -97,10 +97,13 @@ namespace SeeTrue.CQRS.Commands
                     throw new Exception("Invalid data");
                 }
 
+                var validationDate = token.CreatedAt;
 
                 // TODO: Get refresh token lifetime from config
-                if (!Helpers.ValidateExpiringToken(request.data.RefreshToken, 7 * 24 * 60))
+                if (validationDate.AddDays(14) < DateTime.UtcNow)
                 {
+                    //alternative validation (date is embedded into the token)
+                    //!Helpers.ValidateExpiringToken(request.data.RefreshToken, 7 * 24 * 60
                     throw new Exception("Invalid data");
                 }
 
