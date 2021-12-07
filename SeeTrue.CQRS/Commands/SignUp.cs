@@ -11,7 +11,7 @@ namespace SeeTrue.CQRS.Commands
 {
     public static class SignUp
     {
-        public record Command(SignUpData Data, string Aud, string Provider = "email"): IRequest<User>;
+        public record Command(SignUpData Data, string Aud, string Provider = "email") : IRequest<User>;
 
         public class Handler : IRequestHandler<Command, User>
         {
@@ -25,21 +25,10 @@ namespace SeeTrue.CQRS.Commands
 
             public async Task<User> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (SeeTrueConfig.DisableSignup)
-                {
-                    throw new Exception("SignUp is disabled");
-                }
-
-                if (!request.Data.Validate())
-                {
-                    throw new Exception("Ivalid data.");
-                }
-                
-
                 var instanceId = SeeTrueConfig.InstanceId;
                 var user = await this.mediator.Send(new CQRS.Queries.FindUser.Query(instanceId, request.Data.Email, request.Aud));
 
-                if(user is not null && user.IsConfirmed())
+                if (user is not null && user.IsConfirmed())
                 {
                     throw new Exception("A user with this email address has already been registered");
                 }
@@ -47,11 +36,13 @@ namespace SeeTrue.CQRS.Commands
                 if (SeeTrueConfig.AutoConfirm)
                 {
                     
+
                     // TODO: trigger eventHook
                     user = await this.mediator.Send(new Commands.SignUpNewUser.Command(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, true));
                     await this.mediator.Send(new NewAuditLogEntry.Command(instanceId, user, AuditAction.UserSignedUpAction, null));
 
-                } else
+                }
+                else
                 {
                     user = await this.mediator.Send(new Commands.SignUpNewUser.Command(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, false));
                     // TODO: send email

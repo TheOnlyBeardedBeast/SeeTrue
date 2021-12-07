@@ -41,6 +41,6 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
-        
+
     }
 }

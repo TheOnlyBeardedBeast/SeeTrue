@@ -33,7 +33,8 @@ namespace SeeTrue.Models
         public string AppMetaDataJson
         {
             get => JsonSerializer.Serialize(this.AppMetaData);
-            init {
+            init
+            {
                 this.AppMetaData = JsonSerializer.Deserialize<Dictionary<string, object>>(value);
             }
         }
@@ -54,5 +55,7 @@ namespace SeeTrue.Models
         public bool? IsSuperAdmin { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-	}
+        [JsonIgnore]
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
+    }
 }

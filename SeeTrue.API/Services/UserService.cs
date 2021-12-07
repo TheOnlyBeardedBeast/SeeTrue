@@ -49,7 +49,7 @@ namespace SeeTrue.API.Services
             return user.Role == role;
         }
 
-        public static void UpdateUserMetaData(this User user, Dictionary<string,object> userMetaData)
+        public static void UpdateUserMetaData(this User user, Dictionary<string, object> userMetaData)
         {
             if (user.UserMetaData is null)
             {

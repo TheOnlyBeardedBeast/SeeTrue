@@ -9,6 +9,7 @@ namespace SeeTrue.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<AuditLogEntry> AuditLogEntries { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public SeeTrueDbContext(DbContextOptions options) : base(options)
         {

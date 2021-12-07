@@ -27,7 +27,7 @@ namespace SeeTrue.CQRS.Commands
                 // Environment.GetEnvironmentVariable("");
 
                 var entry = new AuditLogEntry
-                {             
+                {
                     InstanceId = request.InstanceId,
                     Payload = new Dictionary<string, string>
                     {
@@ -46,7 +46,7 @@ namespace SeeTrue.CQRS.Commands
                 }
 
                 this.db.AuditLogEntries.Add(entry);
-                await this.db.SaveChangesAsync();
+                //await this.db.SaveChangesAsync();
                 return Unit.Value;
             }
         }

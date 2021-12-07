@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using SeeTrue.Models;
 using SeeTrue.Utils;
 using SeeTrue.Utils.Extensions;
 using SeeTrue.Utils.Types;
@@ -23,55 +24,110 @@ namespace SeeTrue.CQRS.Commands
 
             public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (!request.data.Validate())
-                {
-                    throw new Exception("Invalid data");
-                }
-
                 var instanceId = SeeTrueConfig.InstanceId;
+
+                Response response = null;
 
                 switch (request.data.GrantType)
                 {
                     case "password":
                         {
-                            var user = await mediator.Send(new Queries.FindUser.Query(instanceId, request.data.Email, request.Aud));
-
-                            if(user is null)
-                            {
-                                throw new Exception("Invalid user or password");
-                            }
-
-                            if (!user.IsConfirmed())
-                            {
-                                throw new Exception("Invalid user or password");
-                            }
-
-                            if(!BCrypt.Net.BCrypt.Verify(request.data.Password, user.EncryptedPassword))
-                            {
-                                throw new Exception("Invalid user or password");
-                            }
-
-
-
+                            response = await this.HandlePassword(request, instanceId);
                             break;
                         }
                     case "refresh_token":
                         {
+                            response = await this.HandleRefresh(request, instanceId);
                             break;
+                        }
+                    default:
+                        {
+                            throw new Exception("Invalid data");
                         }
                 }
 
-                return null;
+                // TODO: handle cookie
+                Console.WriteLine("Succesful login");
+
+                return response;
+            }
+
+            public async Task<Response> HandlePassword(Command request, Guid instanceId)
+            {
+                var user = await mediator.Send(new Queries.FindUser.Query(instanceId, request.data.Email, request.Aud));
+
+                if (user is null)
+                {
+                    throw new Exception("Invalid user or password");
+                }
+
+                if (!user.IsConfirmed())
+                {
+                    throw new Exception("Invalid user or password");
+                }
+
+                if (!BCrypt.Net.BCrypt.Verify(request.data.Password, user.EncryptedPassword))
+                {
+                    throw new Exception("Invalid user or password");
+                }
+
+                await this.mediator.Send(new Commands.NewAuditLogEntry.Command(instanceId, user, AuditAction.LoginAction, null));
+                var token = await this.mediator.Send(new Commands.IssueRefreshToken.Command(user));
+
+                return new Response
+                {
+                    AccessToken = token.AccessToken,
+                    RefreshToken = token.RefreshToken,
+                    User = user
+                };
+            }
+
+            public async Task<Response> HandleRefresh(Command request, Guid instanceId)
+            {
+                var token = await this.mediator.Send(new Queries.FindUserByRefreshToken.Query(request.data.RefreshToken));
+
+                if (token is null || token.User is null)
+                {
+                    throw new Exception("Invalid data");
+                }
+
+                if (token.Revoked)
+                {
+                    // TODO: Clear cookie token
+                    throw new Exception("Invalid data");
+                }
+
+
+                // TODO: Get refresh token lifetime from config
+                if (!Helpers.ValidateExpiringToken(request.data.RefreshToken, 7 * 24 * 60))
+                {
+                    throw new Exception("Invalid data");
+                }
+
+                await this.mediator.Send(new Commands.NewAuditLogEntry.Command(instanceId, token.User, AuditAction.TokenRefreshedAction, null));
+                var response = await this.mediator.Send(new GrantRefreshTokenSwap.Command(token));
+
+                return new Response
+                {
+                    AccessToken = response.AccessToken,
+                    RefreshToken = response.RefreshToken,
+                    User = token.User
+                };
             }
         }
 
-        public record Response
+        public record Response : TokenResponse
+        {
+            public User User { get; init; }
+        }
+
+        public record TokenResponse
         {
             public string AccessToken { get; init; }
 
-            public string TokenType { get; init; }
+            public string TokenType { get; init; } = "Bearer";
 
-            public string ExpiresIn { get; init; }
+            public int ExpiresIn { get; init; } = 3600;
 
             public string RefreshToken { get; init; }
         }

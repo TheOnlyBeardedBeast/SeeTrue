@@ -38,12 +38,12 @@ namespace SeeTrue.API.Filters
                 //        }
                 //}
 
-            } 
+            }
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            
+
         }
     }
 }

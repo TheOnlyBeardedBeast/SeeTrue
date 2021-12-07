@@ -13,7 +13,7 @@ namespace SeeTrue.Models
         public Guid InstanceId { get; set; }
 
         [Column(TypeName = "jsonb")]
-        public Dictionary<string,string> Payload { get; set; }
+        public Dictionary<string, string> Payload { get; set; }
 
         public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
     }

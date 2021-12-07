@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SeeTrue.CQRS.Commands;
+using SeeTrue.Utils;
 using SeeTrue.Utils.Extensions;
 using SeeTrue.Utils.Types;
 
@@ -15,11 +17,11 @@ namespace SeeTrue.API.Controllers
     [Route("/")]
     public class AuthController : ControllerBase
     {
-        protected readonly IMediator mediator;
+        private readonly IMediator m;
 
-        public AuthController(IMediator mediator)
+        public AuthController(IMediator m)
         {
-            this.mediator = mediator;
+            this.m = m;
         }
 
         [HttpGet("health")]
@@ -35,9 +37,27 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<object> SignUp([FromBody] SignUpData data)
+        public async Task<IActionResult> SignUp([FromBody] SignUpData data)
         {
-            return await mediator.Send(new CQRS.Commands.SignUp.Command(data, null));
+            if (SeeTrueConfig.DisableSignup)
+            {
+                return Forbid("SignUp is disabled");
+            }
+
+            if (!data.Validate())
+            {
+                return BadRequest("Ivalid data.");
+            }
+
+            try
+            {
+                var user = await this.m.Send(new CQRS.Commands.SignUp.Command(data, null));
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("invite")]
@@ -71,9 +91,23 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("token")]
-        public object token([FromBody] TokenData data)
+        public async Task<IActionResult> token([FromBody] TokenData data)
         {
-            return data.Validate();
+            if(!data.Validate())
+            {
+                return BadRequest("Invalid data");
+            }
+
+            try
+            {
+                var result = await this.m.Send(new CQRS.Commands.Token.Command(data, null));
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("user")]
