@@ -17,6 +17,7 @@ using SeeTrue.API.Db;
 using SeeTrue.API.Filters;
 using SeeTrue.CQRS;
 using SeeTrue.Models;
+using SeeTrue.Utils.Services;
 
 namespace SeeTrue.API
 {
@@ -39,6 +40,7 @@ namespace SeeTrue.API
                 opt.Filters.Add<TransactionFilter>()
             ); ;
             services.AddMediatR(typeof(HandlerResponse).Assembly);
+            services.AddTransient<IMailService, MailService>();
             // services.AddFluentValidation();
             // services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PersonValidator>());
 
