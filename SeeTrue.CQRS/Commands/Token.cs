@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using SeeTrue.CQRS.Services;
+using SeeTrue.CQRS.Types;
 using SeeTrue.Models;
 using SeeTrue.Utils;
 using SeeTrue.Utils.Extensions;
@@ -11,22 +14,26 @@ namespace SeeTrue.CQRS.Commands
 {
     public static class Token
     {
-        public record Command(TokenData data, string Aud) : IRequest<Response>;
+        public record Command(TokenData data, string Aud) : IRequest<UserTokenResponse>;
 
-        public class Handler : IRequestHandler<Command, Response>
+        public class Handler : IRequestHandler<Command, UserTokenResponse>
         {
             private readonly IMediator mediator;
+            private readonly IQueryService query;
+            private readonly ICommandService command;
 
-            public Handler(IMediator mediator)
+            public Handler(IMediator mediator, IQueryService query, ICommandService command)
             {
                 this.mediator = mediator;
+                this.query = query;
+                this.command = command;
             }
 
-            public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<UserTokenResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 var instanceId = SeeTrueConfig.InstanceId;
 
-                Response response = null;
+                UserTokenResponse response = null;
 
                 switch (request.data.GrantType)
                 {
@@ -47,14 +54,12 @@ namespace SeeTrue.CQRS.Commands
                 }
 
                 // TODO: handle cookie
-                Console.WriteLine("Succesful login");
-
                 return response;
             }
 
-            public async Task<Response> HandlePassword(Command request, Guid instanceId)
+            public async Task<UserTokenResponse> HandlePassword(Command request, Guid instanceId)
             {
-                var user = await mediator.Send(new Queries.FindUser.Query(instanceId, request.data.Email, request.Aud));
+                var user = await query.FindUserByEmailAndAudience(request.data.Email, request.Aud);
 
                 if (user is null)
                 {
@@ -71,10 +76,10 @@ namespace SeeTrue.CQRS.Commands
                     throw new Exception("Invalid user or password");
                 }
 
-                await this.mediator.Send(new Commands.NewAuditLogEntry.Command(instanceId, user, AuditAction.LoginAction, null));
-                var token = await this.mediator.Send(new Commands.IssueRefreshToken.Command(user));
+                await command.NewAuditLogEntry(user, AuditAction.LoginAction, null);
+                var token = await command.IssueTokens(user);
 
-                return new Response
+                return new UserTokenResponse
                 {
                     AccessToken = token.AccessToken,
                     RefreshToken = token.RefreshToken,
@@ -82,9 +87,9 @@ namespace SeeTrue.CQRS.Commands
                 };
             }
 
-            public async Task<Response> HandleRefresh(Command request, Guid instanceId)
+            public async Task<UserTokenResponse> HandleRefresh(Command request, Guid instanceId)
             {
-                var token = await this.mediator.Send(new Queries.FindUserByRefreshToken.Query(request.data.RefreshToken));
+                var token = await query.FindRefreshTokenWithUser(request.data.RefreshToken);
 
                 if (token is null || token.User is null)
                 {
@@ -107,32 +112,16 @@ namespace SeeTrue.CQRS.Commands
                     throw new Exception("Invalid data");
                 }
 
-                await this.mediator.Send(new Commands.NewAuditLogEntry.Command(instanceId, token.User, AuditAction.TokenRefreshedAction, null));
-                var response = await this.mediator.Send(new GrantRefreshTokenSwap.Command(token));
+                await command.NewAuditLogEntry(token.User, AuditAction.TokenRefreshedAction, null);
+                var response = await command.GrantTokenSwap(token);
 
-                return new Response
+                return new UserTokenResponse
                 {
                     AccessToken = response.AccessToken,
                     RefreshToken = response.RefreshToken,
                     User = token.User
                 };
             }
-        }
-
-        public record Response : TokenResponse
-        {
-            public User User { get; init; }
-        }
-
-        public record TokenResponse
-        {
-            public string AccessToken { get; init; }
-
-            public string TokenType { get; init; } = "Bearer";
-
-            public int ExpiresIn { get; init; } = 3600;
-
-            public string RefreshToken { get; init; }
         }
     }
 }

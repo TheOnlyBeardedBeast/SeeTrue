@@ -67,9 +67,9 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("verify")]
-        public object Verify()
+        public async Task<IActionResult> Verify(CQRS.Commands.Verify.Command data)
         {
-            throw new NotImplementedException();
+            return Ok(await this.m.Send(data));
         }
 
         [HttpGet("verify")]

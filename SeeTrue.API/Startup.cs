@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -36,11 +37,17 @@ namespace SeeTrue.API
             services.AddDbContext<ISeeTrueDbContext, AppDbContext>(options =>
                  options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllers(opt =>
+            services.AddControllers(
+
+                opt =>
                 opt.Filters.Add<TransactionFilter>()
-            ); ;
+            ).AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+
             services.AddMediatR(typeof(HandlerResponse).Assembly);
             services.AddTransient<IMailService, MailService>();
+            services.AddSeeTrue();
             // services.AddFluentValidation();
             // services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PersonValidator>());
 

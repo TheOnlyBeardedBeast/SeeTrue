@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using SeeTrue.CQRS.Services;
 using SeeTrue.Models;
 using SeeTrue.Utils;
 using SeeTrue.Utils.Extensions;
@@ -17,16 +18,20 @@ namespace SeeTrue.CQRS.Commands
         {
             protected readonly SeeTrueDbContext db;
             protected readonly IMediator mediator;
+            private readonly IQueryService query;
+            private readonly ICommandService command;
 
-            public Handler(IMediator metiator)
+            public Handler(IMediator metiator, IQueryService query, ICommandService command)
             {
                 this.mediator = metiator;
+                this.query = query;
+                this.command = command;
             }
 
             public async Task<User> Handle(Command request, CancellationToken cancellationToken)
             {
                 var instanceId = SeeTrueConfig.InstanceId;
-                var user = await this.mediator.Send(new CQRS.Queries.FindUser.Query(instanceId, request.Data.Email, request.Aud));
+                var user = await query.FindUserByEmailAndAudience(request.Data.Email, request.Aud);
 
                 if (user is not null && user.IsConfirmed())
                 {
@@ -35,17 +40,15 @@ namespace SeeTrue.CQRS.Commands
 
                 if (SeeTrueConfig.AutoConfirm)
                 {
-                    
-
                     // TODO: trigger eventHook
-                    user = await this.mediator.Send(new Commands.SignUpNewUser.Command(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, true));
-                    await this.mediator.Send(new NewAuditLogEntry.Command(instanceId, user, AuditAction.UserSignedUpAction, null));
+                    user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, true);
+                    await command.NewAuditLogEntry(user, AuditAction.UserSignedUpAction, null);
 
                 }
                 else
                 {
-                    user = await this.mediator.Send(new Commands.SignUpNewUser.Command(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, false));
-                    // TODO: send email
+                    user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, false);
+                    await command.SendConfirmation(user);
                 }
 
                 return user;

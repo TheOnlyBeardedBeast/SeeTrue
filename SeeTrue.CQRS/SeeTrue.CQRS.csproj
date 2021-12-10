@@ -6,9 +6,10 @@
 
   <ItemGroup>
     <None Remove="MediatR" />
-    <None Remove="Queries\" />
     <None Remove="Commands\" />
     <None Remove="BCrypt.Net-Next" />
+    <None Remove="Services\" />
+    <None Remove="Types\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -19,7 +20,8 @@
     <ProjectReference Include="..\SeeTrue.Utils\SeeTrue.Utils.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Queries\" />
     <Folder Include="Commands\" />
+    <Folder Include="Services\" />
+    <Folder Include="Types\" />
   </ItemGroup>
 </Project>

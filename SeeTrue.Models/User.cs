@@ -20,10 +20,14 @@ namespace SeeTrue.Models
         public string EncryptedPassword { get; set; }
         public DateTime? ConfirmedAt { get; set; }
         public DateTime? InvitedAt { get; set; }
+        [JsonIgnore]
         public string ConfirmationToken { get; set; }
+        [JsonIgnore]
         public DateTime? ConfirmationSentAt { get; set; }
+        [JsonIgnore]
         public string RecoveryToken { get; set; }
         public DateTime? RecoverySentAt { get; set; }
+        [JsonIgnore]
         public string EmailChangeToken { get; set; }
         public string EmailChange { get; set; }
         public DateTime? EmailChangeSentAt { get; set; }
