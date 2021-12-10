@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SeeTrue.CQRS.Commands;
 using SeeTrue.Utils;
@@ -60,6 +61,7 @@ namespace SeeTrue.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("invite")]
         public object Invite()
         {

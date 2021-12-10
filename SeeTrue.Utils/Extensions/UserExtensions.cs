@@ -46,10 +46,12 @@ namespace SeeTrue.Utils.Extensions
         public static string GenerateAccessToken(this User user)
         {
             // TODO: Get lifetime from env
-            var payload = new Dictionary<string, string> {
+            var payload = new Dictionary<string, object> {
                 { "sub", user.Id.ToString() },
                 { "aud", user.Aud },
-                { "exp", DateTime.UtcNow.AddSeconds(3600).ToString() }
+                { "iss", "http://localhost:5000/" },
+                { "exp", DateTime.UtcNow.AddSeconds(3600).GetUnixEpoch() }
+                //{ "exp", ((int)DateTime.Now.AddSeconds(3600).ToUniversalTime().Subtract(new DateTime (1970, 01, 01)).TotalSeconds) }
             };
 
             var headers = new Dictionary<string, object>{
@@ -61,6 +63,15 @@ namespace SeeTrue.Utils.Extensions
             var secretKey = new byte[] { 164, 60, 194, 0, 161, 189, 41, 38, 130, 89, 141, 164, 45, 170, 159, 209, 69, 137, 243, 216, 191, 131, 47, 250, 32, 107, 231, 117, 37, 158, 225, 234 };
 
             return Jose.JWT.Encode(payload, secretKey, JwsAlgorithm.HS256, extraHeaders: headers);
+        }
+
+        // TODO: Need to exclude to a separate file
+        private static double GetUnixEpoch(this DateTime dateTime)
+        {
+            var unixTime = dateTime.ToUniversalTime() -
+                new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+            return unixTime.TotalSeconds;
         }
     }
 }
