@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -112,10 +114,13 @@ namespace SeeTrue.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("user")]
-        public object GetUser()
+        public async Task<IActionResult> GetUser()
         {
-            throw new NotImplementedException();
+            var userId = HttpContext.GetUserId();
+
+            return Ok(await this.m.Send(new CQRS.Queries.GetUser.Query(userId)));
         }
 
         [HttpPut("user")]

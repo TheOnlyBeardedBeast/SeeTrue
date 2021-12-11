@@ -12,6 +12,7 @@ namespace SeeTrue.CQRS.Services
         Task<RefreshToken> FindRefreshTokenWithUser(string refreshToken);
         Task<User> FindUserByEmailAndAudience(string email, string audience);
         Task<User> FindUserByConfirmationToken(string confirmationToken);
+        Task<User> FindUserById(Guid userId);
     }
 
     public class QueryService : IQueryService
@@ -40,6 +41,16 @@ namespace SeeTrue.CQRS.Services
                     .FirstOrDefaultAsync();
 
             return user;
+        }
+
+        /// <summary>
+        /// Gets the user by the ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<User> FindUserById(Guid userId)
+        {
+            return await this.db.Users.FirstOrDefaultAsync(e => e.Id == userId);
         }
 
         /// <summary>

@@ -109,6 +109,13 @@ namespace SeeTrue.CQRS.Services
             };
         }
 
+        /// <summary>
+        /// Creates a new audit log entry in the db
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="action"></param>
+        /// <param name="traits"></param>
+        /// <returns></returns>
         public async Task NewAuditLogEntry(User actor, AuditAction action, object traits)
         {
             // Environment.GetEnvironmentVariable("");
@@ -136,6 +143,11 @@ namespace SeeTrue.CQRS.Services
             await this.db.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Sends a confirmation email to the user and updates related data in the db
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task SendConfirmation(User user)
         {
             Console.WriteLine("Email sent");
@@ -156,6 +168,13 @@ namespace SeeTrue.CQRS.Services
             await db.SaveChangesAsync();
         }
 
+
+        /// <summary>
+        /// Updates the users encrypted password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public async Task UpdateUserPassword(User user, string password)
         {
             user.EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(password);
@@ -164,6 +183,11 @@ namespace SeeTrue.CQRS.Services
             await db.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Confirms the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task ConfirmUser(User user)
         {
             user.ConfirmationToken = null;

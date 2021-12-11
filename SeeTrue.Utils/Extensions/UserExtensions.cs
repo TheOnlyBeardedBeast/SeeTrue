@@ -65,13 +65,5 @@ namespace SeeTrue.Utils.Extensions
             return Jose.JWT.Encode(payload, secretKey, JwsAlgorithm.HS256, extraHeaders: headers);
         }
 
-        // TODO: Need to exclude to a separate file
-        private static double GetUnixEpoch(this DateTime dateTime)
-        {
-            var unixTime = dateTime.ToUniversalTime() -
-                new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-            return unixTime.TotalSeconds;
-        }
     }
 }

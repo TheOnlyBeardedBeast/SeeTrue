@@ -10,6 +10,7 @@
     <None Remove="BCrypt.Net-Next" />
     <None Remove="Services\" />
     <None Remove="Types\" />
+    <None Remove="Queries\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -23,5 +24,6 @@
     <Folder Include="Commands\" />
     <Folder Include="Services\" />
     <Folder Include="Types\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 </Project>

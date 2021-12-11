@@ -50,6 +50,8 @@ namespace SeeTrue.API
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                     opt =>
                     {
+                        opt.SaveToken = true;
+                        
                         opt.TokenValidationParameters = new()
                         {
                             ValidateIssuer = true,
