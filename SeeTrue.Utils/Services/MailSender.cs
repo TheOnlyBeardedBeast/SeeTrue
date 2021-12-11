@@ -10,6 +10,7 @@ namespace SeeTrue.Utils.Services
     {
         Task Send(string address, string code);
         Task NotifyEmailChange(User user, string email);
+        Task NotifyRecovery(User user);
     }
 
     // TODO: add dynamic config
@@ -48,6 +49,21 @@ namespace SeeTrue.Utils.Services
             {
                 Subject = "Passwordless",
                 Body = $"<a href=\"http://localhost:5000/confirm-emailchange/{user.EmailChangeToken}\">confirm {user.EmailChangeToken}</a>",
+                IsBodyHtml = true
+            };
+
+            await Task.Run(() => client.Send(message));
+        }
+
+        public async Task NotifyRecovery(User user)
+        {
+            MailAddress from = new("service@mailhog.example", "Confirm email change");
+            MailAddress to = new(user.Email);
+
+            MailMessage message = new MailMessage(from, to)
+            {
+                Subject = "Passwordless",
+                Body = $"<a href=\"http://localhost:5000/verify/{user.RecoveryToken}\">confirm {user.RecoveryToken}</a>",
                 IsBodyHtml = true
             };
 

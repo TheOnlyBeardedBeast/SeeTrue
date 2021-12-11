@@ -95,9 +95,10 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("recover")]
-        public object Recover()
+        public async Task<IActionResult> Recover([FromBody] CQRS.Commands.Recover.Command data)
         {
-            throw new NotImplementedException();
+            await this.m.Send(data);
+            return Ok();
         }
 
         [HttpPost("token")]

@@ -34,11 +34,13 @@ namespace SeeTrue.CQRS.Commands
                         }
                     case "recovery":
                         {
-                            return null;
+                            user = await this.RecoveryVerify(request);
+                            break;
                         }
                     default:
                         {
-                            return null;
+                            user = null;
+                            break;
                         }
                 }
 
@@ -68,6 +70,7 @@ namespace SeeTrue.CQRS.Commands
                     throw new Exception("Invalid data");
                 }
 
+                
                 if(string.IsNullOrWhiteSpace(user.EncryptedPassword))
                 {
                     if(user.InvitedAt is not null)
@@ -88,9 +91,18 @@ namespace SeeTrue.CQRS.Commands
                 return user;
             }
 
-            public async Task RecoveryVerify()
+            public async Task<User> RecoveryVerify(Command request)
             {
+                var user = await query.FindUserByRecoveryToken(request.token);
+                
+                if (user is null)
+                {
+                    throw new Exception("Invalid data");
+                }
 
+                await this.command.Recover(user);
+
+                return user;
             }
         }
     }

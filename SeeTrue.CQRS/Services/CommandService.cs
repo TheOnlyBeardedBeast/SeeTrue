@@ -22,6 +22,8 @@ namespace SeeTrue.CQRS.Services
         Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData);
         Task SendEmailChange(User user, string email);
         Task ConfirmEmailChange(User user);
+        Task SendPasswordRecovery(User user);
+        Task Recover(User user);
     }
 
     public class CommandService : ICommandService
@@ -250,6 +252,31 @@ namespace SeeTrue.CQRS.Services
             user.EmailChange = null;
 
             this.db.Update(user);
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task SendPasswordRecovery(User user)
+        {
+            // TODO: define enviroment variable for recovery max frequence
+            if(user.RecoverySentAt < DateTime.UtcNow.AddSeconds(60))
+            {
+                throw new Exception("Try again later");
+            }
+
+            user.RecoveryToken = Helpers.GenerateUniqueToken();
+            await mailer.NotifyRecovery(user);
+
+            user.RecoverySentAt = DateTime.UtcNow;
+
+            this.db.Update(user);
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task Recover(User user)
+        {
+            user.RecoveryToken = null;
+            this.db.Update(user);
+
             await this.db.SaveChangesAsync();
         }
     }

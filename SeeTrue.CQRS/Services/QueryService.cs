@@ -15,6 +15,7 @@ namespace SeeTrue.CQRS.Services
         Task<User> FindUserById(Guid userId);
         Task<bool> CheckEmailExists(string email, string audience);
         Task<User> FindUserByEmailChangeToken(string token);
+        Task<User> FindUserByRecoveryToken(string token);
     }
 
     public class QueryService : IQueryService
@@ -92,6 +93,11 @@ namespace SeeTrue.CQRS.Services
         public async Task<User> FindUserByEmailChangeToken(string token)
         {
             return await this.db.Users.FirstOrDefaultAsync( e => e.EmailChangeToken == token);
+        }
+
+        public async Task<User> FindUserByRecoveryToken(string token)
+        {
+            return await this.db.Users.FirstOrDefaultAsync(e => e.RecoveryToken == token);
         }
 
     }
