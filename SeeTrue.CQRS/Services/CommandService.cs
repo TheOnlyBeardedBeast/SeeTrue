@@ -18,6 +18,10 @@ namespace SeeTrue.CQRS.Services
         Task SendConfirmation(User user);
         Task UpdateUserPassword(User user, string password);
         Task ConfirmUser(User user);
+        Task UpdatePassword(User user, string password);
+        Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData);
+        Task SendEmailChange(User user, string email);
+        Task ConfirmEmailChange(User user);
     }
 
     public class CommandService : ICommandService
@@ -195,6 +199,58 @@ namespace SeeTrue.CQRS.Services
 
             this.db.Update(user);
             await db.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Updated the users password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task UpdatePassword(User user, string password)
+        {
+            user.EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            this.db.Update(user);
+
+            await this.db.SaveChangesAsync();
+        }
+
+
+        /// <summary>
+        /// Updateds the user metada, adds new fields, or modifies fields, if the new field has a value off null removes fields
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="userMetaData"></param>
+        /// <returns></returns>
+        public async Task UpdateUserMetaData(User user, Dictionary<string,object> userMetaData)
+        {
+            user.UpdateUserMetaData(userMetaData);
+            this.db.Update(user);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task SendEmailChange(User user, string email)
+        {
+            user.EmailChangeToken = Helpers.GenerateUniqueToken();
+            user.EmailChange = email;
+
+            await this.mailer.NotifyEmailChange(user, email);
+
+            user.EmailChangeSentAt = DateTime.UtcNow;
+
+            this.db.Update(user);
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task ConfirmEmailChange(User user)
+        {
+            user.Email = user.EmailChange;
+            user.EmailChangeToken = null;
+            user.EmailChange = null;
+
+            this.db.Update(user);
+            await this.db.SaveChangesAsync();
         }
     }
 }

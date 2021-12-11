@@ -13,6 +13,8 @@ namespace SeeTrue.CQRS.Services
         Task<User> FindUserByEmailAndAudience(string email, string audience);
         Task<User> FindUserByConfirmationToken(string confirmationToken);
         Task<User> FindUserById(Guid userId);
+        Task<bool> CheckEmailExists(string email, string audience);
+        Task<User> FindUserByEmailChangeToken(string token);
     }
 
     public class QueryService : IQueryService
@@ -72,6 +74,24 @@ namespace SeeTrue.CQRS.Services
         public async Task<User> FindUserByConfirmationToken(string confirmationToken)
         {
             return await this.db.Users.FirstOrDefaultAsync(e => e.ConfirmationToken.Equals(confirmationToken) && e.InstanceID == SeeTrueConfig.InstanceId);
+        }
+
+        /// <summary>
+        /// Checks if a user with the same email, audience and instance exists
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="audience"></param>
+        /// <returns></returns>
+        public async Task<bool> CheckEmailExists(string email,string audience)
+        {
+            var instanceId = SeeTrueConfig.InstanceId;
+
+            return await this.db.Users.AnyAsync(e => e.InstanceID == instanceId && e.Email == email && e.Aud == audience);
+        }
+
+        public async Task<User> FindUserByEmailChangeToken(string token)
+        {
+            return await this.db.Users.FirstOrDefaultAsync( e => e.EmailChangeToken == token);
         }
 
     }

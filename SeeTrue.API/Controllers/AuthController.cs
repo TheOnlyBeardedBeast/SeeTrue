@@ -70,6 +70,12 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpPost("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail([FromBody] CQRS.Commands.ConfirmEmailChange.Command data)
+        {
+            return Ok(await this.m.Send(data));
+        }
+
         [HttpPost("verify")]
         public async Task<IActionResult> Verify(CQRS.Commands.Verify.Command data)
         {
@@ -124,9 +130,9 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPut("user")]
-        public object UpdateUser()
+        public async Task<IActionResult> UpdateUser([FromBody] CQRS.Commands.UserUpdate.Command data)
         {
-            throw new NotImplementedException();
+            return Ok(await this.m.Send(data));
         }
 
         [HttpPost("logout")]

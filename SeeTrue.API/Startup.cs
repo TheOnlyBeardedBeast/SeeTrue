@@ -71,8 +71,10 @@ namespace SeeTrue.API
             // services.AddFluentValidation();
             // services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PersonValidator>());
 
-            services.AddSwaggerGen(c =>
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTrue", Version = "v1" })
+            services.AddSwaggerGen(c => {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTrue", Version = "v1" });
+                    c.CustomSchemaIds(x => x.FullName);
+                }
             );
         }
 
