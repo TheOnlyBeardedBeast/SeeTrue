@@ -143,15 +143,27 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpGet("authorize")]
-        public object Authorize()
+        public async Task<IActionResult> Authorize([FromQuery] string provider)
         {
-            throw new NotImplementedException();
+            var url = this.m.Send(new CQRS.Queries.Authorize.Query(provider));
+
+            return Ok(url);
         }
 
-        [HttpPut("callback")]
-        public object Callback()
+
+        [HttpGet("callback")]
+        public object Callback([FromQuery] string code, [FromQuery] string state)
         {
-            throw new NotImplementedException();
+            // check if state is in cache, and get the right provider
+            // if state doesnt exist in cache abort processing
+            // else use code to request POST https://github.com/login/oauth/access_token with header Accept: application/json
+            // recieve token
+            // request user data
+            // GET https://api.github.com/user
+            // check if users email in our database if not register him if yes return user
+            // issue access and refresh tokens
+
+            return Ok(code);
         }
     }
 }
