@@ -11,6 +11,7 @@ namespace SeeTrue.Utils.Services
         Task Send(string address, string code);
         Task NotifyEmailChange(User user, string email);
         Task NotifyRecovery(User user);
+        Task NotifyMagicLink(User user, string token);
     }
 
     // TODO: add dynamic config
@@ -32,7 +33,7 @@ namespace SeeTrue.Utils.Services
 
             MailMessage message = new MailMessage(from, to)
             {
-                Subject = "Passwordless",
+                Subject = "Passwordless Confirm",
                 Body = $"<a href=\"http://localhost:5000/confirm/{code}\">confirm</a>",
                 IsBodyHtml = true
             };
@@ -47,7 +48,7 @@ namespace SeeTrue.Utils.Services
 
             MailMessage message = new MailMessage(from, to)
             {
-                Subject = "Passwordless",
+                Subject = "Passwordless Update",
                 Body = $"<a href=\"http://localhost:5000/confirm-emailchange/{user.EmailChangeToken}\">confirm {user.EmailChangeToken}</a>",
                 IsBodyHtml = true
             };
@@ -62,8 +63,23 @@ namespace SeeTrue.Utils.Services
 
             MailMessage message = new MailMessage(from, to)
             {
-                Subject = "Passwordless",
+                Subject = "Passwordless Recovery",
                 Body = $"<a href=\"http://localhost:5000/verify/{user.RecoveryToken}\">confirm {user.RecoveryToken}</a>",
+                IsBodyHtml = true
+            };
+
+            await Task.Run(() => client.Send(message));
+        }
+
+        public async Task NotifyMagicLink(User user, string token)
+        {
+            MailAddress from = new("service@mailhog.example", "Confirm email change");
+            MailAddress to = new(user.Email);
+
+            MailMessage message = new MailMessage(from, to)
+            {
+                Subject = "Passwordless MagicLink",
+                Body = $"<a href=\"http://localhost:5000/verify/{token}\">magiclink {token}</a>",
                 IsBodyHtml = true
             };
 

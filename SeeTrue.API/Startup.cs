@@ -51,7 +51,7 @@ namespace SeeTrue.API
                     opt =>
                     {
                         opt.SaveToken = true;
-                        
+
                         opt.TokenValidationParameters = new()
                         {
                             ValidateIssuer = true,
@@ -68,6 +68,7 @@ namespace SeeTrue.API
             services.AddMediatR(typeof(HandlerResponse).Assembly);
             services.AddTransient<IMailService, MailService>();
             services.AddSeeTrue();
+            services.AddMemoryCache();
             // services.AddFluentValidation();
             // services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PersonValidator>());
 

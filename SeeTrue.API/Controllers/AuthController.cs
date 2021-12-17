@@ -82,16 +82,17 @@ namespace SeeTrue.API.Controllers
             return Ok(await this.m.Send(data));
         }
 
-        [HttpGet("verify")]
-        public object CheckVerify()
+        [HttpPost("magiclink")]
+        public async Task<IActionResult> MagicLink([FromBody] CQRS.Commands.RequestMagicLink.Command data)
         {
-            throw new NotImplementedException();
+            await this.m.Send(data);
+            return Ok();
         }
 
-        [HttpPost("magiclink")]
-        public object MagicLink()
+        [HttpGet("magiclink")]
+        public async Task<IActionResult> CheckMagicLink([FromQuery] string token)
         {
-            throw new NotImplementedException();
+            return Ok(await this.m.Send(new CQRS.Commands.ProcessMagicLink.Query(token)));
         }
 
         [HttpPost("recover")]
@@ -162,6 +163,7 @@ namespace SeeTrue.API.Controllers
             // GET https://api.github.com/user
             // check if users email in our database if not register him if yes return user
             // issue access and refresh tokens
+            // redirect to the frontend with query params
 
             return Ok(code);
         }
