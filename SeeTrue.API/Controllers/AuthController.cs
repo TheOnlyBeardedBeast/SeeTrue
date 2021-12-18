@@ -12,6 +12,9 @@ using SeeTrue.Infrastructure.Extensions;
 using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Infrastructure.Types;
 using SeeTrue.Infrastructure.Validators;
+using Microsoft.AspNetCore.Http;
+using System.Net;
+using SeeTrue.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -45,23 +48,17 @@ namespace SeeTrue.API.Controllers
         {
             if (SeeTrueConfig.DisableSignup)
             {
-                return Forbid("SignUp is disabled");
+                throw new SeeTrueException(HttpStatusCode.Forbidden, "SignUp is disabled");
             }
 
             if (!data.Validate())
             {
-                return BadRequest("Ivalid data.");
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            try
-            {
-                var user = await this.m.Send(new Infrastructure.Commands.SignUp.Command(data, null));
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var user = await this.m.Send(new Infrastructure.Commands.SignUp.Command(data, null));
+
+            return Ok(user);
         }
 
         [Authorize]
@@ -78,53 +75,69 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("verify")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Verify(Infrastructure.Commands.Verify.Command data)
         {
             return Ok(await this.m.Send(data));
         }
 
         [HttpPost("magiclink")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> MagicLink([FromBody] Infrastructure.Commands.RequestMagicLink.Command data)
         {
             await this.m.Send(data);
-            return Ok();
+
+            return NoContent();
         }
 
         [HttpGet("magiclink")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(UserTokenResponse),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string),StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckMagicLink([FromQuery] string token)
         {
-            return Ok(await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Query(token)));
+            var result = await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Command(token));
+
+            return Ok(result);
         }
 
         [HttpPost("recover")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Recover([FromBody] Infrastructure.Commands.Recover.Command data)
         {
             await this.m.Send(data);
-            return Ok();
+
+            return NoContent();
         }
 
         [HttpPost("token")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> token([FromBody] TokenData data)
         {
             if(!data.Validate())
             {
-                return BadRequest("Invalid data");
+                throw new SeeTrueException(HttpStatusCode.BadRequest,"Invalid data");
             }
 
-            try
-            {
-                var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, null));
+            var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, null));
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return Ok(result);
         }
 
         [Authorize]
         [HttpGet("user")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(User),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetUser()
         {
             var userId = HttpContext.GetUserId();
@@ -132,12 +145,17 @@ namespace SeeTrue.API.Controllers
             return Ok(await this.m.Send(new Infrastructure.Queries.GetUser.Query(userId)));
         }
 
+        [Authorize]
         [HttpPut("user")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateUser([FromBody] Infrastructure.Commands.UserUpdate.Command data)
         {
             return Ok(await this.m.Send(data));
         }
 
+        [Authorize]
         [HttpPost("logout")]
         public object Logout()
         {

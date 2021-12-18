@@ -24,7 +24,7 @@ namespace SeeTrue.API.Filters
                 context.Result = new ContentResult
                 {
                     StatusCode = (int)exception.StatusCode,
-                    Content = context.Exception.Message
+                    Content = exception.Message
                 };
             } else
             {
