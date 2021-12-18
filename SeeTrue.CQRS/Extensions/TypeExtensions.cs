@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using Jose;
 using Microsoft.AspNetCore.Http;
+using SeeTrue.Infrastructure.Types;
 using SeeTrue.Models;
 
 namespace SeeTrue.Infrastructure.Extensions
@@ -80,17 +82,17 @@ namespace SeeTrue.Infrastructure.Extensions
         {
             var userId = context.User.Claims.FirstOrDefault(e => e.Type == ClaimTypes.NameIdentifier).Value;
 
-            if(userId is null)
+            if (userId is null)
             {
-                throw new Exception("Not authenticated");
+                throw new SeeTrueException(HttpStatusCode.Unauthorized, "Unauthorized");
             }
 
-            if (Guid.TryParse(userId,out var uid))
+            if (Guid.TryParse(userId, out var uid))
             {
                 return uid;
             }
 
-            throw new Exception("Invalid userId");
+            throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid userId");
         }
     }
 }

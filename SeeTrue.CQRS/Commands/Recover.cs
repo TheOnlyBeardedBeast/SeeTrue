@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -9,7 +10,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class Recover
     {
-        public record Command(string Email): IRequest;
+        public record Command(string Email) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
@@ -26,9 +27,9 @@ namespace SeeTrue.Infrastructure.Commands
             {
                 var user = await this.queires.FindUserByEmailAndAudience(request.Email, null);
 
-                if(user is null)
+                if (user is null)
                 {
-                    throw new Exception("Invalid token");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid token");
                 }
 
                 await commands.NewAuditLogEntry(user, AuditAction.UserRecoveryRequestedAction, null);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -10,7 +11,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class Verify
     {
-        public record Command(string type,string token, string password) : IRequest<UserTokenResponse>;
+        public record Command(string type, string token, string password) : IRequest<UserTokenResponse>;
 
         public class Handler : IRequestHandler<Command, UserTokenResponse>
         {
@@ -26,7 +27,8 @@ namespace SeeTrue.Infrastructure.Commands
             public async Task<UserTokenResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 User user;
-                switch (request.type) {
+                switch (request.type)
+                {
                     case "signup":
                         {
                             user = await this.SignupVerify(request);
@@ -44,9 +46,9 @@ namespace SeeTrue.Infrastructure.Commands
                         }
                 }
 
-                if(user is null)
+                if (user is null)
                 {
-                    throw new Exception("Invalid input");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid input");
                 }
 
                 var token = await command.IssueTokens(user);
@@ -67,17 +69,17 @@ namespace SeeTrue.Infrastructure.Commands
 
                 if (user is null || user.ConfirmedAt != null)
                 {
-                    throw new Exception("Invalid data");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                 }
 
-                
-                if(string.IsNullOrWhiteSpace(user.EncryptedPassword))
+
+                if (string.IsNullOrWhiteSpace(user.EncryptedPassword))
                 {
-                    if(user.InvitedAt is not null)
+                    if (user.InvitedAt is not null)
                     {
                         if (string.IsNullOrWhiteSpace(request.password))
                         {
-                            throw new Exception("Invalid data");
+                            throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                         }
 
                         await command.UpdateUserPassword(user, request.password);
@@ -94,10 +96,10 @@ namespace SeeTrue.Infrastructure.Commands
             public async Task<User> RecoveryVerify(Command request)
             {
                 var user = await query.FindUserByRecoveryToken(request.token);
-                
+
                 if (user is null)
                 {
-                    throw new Exception("Invalid data");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                 }
 
                 await this.command.Recover(user);

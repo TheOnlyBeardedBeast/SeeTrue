@@ -40,9 +40,11 @@ namespace SeeTrue.API
                  options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers(
-
                 opt =>
-                opt.Filters.Add<TransactionFilter>()
+                {
+                    opt.Filters.Add<TransactionFilter>();
+                    opt.Filters.Add<SeeTrueExceptionFilter>();
+                }
             ).AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 

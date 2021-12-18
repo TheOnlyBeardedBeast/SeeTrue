@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -35,7 +36,7 @@ namespace SeeTrue.Infrastructure.Commands
 
                 if (user is not null && user.IsConfirmed())
                 {
-                    throw new Exception("A user with this email address has already been registered");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "A user with this email address has already been registered");
                 }
 
                 if (SeeTrueConfig.AutoConfirm)

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Types;
 
 namespace SeeTrue.Infrastructure.Commands
 {
@@ -27,7 +29,7 @@ namespace SeeTrue.Infrastructure.Commands
 
                 if (user is null)
                 {
-                    throw new Exception("invalid token");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid token");
                 }
 
                 await commands.ConfirmEmailChange(user);

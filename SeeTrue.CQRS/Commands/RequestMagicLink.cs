@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Types;
 using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Utils.Services;
 
@@ -30,14 +32,14 @@ namespace SeeTrue.Infrastructure.Commands
             {
                 var user = await this.queries.FindUserByEmailAndAudience(request.Email, null);
 
-                if(user is null)
+                if (user is null)
                 {
-                    throw new Exception("User not found");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "User not found");
                 }
 
                 var token = Helpers.GenerateUniqueToken();
 
-                cache.Set(token,user.Id,TimeSpan.FromMinutes(2));
+                cache.Set(token, user.Id, TimeSpan.FromMinutes(2));
 
                 await mailer.NotifyMagicLink(user, token);
 

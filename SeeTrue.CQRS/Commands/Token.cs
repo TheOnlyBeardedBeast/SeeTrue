@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -46,7 +47,7 @@ namespace SeeTrue.Infrastructure.Commands
                         }
                     default:
                         {
-                            throw new Exception("Invalid data");
+                            throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                         }
                 }
 
@@ -60,17 +61,17 @@ namespace SeeTrue.Infrastructure.Commands
 
                 if (user is null)
                 {
-                    throw new Exception("Invalid user or password");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid user or password");
                 }
 
                 if (!user.IsConfirmed())
                 {
-                    throw new Exception("Invalid user or password");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid user or password");
                 }
 
                 if (!BCrypt.Net.BCrypt.Verify(request.data.Password, user.EncryptedPassword))
                 {
-                    throw new Exception("Invalid user or password");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid user or password");
                 }
 
                 await command.NewAuditLogEntry(user, AuditAction.LoginAction, null);
@@ -90,13 +91,13 @@ namespace SeeTrue.Infrastructure.Commands
 
                 if (token is null || token.User is null)
                 {
-                    throw new Exception("Invalid data");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                 }
 
                 if (token.Revoked)
                 {
                     // TODO: Clear cookie token
-                    throw new Exception("Invalid data");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                 }
 
                 var validationDate = token.CreatedAt;
@@ -106,7 +107,7 @@ namespace SeeTrue.Infrastructure.Commands
                 {
                     //alternative validation (date is embedded into the token)
                     //!Helpers.ValidateExpiringToken(request.data.RefreshToken, 7 * 24 * 60
-                    throw new Exception("Invalid data");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                 }
 
                 await command.NewAuditLogEntry(token.User, AuditAction.TokenRefreshedAction, null);

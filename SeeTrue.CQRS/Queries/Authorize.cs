@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
+using SeeTrue.Infrastructure.Types;
 using SeeTrue.Infrastructure.Utils;
 
 namespace SeeTrue.Infrastructure.Queries
@@ -17,7 +19,7 @@ namespace SeeTrue.Infrastructure.Queries
             {
                 if(request.Provider != "github")
                 {
-                    throw new Exception("Invalid provider");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest,"Invalid provider");
                 };
 
                 var qb = new QueryBuilder();

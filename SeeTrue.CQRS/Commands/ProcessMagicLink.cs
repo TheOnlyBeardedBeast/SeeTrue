@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -47,7 +48,7 @@ namespace SeeTrue.Infrastructure.Commands
                 }
 
                 Error:
-                    throw new Exception("User not found");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "User not found");
 
             }
         }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Types;
 using SeeTrue.Models;
 using UserMetaData = System.Collections.Generic.Dictionary<string, object>;
 
@@ -10,9 +12,9 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class UserUpdate
     {
-        public record Command(Guid UserId, string Password, string Email, UserMetaData UserMetaData,string EmailChangeToken) : IRequest<User>;
+        public record Command(Guid UserId, string Password, string Email, UserMetaData UserMetaData, string EmailChangeToken) : IRequest<User>;
 
-        public class Handler : IRequestHandler<Command,User>
+        public class Handler : IRequestHandler<Command, User>
         {
             private readonly IQueryService queries;
             private readonly ICommandService commands;
@@ -27,31 +29,31 @@ namespace SeeTrue.Infrastructure.Commands
             {
                 var user = await queries.FindUserById(request.UserId);
 
-                if(user is null)
+                if (user is null)
                 {
-                    throw new Exception("User not found");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "User not found");
                 }
 
-                if(!string.IsNullOrWhiteSpace(request.Password))
+                if (!string.IsNullOrWhiteSpace(request.Password))
                 {
                     await commands.UpdatePassword(user, request.Password);
                 }
 
-                if(request.UserMetaData is not null)
+                if (request.UserMetaData is not null)
                 {
                     await commands.UpdateUserMetaData(user, request.UserMetaData);
                 }
 
-                if(!string.IsNullOrWhiteSpace(request.Email) && user.Email != request.Email)
+                if (!string.IsNullOrWhiteSpace(request.Email) && user.Email != request.Email)
                 {
                     var emailExists = await queries.CheckEmailExists(request.Email, user.Aud);
 
                     if (emailExists)
                     {
-                        throw new Exception("Email already in use");
+                        throw new SeeTrueException(HttpStatusCode.BadRequest, "Email already in use");
                     }
 
-                    await commands.SendEmailChange(user,request.Email);
+                    await commands.SendEmailChange(user, request.Email);
                 }
 
                 return user;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SeeTrue.Infrastructure.Extensions;
@@ -224,7 +225,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="user"></param>
         /// <param name="userMetaData"></param>
         /// <returns></returns>
-        public async Task UpdateUserMetaData(User user, Dictionary<string,object> userMetaData)
+        public async Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData)
         {
             user.UpdateUserMetaData(userMetaData);
             this.db.Update(user);
@@ -258,9 +259,9 @@ namespace SeeTrue.Infrastructure.Services
         public async Task SendPasswordRecovery(User user)
         {
             // TODO: define enviroment variable for recovery max frequence
-            if(user.RecoverySentAt < DateTime.UtcNow.AddSeconds(60))
+            if (user.RecoverySentAt < DateTime.UtcNow.AddSeconds(60))
             {
-                throw new Exception("Try again later");
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "Try again later");
             }
 
             user.RecoveryToken = Helpers.GenerateUniqueToken();
