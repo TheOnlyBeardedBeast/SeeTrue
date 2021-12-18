@@ -55,8 +55,8 @@ namespace SeeTrue.Infrastructure.Extensions
                 { "sub", user.Id.ToString() },
                 { "aud", user.Aud },
                 { "iss", "http://localhost:5000/" },
-                { "exp", DateTime.UtcNow.AddSeconds(3600).GetUnixEpoch() }
-                //{ "exp", ((int)DateTime.Now.AddSeconds(3600).ToUniversalTime().Subtract(new DateTime (1970, 01, 01)).TotalSeconds) }
+                { "exp", (int)DateTime.UtcNow.AddSeconds(3600).GetUnixEpoch() },
+                { "lid", Guid.NewGuid().ToString() }
             };
 
             var headers = new Dictionary<string, object>{

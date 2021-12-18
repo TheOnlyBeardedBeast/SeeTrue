@@ -14,6 +14,10 @@ namespace SeeTrue.Models
 		public Guid UserId { get; set; }
 		public User User { get; set; }
 
+		[Required]
+		public Guid LoginId { get; set; }
+		public Login Login { get; set; }
+
 		public bool Revoked { get; set; } = false;
 
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

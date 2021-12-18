@@ -10,6 +10,7 @@ namespace SeeTrue.Models
         public DbSet<User> Users { get; set; }
         public DbSet<AuditLogEntry> AuditLogEntries { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Login> Logins { get; set; }
 
         public SeeTrueDbContext(DbContextOptions options) : base(options)
         {
@@ -17,6 +18,7 @@ namespace SeeTrue.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().Property<string>("UserMetaDataJson");
             modelBuilder.Entity<User>().Property<string>("AppMetaDataJson");
 
             base.OnModelCreating(modelBuilder);

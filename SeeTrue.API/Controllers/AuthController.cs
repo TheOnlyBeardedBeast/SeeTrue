@@ -32,6 +32,7 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpGet("health")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
         public IActionResult HealthCheck()
         {
             return Ok(new { Name = "SeeTrue", Version = 1, Description = "SeeTrue is a user registration and authentication API" });
@@ -44,6 +45,8 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("signup")]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignUp([FromBody] SignUpData data)
         {
             if (SeeTrueConfig.DisableSignup)
@@ -69,13 +72,16 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("confirm-email")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ConfirmEmail([FromBody] Infrastructure.Commands.ConfirmEmailChange.Command data)
         {
-            return Ok(await this.m.Send(data));
+            await this.m.Send(data);
+
+            return NoContent();
         }
 
         [HttpPost("verify")]
-        [Produces("application/json")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Verify(Infrastructure.Commands.Verify.Command data)
@@ -84,7 +90,6 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("magiclink")]
-        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> MagicLink([FromBody] Infrastructure.Commands.RequestMagicLink.Command data)
@@ -95,7 +100,6 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpGet("magiclink")]
-        [Produces("application/json")]
         [ProducesResponseType(typeof(UserTokenResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string),StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckMagicLink([FromQuery] string token)
@@ -106,7 +110,6 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("recover")]
-        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Recover([FromBody] Infrastructure.Commands.Recover.Command data)
@@ -117,7 +120,6 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("token")]
-        [Produces("application/json")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> token([FromBody] TokenData data)
@@ -134,7 +136,6 @@ namespace SeeTrue.API.Controllers
 
         [Authorize]
         [HttpGet("user")]
-        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(User),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -147,7 +148,7 @@ namespace SeeTrue.API.Controllers
 
         [Authorize]
         [HttpPut("user")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateUser([FromBody] Infrastructure.Commands.UserUpdate.Command data)

@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using SeeTrue.Infrastructure.Extensions;
 using SeeTrue.Infrastructure.Services;
 using SeeTrue.Infrastructure.Types;
@@ -19,12 +20,14 @@ namespace SeeTrue.Infrastructure.Commands
             private readonly IMediator mediator;
             private readonly IQueryService query;
             private readonly ICommandService command;
+            private readonly IHttpContextAccessor context;
 
-            public Handler(IMediator mediator, IQueryService query, ICommandService command)
+            public Handler(IMediator mediator, IQueryService query, ICommandService command, IHttpContextAccessor context)
             {
                 this.mediator = mediator;
                 this.query = query;
                 this.command = command;
+                this.context = context;
             }
 
             public async Task<UserTokenResponse> Handle(Command request, CancellationToken cancellationToken)
@@ -75,7 +78,9 @@ namespace SeeTrue.Infrastructure.Commands
                 }
 
                 await command.NewAuditLogEntry(user, AuditAction.LoginAction, null);
-                var token = await command.IssueTokens(user);
+
+                var login = await command.StoreLogin(context.HttpContext.Request.Headers["User-Agent"],user.Id);
+                var token = await command.IssueTokens(user,login.Id);
 
                 return new UserTokenResponse
                 {

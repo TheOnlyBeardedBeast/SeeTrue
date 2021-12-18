@@ -14,10 +14,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SeeTrue.API.Db;
 using SeeTrue.API.Filters;
+using SeeTrue.API.Services;
 using SeeTrue.Infrastructure;
 using SeeTrue.Models;
 using SeeTrue.Utils.Services;
@@ -36,6 +38,7 @@ namespace SeeTrue.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
             services.AddDbContext<ISeeTrueDbContext, AppDbContext>(options =>
                  options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -44,33 +47,37 @@ namespace SeeTrue.API
                 {
                     opt.Filters.Add<TransactionFilter>();
                     opt.Filters.Add<SeeTrueExceptionFilter>();
+                    //opt.Filters.Add<LoginTokenAuthorizationFilter>();
                 }
             ).AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+            services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
             services.AddAuthorization()
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
-                    opt =>
-                    {
-                        opt.SaveToken = true;
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+                //.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                //    opt =>
+                //    {
+                //        opt.SaveToken = true;
 
-                        opt.TokenValidationParameters = new()
-                        {
-                            ValidateIssuer = true,
-                            ValidateAudience = false,
-                            ValidateLifetime = true,
-                            ValidateIssuerSigningKey = true,
-                            ValidIssuer = "http://localhost:5000/",
-                            // ValidAudience = builder.Configuration["Jwt:Issuer"],
-                            IssuerSigningKey = new SymmetricSecurityKey(new byte[] { 164, 60, 194, 0, 161, 189, 41, 38, 130, 89, 141, 164, 45, 170, 159, 209, 69, 137, 243, 216, 191, 131, 47, 250, 32, 107, 231, 117, 37, 158, 225, 234 })
-                        };
-                    }
-                );
+                //        opt.TokenValidationParameters = new()
+                //        {
+                //            ValidateIssuer = true,
+                //            ValidateAudience = false,
+                //            ValidateLifetime = true,
+                //            ValidateIssuerSigningKey = true,
+                //            ValidIssuer = "http://localhost:5000/",
+                //            // ValidAudience = builder.Configuration["Jwt:Issuer"],
+                //            IssuerSigningKey = new SymmetricSecurityKey(new byte[] { 164, 60, 194, 0, 161, 189, 41, 38, 130, 89, 141, 164, 45, 170, 159, 209, 69, 137, 243, 216, 191, 131, 47, 250, 32, 107, 231, 117, 37, 158, 225, 234 })
+                //        };
+                //    }
+                //);
 
             services.AddMediatR(typeof(HandlerResponse).Assembly);
             services.AddTransient<IMailService, MailService>();
             services.AddSeeTrue();
-            services.AddMemoryCache();
+            services.AddHttpContextAccessor();
+            
             // services.AddFluentValidation();
             // services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PersonValidator>());
 

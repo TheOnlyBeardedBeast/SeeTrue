@@ -14,7 +14,6 @@ namespace SeeTrue.Infrastructure.Services
     {
         Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, bool confirmed);
         Task<TokenResponse> GrantTokenSwap(RefreshToken token);
-        Task<TokenResponse> IssueTokens(User user);
         Task NewAuditLogEntry(User actor, AuditAction action, object traits);
         Task SendConfirmation(User user);
         Task UpdateUserPassword(User user, string password);
@@ -25,6 +24,8 @@ namespace SeeTrue.Infrastructure.Services
         Task ConfirmEmailChange(User user);
         Task SendPasswordRecovery(User user);
         Task Recover(User user);
+        Task<TokenResponse> IssueTokens(User user, Guid loginId);
+        Task<Login> StoreLogin(string userAgent, Guid userId);
     }
 
     public class CommandService : ICommandService
@@ -83,7 +84,7 @@ namespace SeeTrue.Infrastructure.Services
             this.db.RefreshTokens.Update(token);
             await db.SaveChangesAsync();
 
-            var response = await this.IssueTokens(token.User);
+            var response = await this.IssueTokens(token.User, token.LoginId);
             return response;
         }
 
@@ -92,7 +93,7 @@ namespace SeeTrue.Infrastructure.Services
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<TokenResponse> IssueTokens(User user)
+        public async Task<TokenResponse> IssueTokens(User user, Guid loginId)
         {
             user.LastSignInAt = DateTime.UtcNow;
 
@@ -103,7 +104,8 @@ namespace SeeTrue.Infrastructure.Services
             {
                 Token = refresToken,
                 InstanceID = user.InstanceID,
-                UserId = user.Id
+                UserId = user.Id,
+                LoginId = loginId
             });
 
             await db.SaveChangesAsync();
@@ -279,6 +281,20 @@ namespace SeeTrue.Infrastructure.Services
             this.db.Update(user);
 
             await this.db.SaveChangesAsync();
+        }
+
+        public async Task<Login> StoreLogin(string userAgent, Guid userId)
+        {
+            var login = new Login
+            {
+                UserAgent = userAgent,
+                UserId = userId
+            };
+
+            this.db.Logins.Add(login);
+            await this.db.SaveChangesAsync();
+
+            return login;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using SeeTrue.Infrastructure.Services;
 using SeeTrue.Infrastructure.Types;
@@ -18,12 +19,14 @@ namespace SeeTrue.Infrastructure.Commands
             private readonly IMemoryCache cache;
             private readonly ICommandService commands;
             private readonly IQueryService queries;
+            private readonly IHttpContextAccessor context;
 
-            public Handler(IMemoryCache cache,ICommandService commands,IQueryService queries)
+            public Handler(IMemoryCache cache,ICommandService commands,IQueryService queries, IHttpContextAccessor context)
             {
                 this.cache = cache;
                 this.commands = commands;
                 this.queries = queries;
+                this.context = context;
             }
 
             public async Task<UserTokenResponse> Handle(Command request, CancellationToken cancellationToken)
@@ -38,7 +41,8 @@ namespace SeeTrue.Infrastructure.Commands
                     }
 
                     this.cache.Remove(request.Token);
-                    var result = await this.commands.IssueTokens(user);
+                    var login = await this.commands.StoreLogin(context.HttpContext.Request.Headers["User-Agent"],userId);
+                    var result = await this.commands.IssueTokens(user,login.Id);
 
                     return new UserTokenResponse {
                         User = user,
