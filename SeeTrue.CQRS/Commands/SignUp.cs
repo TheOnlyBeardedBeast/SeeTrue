@@ -2,13 +2,13 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SeeTrue.CQRS.Services;
+using SeeTrue.Infrastructure.Extensions;
+using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Types;
+using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Models;
-using SeeTrue.Utils;
-using SeeTrue.Utils.Extensions;
-using SeeTrue.Utils.Types;
 
-namespace SeeTrue.CQRS.Commands
+namespace SeeTrue.Infrastructure.Commands
 {
     public static class SignUp
     {

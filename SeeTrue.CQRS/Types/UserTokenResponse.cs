@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using SeeTrue.Models;
 
-namespace SeeTrue.CQRS.Types
+namespace SeeTrue.Infrastructure.Types
 {
     public record UserTokenResponse : TokenResponse
     {

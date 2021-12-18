@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SeeTrue.CQRS.Commands;
-using SeeTrue.Utils;
-using SeeTrue.Utils.Extensions;
-using SeeTrue.Utils.Types;
+using SeeTrue.Infrastructure.Queries;
+using SeeTrue.Infrastructure.Extensions;
+using SeeTrue.Infrastructure.Utils;
+using SeeTrue.Infrastructure.Types;
+using SeeTrue.Infrastructure.Validators;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -54,7 +55,7 @@ namespace SeeTrue.API.Controllers
 
             try
             {
-                var user = await this.m.Send(new CQRS.Commands.SignUp.Command(data, null));
+                var user = await this.m.Send(new Infrastructure.Commands.SignUp.Command(data, null));
                 return Ok(user);
             }
             catch (Exception ex)
@@ -71,19 +72,19 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpPost("confirm-email")]
-        public async Task<IActionResult> ConfirmEmail([FromBody] CQRS.Commands.ConfirmEmailChange.Command data)
+        public async Task<IActionResult> ConfirmEmail([FromBody] Infrastructure.Commands.ConfirmEmailChange.Command data)
         {
             return Ok(await this.m.Send(data));
         }
 
         [HttpPost("verify")]
-        public async Task<IActionResult> Verify(CQRS.Commands.Verify.Command data)
+        public async Task<IActionResult> Verify(Infrastructure.Commands.Verify.Command data)
         {
             return Ok(await this.m.Send(data));
         }
 
         [HttpPost("magiclink")]
-        public async Task<IActionResult> MagicLink([FromBody] CQRS.Commands.RequestMagicLink.Command data)
+        public async Task<IActionResult> MagicLink([FromBody] Infrastructure.Commands.RequestMagicLink.Command data)
         {
             await this.m.Send(data);
             return Ok();
@@ -92,11 +93,11 @@ namespace SeeTrue.API.Controllers
         [HttpGet("magiclink")]
         public async Task<IActionResult> CheckMagicLink([FromQuery] string token)
         {
-            return Ok(await this.m.Send(new CQRS.Commands.ProcessMagicLink.Query(token)));
+            return Ok(await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Query(token)));
         }
 
         [HttpPost("recover")]
-        public async Task<IActionResult> Recover([FromBody] CQRS.Commands.Recover.Command data)
+        public async Task<IActionResult> Recover([FromBody] Infrastructure.Commands.Recover.Command data)
         {
             await this.m.Send(data);
             return Ok();
@@ -112,7 +113,7 @@ namespace SeeTrue.API.Controllers
 
             try
             {
-                var result = await this.m.Send(new CQRS.Commands.Token.Command(data, null));
+                var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, null));
 
                 return Ok(result);
             }
@@ -128,11 +129,11 @@ namespace SeeTrue.API.Controllers
         {
             var userId = HttpContext.GetUserId();
 
-            return Ok(await this.m.Send(new CQRS.Queries.GetUser.Query(userId)));
+            return Ok(await this.m.Send(new Infrastructure.Queries.GetUser.Query(userId)));
         }
 
         [HttpPut("user")]
-        public async Task<IActionResult> UpdateUser([FromBody] CQRS.Commands.UserUpdate.Command data)
+        public async Task<IActionResult> UpdateUser([FromBody] Infrastructure.Commands.UserUpdate.Command data)
         {
             return Ok(await this.m.Send(data));
         }
@@ -146,7 +147,7 @@ namespace SeeTrue.API.Controllers
         [HttpGet("authorize")]
         public async Task<IActionResult> Authorize([FromQuery] string provider)
         {
-            var url = this.m.Send(new CQRS.Queries.Authorize.Query(provider));
+            var url = this.m.Send(new Infrastructure.Queries.Authorize.Query(provider));
 
             return Ok(url);
         }

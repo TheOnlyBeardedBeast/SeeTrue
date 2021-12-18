@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
-using SeeTrue.Utils;
+using SeeTrue.Infrastructure.Utils;
 
-namespace SeeTrue.CQRS.Queries
+namespace SeeTrue.Infrastructure.Queries
 {
     public static class Authorize
     {

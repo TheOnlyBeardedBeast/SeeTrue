@@ -2,7 +2,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using SeeTrue.CQRS;
+using SeeTrue.Infrastructure;
 
 namespace SeeTrue.API.Filters
 {

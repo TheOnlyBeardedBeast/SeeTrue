@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace SeeTrue.CQRS
+namespace SeeTrue.Infrastructure
 {
     public interface IHandlerResponse { }
 

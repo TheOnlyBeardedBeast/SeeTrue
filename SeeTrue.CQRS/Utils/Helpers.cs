@@ -4,7 +4,7 @@ using System.Linq;
 using Jose;
 using SeeTrue.Models;
 
-namespace SeeTrue.Utils
+namespace SeeTrue.Infrastructure.Utils
 {
     public static class Helpers
     {

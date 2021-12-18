@@ -1,5 +1,6 @@
 ﻿using System;
-namespace SeeTrue.Utils
+
+namespace SeeTrue.Infrastructure.Types
 {
     public enum AuditLogType
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SeeTrue.CQRS.Types;
+using SeeTrue.Infrastructure.Extensions;
+using SeeTrue.Infrastructure.Types;
+using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Models;
-using SeeTrue.Utils;
-using SeeTrue.Utils.Extensions;
 using SeeTrue.Utils.Services;
 
-namespace SeeTrue.CQRS.Services
+namespace SeeTrue.Infrastructure.Services
 {
     public interface ICommandService
     {

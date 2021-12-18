@@ -2,10 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SeeTrue.CQRS.Services;
+using SeeTrue.Infrastructure.Services;
 using SeeTrue.Models;
 
-namespace SeeTrue.CQRS.Queries
+namespace SeeTrue.Infrastructure.Queries
 {
     public static class GetUser
     {

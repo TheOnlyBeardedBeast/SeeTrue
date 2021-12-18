@@ -1,5 +1,6 @@
 ﻿using System;
-namespace SeeTrue.Utils
+
+namespace SeeTrue.Infrastructure.Utils
 {
     public static class SeeTrueConfig
     {

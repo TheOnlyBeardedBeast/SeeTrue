@@ -18,7 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SeeTrue.API.Db;
 using SeeTrue.API.Filters;
-using SeeTrue.CQRS;
+using SeeTrue.Infrastructure;
 using SeeTrue.Models;
 using SeeTrue.Utils.Services;
 

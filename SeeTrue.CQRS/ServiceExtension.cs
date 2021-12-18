@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using SeeTrue.CQRS.Services;
+using SeeTrue.Infrastructure.Services;
 
-namespace SeeTrue.CQRS
+namespace SeeTrue.Infrastructure
 {
     public static class ServiceExtension
     {

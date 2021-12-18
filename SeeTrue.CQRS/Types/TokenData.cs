@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace SeeTrue.Utils.Types
+namespace SeeTrue.Infrastructure.Types
 {
     public record TokenData
     {

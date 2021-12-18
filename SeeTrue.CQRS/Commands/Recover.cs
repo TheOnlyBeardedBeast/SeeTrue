@@ -2,10 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SeeTrue.CQRS.Services;
-using SeeTrue.Utils;
+using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Types;
 
-namespace SeeTrue.CQRS.Commands
+namespace SeeTrue.Infrastructure.Commands
 {
     public static class Recover
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace SeeTrue.CQRS.Types
+namespace SeeTrue.Infrastructure.Types
 {
     public record TokenResponse
     {

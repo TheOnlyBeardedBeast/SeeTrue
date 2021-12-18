@@ -1,8 +1,8 @@
 ﻿using System;
-using SeeTrue.Utils.Types;
-using SeeTrue.Utils.Validators;
+using SeeTrue.Infrastructure.Types;
+using SeeTrue.Infrastructure.Validators;
 
-namespace SeeTrue.Utils.Extensions
+namespace SeeTrue.Infrastructure.Extensions
 {
     public static class ValidationExtensions
     {

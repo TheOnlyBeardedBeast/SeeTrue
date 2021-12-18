@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SeeTrue.CQRS.Services;
-using SeeTrue.CQRS.Types;
-using SeeTrue.Models;
-using SeeTrue.Utils;
-using SeeTrue.Utils.Extensions;
-using SeeTrue.Utils.Types;
+using SeeTrue.Infrastructure.Extensions;
+using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Types;
+using SeeTrue.Infrastructure.Utils;
 
-namespace SeeTrue.CQRS.Commands
+namespace SeeTrue.Infrastructure.Commands
 {
     public static class Token
     {

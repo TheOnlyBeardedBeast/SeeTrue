@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Models;
-using SeeTrue.Utils;
 
-namespace SeeTrue.CQRS.Services
+namespace SeeTrue.Infrastructure.Services
 {
     public interface IQueryService
     {

@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SeeTrue.CQRS.Services;
+using SeeTrue.Infrastructure.Services;
 
-namespace SeeTrue.CQRS.Commands
+namespace SeeTrue.Infrastructure.Commands
 {
     public static class ConfirmEmailChange
     {

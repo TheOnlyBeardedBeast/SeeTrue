@@ -3,11 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
-using SeeTrue.CQRS.Services;
-using SeeTrue.CQRS.Types;
-using SeeTrue.Models;
+using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Types;
 
-namespace SeeTrue.CQRS.Commands
+namespace SeeTrue.Infrastructure.Commands
 {
     public static class ProcessMagicLink
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentValidation;
-using SeeTrue.Utils.Types;
+using SeeTrue.Infrastructure.Types;
 
-namespace SeeTrue.Utils.Validators
+namespace SeeTrue.Infrastructure.Validators
 {
     public class TokenDataValidator : AbstractValidator<TokenData>
     {

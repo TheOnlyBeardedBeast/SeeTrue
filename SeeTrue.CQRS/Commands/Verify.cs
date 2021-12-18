@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SeeTrue.CQRS.Services;
-using SeeTrue.CQRS.Types;
+using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Types;
 using SeeTrue.Models;
 
-namespace SeeTrue.CQRS.Commands
+namespace SeeTrue.Infrastructure.Commands
 {
     public static class Verify
     {
@@ -85,7 +85,7 @@ namespace SeeTrue.CQRS.Commands
                 }
 
                 // TODO: trigger event
-                await command.NewAuditLogEntry(user, Utils.AuditAction.UserSignedUpAction, null);
+                await command.NewAuditLogEntry(user, AuditAction.UserSignedUpAction, null);
                 await command.ConfirmUser(user);
 
                 return user;

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SeeTrue.Utils.Types
+namespace SeeTrue.Infrastructure.Types
 {
     public class Requests
     {

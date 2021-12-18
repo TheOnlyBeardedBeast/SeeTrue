@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using SeeTrue.Infrastructure.Types;
 
-namespace SeeTrue.Utils
+namespace SeeTrue.Infrastructure.Utils
 {
     public static class Constants
     {
