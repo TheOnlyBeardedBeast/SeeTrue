@@ -67,6 +67,7 @@ namespace SeeTrue.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTrue", Version = "v1" });
                 c.CustomSchemaIds(x => x.FullName);
+                c.EnableAnnotations();
             }
             );
         }

@@ -15,6 +15,7 @@ using SeeTrue.Infrastructure.Validators;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using SeeTrue.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,11 +32,9 @@ namespace SeeTrue.API.Controllers
             this.m = m;
         }
 
-        /// <summary>
-        /// Healthcheck
-        /// </summary>
         [HttpGet("health")]
         [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [SwaggerOperation(Summary = "Healthcheck", Description = "Returns a healthcheck object")]
         public IActionResult HealthCheck()
         {
             return Ok(new { Name = "SeeTrue", Version = 1, Description = "SeeTrue is a user registration and authentication API" });
@@ -47,12 +46,10 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Handles email password signup
-        /// </summary>
         [HttpPost("signup")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Signup", Description = "Handles email password signup")]
         public async Task<IActionResult> SignUp([FromBody] SignUpData data)
         {
             if (SeeTrueConfig.DisableSignup)
