@@ -36,7 +36,7 @@ namespace SeeTrue.Infrastructure.Commands
 
                 if (!string.IsNullOrWhiteSpace(request.Password))
                 {
-                    await commands.UpdatePassword(user, request.Password);
+                    await commands.UpdateUserPassword(user, request.Password);
                 }
 
                 if (request.UserMetaData is not null)

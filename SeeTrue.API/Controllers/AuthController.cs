@@ -158,9 +158,13 @@ namespace SeeTrue.API.Controllers
 
         [Authorize]
         [HttpPost("logout")]
-        public object Logout()
+        public IActionResult Logout()
         {
-            throw new NotImplementedException();
+            var loginId = this.HttpContext.GetLoginId();
+
+            this.m.Send(new Infrastructure.Commands.Logout.Command(loginId));
+
+            return NoContent();
         }
 
         [HttpGet("authorize")]

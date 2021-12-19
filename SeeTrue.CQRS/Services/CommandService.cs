@@ -7,38 +7,14 @@ using SeeTrue.Infrastructure.Types;
 using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Models;
 using SeeTrue.Utils.Services;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace SeeTrue.Infrastructure.Services
 {
     public interface ICommandService
     {
-        Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, bool confirmed);
-        Task<TokenResponse> GrantTokenSwap(RefreshToken token);
-        Task NewAuditLogEntry(User actor, AuditAction action, object traits);
-        Task SendConfirmation(User user);
-        Task UpdateUserPassword(User user, string password);
-        Task ConfirmUser(User user);
-        Task UpdatePassword(User user, string password);
-        Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData);
-        Task SendEmailChange(User user, string email);
-        Task ConfirmEmailChange(User user);
-        Task SendPasswordRecovery(User user);
-        Task Recover(User user);
-        Task<TokenResponse> IssueTokens(User user, Guid loginId);
-        Task<Login> StoreLogin(string userAgent, Guid userId);
-    }
-
-    public class CommandService : ICommandService
-    {
-        private readonly SeeTrueDbContext db;
-        private readonly IMailService mailer;
-
-        public CommandService(ISeeTrueDbContext db, IMailService mailer)
-        {
-            this.db = db as SeeTrueDbContext;
-            this.mailer = mailer;
-        }
-
         /// <summary>
         /// Creates a new User in the database and returns its result
         /// </summary>
@@ -49,6 +25,127 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="userMetaData"></param>
         /// <param name="confirmed"></param>
         /// <returns></returns>
+        Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, bool confirmed);
+
+        /// <summary>
+        /// Revokes the current refresh token and generates new tokens
+        /// </summary>
+        /// <param name="token">Current refresh token</param>
+        /// <returns></returns>
+        Task<TokenResponse> GrantTokenSwap(RefreshToken token);
+
+        /// <summary>
+        /// Generates new Acces and Refresh tokens
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task<TokenResponse> IssueTokens(User user, Guid loginId);
+
+        /// <summary>
+        /// Creates a new audit log entry in the db
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="action"></param>
+        /// <param name="traits"></param>
+        /// <returns></returns>
+        Task NewAuditLogEntry(User actor, AuditAction action, object traits);
+
+
+        /// <summary>
+        /// Sends a confirmation email to the user and updates related data in the db
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task SendConfirmation(User user);
+
+
+        /// <summary>
+        /// Updates the users encrypted password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        Task UpdateUserPassword(User user, string password);
+
+        /// <summary>
+        /// Confirms the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task ConfirmUser(User user);
+
+        /// <summary>
+        /// Updateds the user metada, adds new fields, or modifies fields, if the new field has a value off null removes fields
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="userMetaData"></param>
+        /// <returns></returns>
+        Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData);
+
+        /// <summary>
+        /// Sends an email change token email to the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        Task SendEmailChange(User user, string email);
+
+        /// <summary>
+        /// Confrims the email change
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task ConfirmEmailChange(User user);
+
+        /// <summary>
+        /// Send a password recovery token email to the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task SendPasswordRecovery(User user);
+
+        /// <summary>
+        /// Updates the u
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task Recover(User user);
+
+        /// <summary>
+        /// Stores a login session in the db
+        /// </summary>
+        /// <param name="userAgent"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<Login> StoreLogin(string userAgent, Guid userId);
+
+        /// <summary>
+        /// Invalidates refresh token by a loginId
+        /// </summary>
+        /// <param name="loginId"></param>
+        /// <returns></returns>
+        Task InvalidateRefreshTokenByLoginId(Guid loginId);
+
+        /// <summary>
+        /// Restricts the usage of active access tokens for example after logout
+        /// </summary>
+        /// <param name="loginId"></param>
+        void RestrictAccesTokenUsage(Guid loginId);
+    }
+
+    public class CommandService : ICommandService
+    {
+        private readonly SeeTrueDbContext db;
+        private readonly IMailService mailer;
+        private readonly IMemoryCache cache;
+
+        public CommandService(ISeeTrueDbContext db, IMailService mailer, IMemoryCache cache)
+        {
+            this.db = db as SeeTrueDbContext;
+            this.mailer = mailer;
+            this.cache = cache;
+        }
+
         public async Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, bool confirmed)
         {
             var appMetaData = new Dictionary<string, object>();
@@ -73,11 +170,6 @@ namespace SeeTrue.Infrastructure.Services
             return user;
         }
 
-        /// <summary>
-        /// Revokes the current refresh token and generates new tokens
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
         public async Task<TokenResponse> GrantTokenSwap(RefreshToken token)
         {
             token.Revoked = true;
@@ -88,11 +180,6 @@ namespace SeeTrue.Infrastructure.Services
             return response;
         }
 
-        /// <summary>
-        /// Generates new Acces and Refresh tokens
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public async Task<TokenResponse> IssueTokens(User user, Guid loginId)
         {
             user.LastSignInAt = DateTime.UtcNow;
@@ -118,13 +205,6 @@ namespace SeeTrue.Infrastructure.Services
             };
         }
 
-        /// <summary>
-        /// Creates a new audit log entry in the db
-        /// </summary>
-        /// <param name="actor"></param>
-        /// <param name="action"></param>
-        /// <param name="traits"></param>
-        /// <returns></returns>
         public async Task NewAuditLogEntry(User actor, AuditAction action, object traits)
         {
             // Environment.GetEnvironmentVariable("");
@@ -152,11 +232,6 @@ namespace SeeTrue.Infrastructure.Services
             await this.db.SaveChangesAsync();
         }
 
-        /// <summary>
-        /// Sends a confirmation email to the user and updates related data in the db
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public async Task SendConfirmation(User user)
         {
             Console.WriteLine("Email sent");
@@ -177,13 +252,6 @@ namespace SeeTrue.Infrastructure.Services
             await db.SaveChangesAsync();
         }
 
-
-        /// <summary>
-        /// Updates the users encrypted password
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
         public async Task UpdateUserPassword(User user, string password)
         {
             user.EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(password);
@@ -192,11 +260,6 @@ namespace SeeTrue.Infrastructure.Services
             await db.SaveChangesAsync();
         }
 
-        /// <summary>
-        /// Confirms the user
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public async Task ConfirmUser(User user)
         {
             user.ConfirmationToken = null;
@@ -206,27 +269,7 @@ namespace SeeTrue.Infrastructure.Services
             await db.SaveChangesAsync();
         }
 
-        /// <summary>
-        /// Updated the users password
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public async Task UpdatePassword(User user, string password)
-        {
-            user.EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            this.db.Update(user);
-
-            await this.db.SaveChangesAsync();
-        }
-
-
-        /// <summary>
-        /// Updateds the user metada, adds new fields, or modifies fields, if the new field has a value off null removes fields
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="userMetaData"></param>
-        /// <returns></returns>
+        
         public async Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData)
         {
             user.UpdateUserMetaData(userMetaData);
@@ -295,6 +338,26 @@ namespace SeeTrue.Infrastructure.Services
             await this.db.SaveChangesAsync();
 
             return login;
+        }
+
+        public async Task InvalidateRefreshTokenByLoginId(Guid loginId)
+        {
+            var refreshTokensToUpdate = await this.db.RefreshTokens.Where(e => e.LoginId == loginId && e.Revoked != false).ToListAsync();
+
+            refreshTokensToUpdate.ForEach(e => {
+                e.Revoked = true;
+                e.UpdatedAt = DateTime.UtcNow;
+            });
+
+            await this.db.SaveChangesAsync();
+
+            this.cache.Set(loginId.ToString(), loginId);
+        }
+
+        public void RestrictAccesTokenUsage(Guid loginId)
+        {
+            //TODO: the value should be cached for the lifetime of the access token
+            this.cache.Set(loginId.ToString(), loginId, TimeSpan.FromHours(1));
         }
     }
 }

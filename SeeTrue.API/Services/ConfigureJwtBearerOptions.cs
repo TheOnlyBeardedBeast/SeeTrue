@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -34,17 +37,25 @@ namespace SeeTrue.API.Services
 
             opt.Events = new JwtBearerEvents
             {
-                OnTokenValidated = async (TokenValidatedContext context) =>
+                OnTokenValidated = (TokenValidatedContext context) =>
                 {
-                    var hasLid = context.Principal.HasClaim(e => e.Type == "lid");
+                    Predicate<Claim> check = e => e.Type == "lid";
+
+                    var hasLid = context.Principal.HasClaim(check);
 
                     if (!hasLid)
                     {
                         context.Fail("Invalid token");
                     }
 
-                    //TODO: check if cache has the lid, if the cache contains lid then it is blaclisted and we have to Fail the token validation
-                    
+                    var lid = context.Principal.Claims.FirstOrDefault(e => e.Type == "lid").Value;
+
+                    if(this.cache.TryGetValue(lid,out var _))
+                    {
+                        context.Fail("Invalid token");
+                    }
+
+                    return Task.CompletedTask;
                 }
             };
         }

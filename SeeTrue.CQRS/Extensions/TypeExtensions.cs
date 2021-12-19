@@ -94,5 +94,22 @@ namespace SeeTrue.Infrastructure.Extensions
 
             throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid userId");
         }
+
+        public static Guid GetLoginId(this HttpContext context)
+        {
+            var loginId = context.User.Claims.FirstOrDefault(e => e.Type == "lid").Value;
+
+            if (loginId is null)
+            {
+                throw new SeeTrueException(HttpStatusCode.Unauthorized, "Unauthorized");
+            }
+
+            if (Guid.TryParse(loginId, out var uid))
+            {
+                return uid;
+            }
+
+            throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid loginId");
+        }
     }
 }
