@@ -31,6 +31,9 @@ namespace SeeTrue.API.Controllers
             this.m = m;
         }
 
+        /// <summary>
+        /// Healthcheck
+        /// </summary>
         [HttpGet("health")]
         [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
         public IActionResult HealthCheck()
@@ -44,6 +47,9 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Handles email password signup
+        /// </summary>
         [HttpPost("signup")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -71,6 +77,9 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Handles email change confirmation
+        /// </summary>
         [HttpPost("confirm-email")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -81,6 +90,9 @@ namespace SeeTrue.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Handles token verfication for signop and recovery
+        /// </summary>
         [HttpPost("verify")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -89,6 +101,9 @@ namespace SeeTrue.API.Controllers
             return Ok(await this.m.Send(data with { UserAgent = HttpContext.GetUserAgent() }));
         }
 
+        /// <summary>
+        /// Process a magic link request
+        /// </summary>
         [HttpPost("magiclink")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -99,6 +114,9 @@ namespace SeeTrue.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Process a maiclink token
+        /// </summary>
         [HttpGet("magiclink")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -109,6 +127,9 @@ namespace SeeTrue.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Handlig a recover request
+        /// </summary>
         [HttpPost("recover")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -119,6 +140,10 @@ namespace SeeTrue.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Handles login via email and password
+        /// Handles Refresh token
+        /// </summary>
         [HttpPost("token")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -134,6 +159,9 @@ namespace SeeTrue.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Returns the current users data
+        /// </summary>
         [Authorize]
         [HttpGet("user")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -146,6 +174,9 @@ namespace SeeTrue.API.Controllers
             return Ok(await this.m.Send(new Infrastructure.Queries.GetUser.Query(userId)));
         }
 
+        /// <summary>
+        /// Updates the existing user data
+        /// </summary>
         [Authorize]
         [HttpPut("user")]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
@@ -156,6 +187,12 @@ namespace SeeTrue.API.Controllers
             return Ok(await this.m.Send(data));
         }
 
+
+        /// <summary>
+        /// Logs out the users
+        /// Revokes all the refresh tokens connected to the given login
+        /// Revokes all the access tokens connected to the given login
+        /// </summary>
         [Authorize]
         [HttpPost("logout")]
         public IActionResult Logout()
