@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.Json;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +7,6 @@ using SeeTrue.Infrastructure.Queries;
 using SeeTrue.Infrastructure.Extensions;
 using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Infrastructure.Types;
-using SeeTrue.Infrastructure.Validators;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using SeeTrue.Models;
@@ -74,12 +69,10 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Handles email change confirmation
-        /// </summary>
         [HttpPost("confirm-email")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Email change confirmation", Description = "Handles email change confirmation")]
         public async Task<IActionResult> ConfirmEmail([FromBody] Infrastructure.Commands.ConfirmEmailChange.Command data)
         {
             await this.m.Send(data);
@@ -87,23 +80,19 @@ namespace SeeTrue.API.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Handles token verfication for signop and recovery
-        /// </summary>
         [HttpPost("verify")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Signup | Recovery verification", Description = "Handles token verfication for signup and recovery")]
         public async Task<IActionResult> Verify(Infrastructure.Commands.Verify.Command data)
         {
             return Ok(await this.m.Send(data with { UserAgent = HttpContext.GetUserAgent() }));
         }
 
-        /// <summary>
-        /// Process a magic link request
-        /// </summary>
         [HttpPost("magiclink")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Request magic link", Description = "Process a magic link request")]
         public async Task<IActionResult> MagicLink([FromBody] Infrastructure.Commands.RequestMagicLink.Command data)
         {
             await this.m.Send(data);
@@ -111,12 +100,10 @@ namespace SeeTrue.API.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Process a maiclink token
-        /// </summary>
         [HttpGet("magiclink")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Process magic link token", Description = "Processes a magic link token")]
         public async Task<IActionResult> CheckMagicLink([FromQuery] string token)
         {
             var result = await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Command(HttpContext.GetUserAgent(), token));
@@ -124,12 +111,10 @@ namespace SeeTrue.API.Controllers
             return Ok(result);
         }
 
-        /// <summary>
-        /// Handlig a recover request
-        /// </summary>
         [HttpPost("recover")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Recovery request", Description = "Request a recovery token")]
         public async Task<IActionResult> Recover([FromBody] Infrastructure.Commands.Recover.Command data)
         {
             await this.m.Send(data);
@@ -137,13 +122,10 @@ namespace SeeTrue.API.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Handles login via email and password
-        /// Handles Refresh token
-        /// </summary>
         [HttpPost("token")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Login | Refresh", Description = "Handles login via email and password, Handles Refresh token")]
         public async Task<IActionResult> token([FromBody] TokenData data)
         {
             if (!data.Validate())
@@ -156,14 +138,12 @@ namespace SeeTrue.API.Controllers
             return Ok(result);
         }
 
-        /// <summary>
-        /// Returns the current users data
-        /// </summary>
         [Authorize]
         [HttpGet("user")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "User data", Description = "Returns the current users data")]
         public async Task<IActionResult> GetUser()
         {
             var userId = HttpContext.GetUserId();
@@ -171,27 +151,20 @@ namespace SeeTrue.API.Controllers
             return Ok(await this.m.Send(new Infrastructure.Queries.GetUser.Query(userId)));
         }
 
-        /// <summary>
-        /// Updates the existing user data
-        /// </summary>
         [Authorize]
         [HttpPut("user")]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "User update", Description = "Updates the authentcated users data")]
         public async Task<IActionResult> UpdateUser([FromBody] Infrastructure.Commands.UserUpdate.Command data)
         {
             return Ok(await this.m.Send(data));
         }
 
-
-        /// <summary>
-        /// Logs out the users
-        /// Revokes all the refresh tokens connected to the given login
-        /// Revokes all the access tokens connected to the given login
-        /// </summary>
         [Authorize]
         [HttpPost("logout")]
+        [SwaggerOperation(Summary = "User logout", Description = "Revokes all the refresh tokens connected to the given login, Revokes all the access tokens connected to the given login")]
         public IActionResult Logout()
         {
             var loginId = this.HttpContext.GetLoginId();
