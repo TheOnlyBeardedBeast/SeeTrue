@@ -10,7 +10,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class ConfirmEmailChange
     {
-        public record Command(string Token): IRequest;
+        public record Command(string Token) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {

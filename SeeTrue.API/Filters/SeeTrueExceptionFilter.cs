@@ -19,14 +19,15 @@ namespace SeeTrue.API.Filters
         {
             dbContext.RollbackTransaction();
 
-            if(context.Exception is SeeTrueException exception)
+            if (context.Exception is SeeTrueException exception)
             {
                 context.Result = new ContentResult
                 {
                     StatusCode = (int)exception.StatusCode,
                     Content = exception.Message
                 };
-            } else
+            }
+            else
             {
                 context.Result = new ContentResult
                 {
@@ -35,7 +36,7 @@ namespace SeeTrue.API.Filters
                 };
             }
 
-            
+
         }
     }
 }

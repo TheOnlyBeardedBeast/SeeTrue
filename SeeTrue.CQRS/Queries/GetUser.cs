@@ -11,7 +11,7 @@ namespace SeeTrue.Infrastructure.Queries
     {
         public record Query(Guid UserId) : IRequest<User>;
 
-        public class Handler : IRequestHandler<Query,User>
+        public class Handler : IRequestHandler<Query, User>
         {
             private readonly IQueryService query;
 

@@ -13,13 +13,13 @@ namespace SeeTrue.Infrastructure.Queries
     {
         public record Query(string Provider) : IRequest<string>;
 
-        public class Handler : IRequestHandler<Query,string>
+        public class Handler : IRequestHandler<Query, string>
         {
-            public async Task<string> Handle(Query request, CancellationToken cancellationToken)
+            public Task<string> Handle(Query request, CancellationToken cancellationToken)
             {
-                if(request.Provider != "github")
+                if (request.Provider != "github")
                 {
-                    throw new SeeTrueException(HttpStatusCode.BadRequest,"Invalid provider");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid provider");
                 };
 
                 var qb = new QueryBuilder();
@@ -28,7 +28,7 @@ namespace SeeTrue.Infrastructure.Queries
                 // Cache state with 10 min ttl
                 qb.Add("state", Helpers.GenerateUniqueToken());
 
-                return $"https://github.com/login/oauth/authorize{qb.ToQueryString()}";
+                return Task.FromResult($"https://github.com/login/oauth/authorize{qb.ToQueryString()}");
             }
         }
     }

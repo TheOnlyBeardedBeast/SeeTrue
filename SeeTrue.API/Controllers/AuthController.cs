@@ -170,7 +170,7 @@ namespace SeeTrue.API.Controllers
         [HttpGet("authorize")]
         public async Task<IActionResult> Authorize([FromQuery] string provider)
         {
-            var url = this.m.Send(new Infrastructure.Queries.Authorize.Query(provider));
+            var url = await this.m.Send(new Infrastructure.Queries.Authorize.Query(provider));
 
             return Ok(url);
         }

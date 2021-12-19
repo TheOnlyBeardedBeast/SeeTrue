@@ -8,7 +8,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class Logout
     {
-        public record Command(Guid LoginId): IRequest;
+        public record Command(Guid LoginId) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
