@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Models;
 
@@ -16,15 +17,18 @@ namespace SeeTrue.Infrastructure.Services
         Task<bool> CheckEmailExists(string email, string audience);
         Task<User> FindUserByEmailChangeToken(string token);
         Task<User> FindUserByRecoveryToken(string token);
+        bool TryGetValueFromCache<T>(object key, out T value);
     }
 
     public class QueryService : IQueryService
     {
         private readonly SeeTrueDbContext db;
+        private readonly IMemoryCache cache;
 
-        public QueryService(ISeeTrueDbContext db)
+        public QueryService(ISeeTrueDbContext db, IMemoryCache cache)
         {
             this.db = db as SeeTrueDbContext;
+            this.cache = cache;
         }
 
         /// <summary>
@@ -83,7 +87,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="email"></param>
         /// <param name="audience"></param>
         /// <returns></returns>
-        public async Task<bool> CheckEmailExists(string email,string audience)
+        public async Task<bool> CheckEmailExists(string email, string audience)
         {
             var instanceId = SeeTrueConfig.InstanceId;
 
@@ -92,12 +96,17 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task<User> FindUserByEmailChangeToken(string token)
         {
-            return await this.db.Users.FirstOrDefaultAsync( e => e.EmailChangeToken == token);
+            return await this.db.Users.FirstOrDefaultAsync(e => e.EmailChangeToken == token);
         }
 
         public async Task<User> FindUserByRecoveryToken(string token)
         {
             return await this.db.Users.FirstOrDefaultAsync(e => e.RecoveryToken == token);
+        }
+
+        public bool TryGetValueFromCache<T>(object key, out T value)
+        {
+            return this.cache.TryGetValue<T>(key, out value);
         }
 
     }

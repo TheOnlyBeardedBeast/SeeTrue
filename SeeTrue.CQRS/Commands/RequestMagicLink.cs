@@ -18,14 +18,14 @@ namespace SeeTrue.Infrastructure.Commands
         public class Handler : IRequestHandler<Command>
         {
             private readonly IQueryService queries;
-            private readonly IMemoryCache cache;
             private readonly IMailService mailer;
+            private readonly ICommandService commands;
 
-            public Handler(IQueryService queries, IMemoryCache cache, IMailService mailer)
+            public Handler(IQueryService queries, ICommandService commands, IMailService mailer)
             {
                 this.queries = queries;
-                this.cache = cache;
                 this.mailer = mailer;
+                this.commands = commands;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ namespace SeeTrue.Infrastructure.Commands
 
                 var token = Helpers.GenerateUniqueToken();
 
-                cache.Set(token, user.Id, TimeSpan.FromMinutes(2));
+                this.commands.SetCache(token, user.Id, TimeSpan.FromMinutes(2));
 
                 await mailer.NotifyMagicLink(user, token);
 

@@ -16,7 +16,6 @@ namespace SeeTrue.API.Services
         public ConfigureJwtBearerOptions(IMemoryCache cache)
         {
             this.cache = cache;
-            Console.WriteLine("Joo I am inited");
         }
 
         public void PostConfigure(string name, JwtBearerOptions opt)
@@ -50,7 +49,7 @@ namespace SeeTrue.API.Services
 
                     var lid = context.Principal.Claims.FirstOrDefault(e => e.Type == "lid").Value;
 
-                    if(this.cache.TryGetValue(lid,out var _))
+                    if (this.cache.TryGetValue(lid, out var _))
                     {
                         context.Fail("Invalid token");
                     }

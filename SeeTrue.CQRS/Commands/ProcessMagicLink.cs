@@ -16,14 +16,12 @@ namespace SeeTrue.Infrastructure.Commands
 
         public class Handler : IRequestHandler<Command, UserTokenResponse>
         {
-            private readonly IMemoryCache cache;
             private readonly ICommandService commands;
             private readonly IQueryService queries;
             private readonly IHttpContextAccessor context;
 
-            public Handler(IMemoryCache cache,ICommandService commands,IQueryService queries, IHttpContextAccessor context)
+            public Handler(ICommandService commands, IQueryService queries, IHttpContextAccessor context)
             {
-                this.cache = cache;
                 this.commands = commands;
                 this.queries = queries;
                 this.context = context;
@@ -31,28 +29,28 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<UserTokenResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                if(this.cache.TryGetValue(request.Token, out Guid userId))
+                if (this.queries.TryGetValueFromCache(request.Token, out Guid userId))
                 {
                     var user = await queries.FindUserById(userId);
 
-                    if(user is null)
+                    if (user is null)
                     {
-                        goto Error;
+                        throw new SeeTrueException(HttpStatusCode.BadRequest, "User not found");
                     }
 
-                    this.cache.Remove(request.Token);
-                    var login = await this.commands.StoreLogin(context.HttpContext.Request.Headers["User-Agent"],userId);
-                    var result = await this.commands.IssueTokens(user,login.Id);
+                    this.commands.RemoveFromCache(request.Token);
+                    var login = await this.commands.StoreLogin(context.HttpContext.Request.Headers["User-Agent"], userId);
+                    var result = await this.commands.IssueTokens(user, login.Id);
 
-                    return new UserTokenResponse {
+                    return new UserTokenResponse
+                    {
                         User = user,
                         AccessToken = result.AccessToken,
                         RefreshToken = result.RefreshToken,
                     };
                 }
 
-                Error:
-                    throw new SeeTrueException(HttpStatusCode.BadRequest, "User not found");
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "User not found");
 
             }
         }

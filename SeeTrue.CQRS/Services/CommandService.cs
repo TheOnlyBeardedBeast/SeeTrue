@@ -131,6 +131,27 @@ namespace SeeTrue.Infrastructure.Services
         /// </summary>
         /// <param name="loginId"></param>
         void RestrictAccesTokenUsage(Guid loginId);
+
+        /// <summary>
+        /// Removes an item from the cache
+        /// </summary>
+        /// <param name="key"></param>
+        void RemoveFromCache(string key);
+
+        /// <summary>
+        /// Adds item to the cache
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        TItem SetCache<TItem>(object key, TItem value);
+
+        /// <summary>
+        /// Adds item to the cache
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="ttl">Relative time to live</param>
+        TItem SetCache<TItem>(object key, TItem value, TimeSpan ttl);
     }
 
     public class CommandService : ICommandService
@@ -269,7 +290,7 @@ namespace SeeTrue.Infrastructure.Services
             await db.SaveChangesAsync();
         }
 
-        
+
         public async Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData)
         {
             user.UpdateUserMetaData(userMetaData);
@@ -344,20 +365,34 @@ namespace SeeTrue.Infrastructure.Services
         {
             var refreshTokensToUpdate = await this.db.RefreshTokens.Where(e => e.LoginId == loginId && e.Revoked != false).ToListAsync();
 
-            refreshTokensToUpdate.ForEach(e => {
+            refreshTokensToUpdate.ForEach(e =>
+            {
                 e.Revoked = true;
                 e.UpdatedAt = DateTime.UtcNow;
             });
 
             await this.db.SaveChangesAsync();
-
-            this.cache.Set(loginId.ToString(), loginId);
         }
 
         public void RestrictAccesTokenUsage(Guid loginId)
         {
             //TODO: the value should be cached for the lifetime of the access token
             this.cache.Set(loginId.ToString(), loginId, TimeSpan.FromHours(1));
+        }
+
+        public void RemoveFromCache(string key)
+        {
+            this.cache.Remove(key);
+        }
+
+        public TItem SetCache<TItem>(object key, TItem value)
+        {
+            return this.cache.Set(key, value);
+        }
+
+        public TItem SetCache<TItem>(object key, TItem value, TimeSpan ttl)
+        {
+            return this.cache.Set(key, value, ttl);
         }
     }
 }

@@ -47,7 +47,6 @@ namespace SeeTrue.API
                 {
                     opt.Filters.Add<TransactionFilter>();
                     opt.Filters.Add<SeeTrueExceptionFilter>();
-                    //opt.Filters.Add<LoginTokenAuthorizationFilter>();
                 }
             ).AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -60,14 +59,15 @@ namespace SeeTrue.API
             services.AddTransient<IMailService, MailService>();
             services.AddSeeTrue();
             services.AddHttpContextAccessor();
-            
+
             // services.AddFluentValidation();
             // services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PersonValidator>());
 
-            services.AddSwaggerGen(c => {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTrue", Version = "v1" });
-                    c.CustomSchemaIds(x => x.FullName);
-                }
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTrue", Version = "v1" });
+                c.CustomSchemaIds(x => x.FullName);
+            }
             );
         }
 
