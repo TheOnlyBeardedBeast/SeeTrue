@@ -3,8 +3,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Caching.Memory;
 using SeeTrue.Infrastructure.Services;
 using SeeTrue.Infrastructure.Types;
 
@@ -12,19 +10,17 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class ProcessMagicLink
     {
-        public record Command(string Token) : IRequest<UserTokenResponse>;
+        public record Command(string Token, string UserAgent) : IRequest<UserTokenResponse>;
 
         public class Handler : IRequestHandler<Command, UserTokenResponse>
         {
             private readonly ICommandService commands;
             private readonly IQueryService queries;
-            private readonly IHttpContextAccessor context;
 
-            public Handler(ICommandService commands, IQueryService queries, IHttpContextAccessor context)
+            public Handler(ICommandService commands, IQueryService queries)
             {
                 this.commands = commands;
                 this.queries = queries;
-                this.context = context;
             }
 
             public async Task<UserTokenResponse> Handle(Command request, CancellationToken cancellationToken)
@@ -39,7 +35,7 @@ namespace SeeTrue.Infrastructure.Commands
                     }
 
                     this.commands.RemoveFromCache(request.Token);
-                    var login = await this.commands.StoreLogin(context.HttpContext.Request.Headers["User-Agent"], userId);
+                    var login = await this.commands.StoreLogin(request.UserAgent, userId);
                     var result = await this.commands.IssueTokens(user, login.Id);
 
                     return new UserTokenResponse

@@ -86,7 +86,7 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Verify(Infrastructure.Commands.Verify.Command data)
         {
-            return Ok(await this.m.Send(data));
+            return Ok(await this.m.Send(data with { UserAgent = HttpContext.GetUserAgent() }));
         }
 
         [HttpPost("magiclink")]
@@ -104,7 +104,7 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckMagicLink([FromQuery] string token)
         {
-            var result = await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Command(token));
+            var result = await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Command(HttpContext.GetUserAgent(), token));
 
             return Ok(result);
         }
