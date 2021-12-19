@@ -111,5 +111,10 @@ namespace SeeTrue.Infrastructure.Extensions
 
             throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid loginId");
         }
+
+        public static string GetUserAgent(this HttpContext context)
+        {
+            return context.Request.Headers["User-Agent"];
+        }
     }
 }

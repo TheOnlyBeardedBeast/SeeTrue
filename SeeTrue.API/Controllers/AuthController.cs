@@ -100,8 +100,8 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpGet("magiclink")]
-        [ProducesResponseType(typeof(UserTokenResponse),StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string),StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckMagicLink([FromQuery] string token)
         {
             var result = await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Command(token));
@@ -124,12 +124,12 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> token([FromBody] TokenData data)
         {
-            if(!data.Validate())
+            if (!data.Validate())
             {
-                throw new SeeTrueException(HttpStatusCode.BadRequest,"Invalid data");
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, null));
+            var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, null, HttpContext.GetUserAgent()));
 
             return Ok(result);
         }
@@ -137,7 +137,7 @@ namespace SeeTrue.API.Controllers
         [Authorize]
         [HttpGet("user")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(User),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetUser()
         {
