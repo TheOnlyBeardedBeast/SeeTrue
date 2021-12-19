@@ -41,7 +41,7 @@
     <ProjectReference Include="..\SeeTrue.Models\SeeTrue.Models.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\SeeTrue.CQRS\SeeTrue.Infrastructure.csproj">
+    <ProjectReference Include="..\SeeTrue.Infrastructure\SeeTrue.Infrastructure.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

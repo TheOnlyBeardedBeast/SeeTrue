@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeTrue.Infrastructure", "SeeTrue.CQRS\SeeTrue.Infrastructure.csproj", "{247E1EEC-D849-41D4-A116-AAF679D3C4BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeTrue.Infrastructure", "SeeTrue.Infrastructure\SeeTrue.Infrastructure.csproj", "{247E1EEC-D849-41D4-A116-AAF679D3C4BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeTrue.API", "SeeTrue.API\SeeTrue.API.csproj", "{9AA48196-5DF8-47D3-BB8B-6A1F83B88B50}"
 EndProject
