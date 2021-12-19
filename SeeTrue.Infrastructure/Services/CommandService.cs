@@ -206,7 +206,7 @@ namespace SeeTrue.Infrastructure.Services
             user.LastSignInAt = DateTime.UtcNow;
 
             var refresToken = Helpers.GenerateTimestampedToken();
-            var accessToken = user.GenerateAccessToken();
+            var accessToken = user.GenerateAccessToken(loginId);
 
             db.RefreshTokens.Add(new RefreshToken
             {
@@ -255,9 +255,9 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task SendConfirmation(User user)
         {
-            Console.WriteLine("Email sent");
+            var ttl = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_VERIFICATION_TOKEN_LIFETIME"));
             // TODO: lifetime from configuration
-            if (user.ConfirmationSentAt != null && user.ConfirmationSentAt > DateTime.UtcNow.AddDays(-1))
+            if (user.ConfirmationSentAt != null && user.ConfirmationSentAt > DateTime.UtcNow.AddHours(0 - ttl))
             {
                 return;
             }
@@ -324,8 +324,9 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task SendPasswordRecovery(User user)
         {
-            // TODO: define enviroment variable for recovery max frequence
-            if (user.RecoverySentAt < DateTime.UtcNow.AddSeconds(60))
+            var maxFrequency = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_RECOVERY_MAX_FREQUENCY"));
+
+            if (user.RecoverySentAt < DateTime.UtcNow.AddMinutes(maxFrequency))
             {
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Try again later");
             }
@@ -376,8 +377,9 @@ namespace SeeTrue.Infrastructure.Services
 
         public void RestrictAccesTokenUsage(Guid loginId)
         {
-            //TODO: the value should be cached for the lifetime of the access token
-            this.cache.Set(loginId.ToString(), loginId, TimeSpan.FromHours(1));
+            var ttl = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_TOKEN_LIFETIME"));
+
+            this.cache.Set(loginId.ToString(), loginId, TimeSpan.FromSeconds(ttl));
         }
 
         public void RemoveFromCache(string key)

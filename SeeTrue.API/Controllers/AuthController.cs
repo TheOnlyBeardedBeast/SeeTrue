@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Linq;
+using System;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -47,6 +48,15 @@ namespace SeeTrue.API.Controllers
         [SwaggerOperation(Summary = "Signup", Description = "Handles email password signup")]
         public async Task<IActionResult> SignUp([FromBody] SignUpData data)
         {
+            var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
+            var audiences = Helpers.ParseAudiences(Environment.GetEnvironmentVariable("SEETRUE_AUIDIENCES")).ToList();
+
+            if (!audiences.Contains(aud))
+            {
+                throw new SeeTrueException(HttpStatusCode.Forbidden, "Not supported client");
+            }
+
+            // TODO: Env
             if (SeeTrueConfig.DisableSignup)
             {
                 throw new SeeTrueException(HttpStatusCode.Forbidden, "SignUp is disabled");
@@ -57,7 +67,9 @@ namespace SeeTrue.API.Controllers
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            var user = await this.m.Send(new Infrastructure.Commands.SignUp.Command(data, null));
+            var refferer = Request.Headers["Referer"].ToString();
+
+            var user = await this.m.Send(new Infrastructure.Commands.SignUp.Command(data, aud));
 
             return Ok(user);
         }

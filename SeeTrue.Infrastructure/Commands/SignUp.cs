@@ -18,13 +18,11 @@ namespace SeeTrue.Infrastructure.Commands
         public class Handler : IRequestHandler<Command, User>
         {
             protected readonly SeeTrueDbContext db;
-            protected readonly IMediator mediator;
             private readonly IQueryService query;
             private readonly ICommandService command;
 
-            public Handler(IMediator metiator, IQueryService query, ICommandService command)
+            public Handler(IQueryService query, ICommandService command)
             {
-                this.mediator = metiator;
                 this.query = query;
                 this.command = command;
             }

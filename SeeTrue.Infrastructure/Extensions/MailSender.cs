@@ -14,15 +14,18 @@ namespace SeeTrue.Utils.Services
         Task NotifyMagicLink(User user, string token);
     }
 
-    // TODO: add dynamic config
     public class MailService : IMailService
     {
         protected readonly SmtpClient client;
-
-
         public MailService()
         {
+            var host = Environment.GetEnvironmentVariable("SEETRUE_SMTP_HOST");
+            var port = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_SMTP_PORT"));
+            var user = Environment.GetEnvironmentVariable("SEETRUE_SMTP_USER");
+            var pass = Environment.GetEnvironmentVariable("SEETRUE_SMTP_PASS");
+
             this.client = new SmtpClient("localhost", 1025);
+            this.client.Credentials = new NetworkCredential(user, pass);
         }
 
         public async Task Send(string address, string code)

@@ -33,5 +33,10 @@ namespace SeeTrue.Infrastructure.Utils
 
             return true;
         }
+
+        public static IEnumerable<string> ParseAudiences(string source)
+        {
+            return source.Split(",");
+        }
     }
 }

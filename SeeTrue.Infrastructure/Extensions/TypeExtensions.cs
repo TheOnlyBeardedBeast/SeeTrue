@@ -48,15 +48,18 @@ namespace SeeTrue.Infrastructure.Extensions
             }
         }
 
-        public static string GenerateAccessToken(this User user)
+        public static string GenerateAccessToken(this User user, Guid loginId)
         {
-            // TODO: Get lifetime from env
+            var ttl = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_TOKEN_LIFETIME"));
+            var issuer = Environment.GetEnvironmentVariable("SEETRUE_ISSUER");
+            var secretKey = Environment.GetEnvironmentVariable("SEETRUE_SIGNING_KEY").ToByteArray();
+
             var payload = new Dictionary<string, object> {
                 { "sub", user.Id.ToString() },
                 { "aud", user.Aud },
-                { "iss", "http://localhost:5000/" },
-                { "exp", (int)DateTime.UtcNow.AddSeconds(3600).GetUnixEpoch() },
-                { "lid", Guid.NewGuid().ToString() }
+                { "iss",  issuer },
+                { "exp", (int)DateTime.UtcNow.AddSeconds(ttl).GetUnixEpoch() },
+                { "lid", loginId.ToString() }
             };
 
             var headers = new Dictionary<string, object>{
@@ -64,8 +67,6 @@ namespace SeeTrue.Infrastructure.Extensions
                 { "app_metadata", user.AppMetaData},
                 { "user_metadata", user.UserMetaData }
             };
-            // TODO: dynamic secret key
-            var secretKey = new byte[] { 164, 60, 194, 0, 161, 189, 41, 38, 130, 89, 141, 164, 45, 170, 159, 209, 69, 137, 243, 216, 191, 131, 47, 250, 32, 107, 231, 117, 37, 158, 225, 234 };
 
             return Jose.JWT.Encode(payload, secretKey, JwsAlgorithm.HS256, extraHeaders: headers);
         }
@@ -115,6 +116,11 @@ namespace SeeTrue.Infrastructure.Extensions
         public static string GetUserAgent(this HttpContext context)
         {
             return context.Request.Headers["User-Agent"];
+        }
+
+        public static byte[] ToByteArray(this string str)
+        {
+            return System.Text.Encoding.ASCII.GetBytes(str);
         }
     }
 }

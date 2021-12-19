@@ -102,9 +102,9 @@ namespace SeeTrue.Infrastructure.Commands
                 }
 
                 var validationDate = token.CreatedAt;
+                var ttl = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_REFRESH_TOKEN_LIFETIME"));
 
-                // TODO: Get refresh token lifetime from config
-                if (validationDate.AddDays(14) < DateTime.UtcNow)
+                if (validationDate.AddHours(ttl) < DateTime.UtcNow)
                 {
                     //alternative validation (date is embedded into the token)
                     //!Helpers.ValidateExpiringToken(request.data.RefreshToken, 7 * 24 * 60

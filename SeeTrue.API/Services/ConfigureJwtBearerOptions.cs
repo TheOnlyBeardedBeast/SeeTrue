@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SeeTrue.Infrastructure.Extensions;
+using SeeTrue.Infrastructure.Utils;
 
 namespace SeeTrue.API.Services
 {
@@ -25,13 +27,13 @@ namespace SeeTrue.API.Services
 
             opt.TokenValidationParameters = new()
             {
-                ValidateIssuer = true,
-                ValidateAudience = false,
+                ValidateIssuer = bool.Parse(Environment.GetEnvironmentVariable("SEETRUE_VALIDATE_ISSUER")),
+                ValidateAudience = bool.Parse(Environment.GetEnvironmentVariable("SEETRUE_VALIDATE_AUDIENCE")),
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = "http://localhost:5000/",
-                // ValidAudience = builder.Configuration["Jwt:Issuer"],
-                IssuerSigningKey = new SymmetricSecurityKey(new byte[] { 164, 60, 194, 0, 161, 189, 41, 38, 130, 89, 141, 164, 45, 170, 159, 209, 69, 137, 243, 216, 191, 131, 47, 250, 32, 107, 231, 117, 37, 158, 225, 234 })
+                ValidIssuer = Environment.GetEnvironmentVariable("SEETRUE_ISSUER"),
+                ValidAudiences = Helpers.ParseAudiences(Environment.GetEnvironmentVariable("SEETRUE_AUIDIENCES")),
+                IssuerSigningKey = new SymmetricSecurityKey(Environment.GetEnvironmentVariable("SEETRUE_SIGNING_KEY").ToByteArray())
             };
 
             opt.Events = new JwtBearerEvents
