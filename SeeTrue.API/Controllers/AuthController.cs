@@ -61,7 +61,6 @@ namespace SeeTrue.API.Controllers
                 }
             }
 
-            // TODO: Env
             if (Env.SignupDisabled)
             {
                 throw new SeeTrueException(HttpStatusCode.Forbidden, "SignUp is disabled");
