@@ -22,7 +22,8 @@
         "SEETRUE_RECOVERY_MAX_FREQUENCY": "5", //minutes
         "SEETRUE_VALIDATE_ISSUER": "true",
         "SEETRUE_VALIDATE_AUDIENCE": "true",
-        "SEETRUE_SIGNUP_DISABLED": "false"
+        "SEETRUE_SIGNUP_DISABLED": "false",
+        "SEETRUE_MAGIC_LINK_LIFETIME": "5" //Minutes
       }
     }
   }

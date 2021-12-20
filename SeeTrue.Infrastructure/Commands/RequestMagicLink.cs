@@ -13,7 +13,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class RequestMagicLink
     {
-        public record Command(string Email) : IRequest;
+        public record Command(string Email, string Audience) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
@@ -30,7 +30,7 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await this.queries.FindUserByEmailAndAudience(request.Email, null);
+                var user = await this.queries.FindUserByEmailAndAudience(request.Email, request.Audience);
 
                 if (user is null)
                 {
@@ -39,7 +39,7 @@ namespace SeeTrue.Infrastructure.Commands
 
                 var token = Helpers.GenerateUniqueToken();
 
-                this.commands.SetCache(token, user.Id, TimeSpan.FromMinutes(2));
+                this.commands.SetCache(token, user.Id, TimeSpan.FromMinutes(Env.MagicLinkLifeTime));
 
                 await mailer.NotifyMagicLink(user, token);
 

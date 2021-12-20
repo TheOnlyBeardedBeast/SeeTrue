@@ -109,7 +109,8 @@ namespace SeeTrue.API.Controllers
         [SwaggerOperation(Summary = "Request magic link", Description = "Process a magic link request")]
         public async Task<IActionResult> MagicLink([FromBody] Infrastructure.Commands.RequestMagicLink.Command data)
         {
-            await this.m.Send(data);
+            var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
+            await this.m.Send(data with { Audience = aud });
 
             return NoContent();
         }
@@ -120,7 +121,7 @@ namespace SeeTrue.API.Controllers
         [SwaggerOperation(Summary = "Process magic link token", Description = "Processes a magic link token")]
         public async Task<IActionResult> CheckMagicLink([FromQuery] string token)
         {
-            var result = await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Command(HttpContext.GetUserAgent(), token));
+            var result = await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Command(token, HttpContext.GetUserAgent()));
 
             return Ok(result);
         }
@@ -131,7 +132,9 @@ namespace SeeTrue.API.Controllers
         [SwaggerOperation(Summary = "Recovery request", Description = "Request a recovery token")]
         public async Task<IActionResult> Recover([FromBody] Infrastructure.Commands.Recover.Command data)
         {
-            await this.m.Send(data);
+            var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
+
+            await this.m.Send(data with { Audience = aud });
 
             return NoContent();
         }
@@ -147,7 +150,8 @@ namespace SeeTrue.API.Controllers
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, null, HttpContext.GetUserAgent()));
+            var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
+            var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, aud, HttpContext.GetUserAgent()));
 
             return Ok(result);
         }
@@ -173,7 +177,9 @@ namespace SeeTrue.API.Controllers
         [SwaggerOperation(Summary = "User update", Description = "Updates the authentcated users data")]
         public async Task<IActionResult> UpdateUser([FromBody] Infrastructure.Commands.UserUpdate.Command data)
         {
-            return Ok(await this.m.Send(data));
+            var userId = HttpContext.GetUserId();
+
+            return Ok(await this.m.Send(data with { UserId = userId }));
         }
 
         [Authorize]

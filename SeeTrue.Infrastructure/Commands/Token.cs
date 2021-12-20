@@ -50,12 +50,12 @@ namespace SeeTrue.Infrastructure.Commands
                         }
                 }
 
-                // TODO: handle cookie
                 return response;
             }
 
             public async Task<UserTokenResponse> HandlePassword(Command request, Guid instanceId)
             {
+
                 var user = await query.FindUserByEmailAndAudience(request.data.Email, request.Aud);
 
                 if (user is null)

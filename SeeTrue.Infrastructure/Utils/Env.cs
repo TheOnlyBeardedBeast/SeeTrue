@@ -19,11 +19,11 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly int RecoveryMaxFrequency;
         public static readonly bool ValidateIssuer;
         public static readonly bool ValidateAudience;
-
         public static readonly bool SignupDisabled;
         public static readonly Guid InstanceId;
         public static readonly bool AutoConfirm;
         public static readonly string JwtDefaultGroupName;
+        public static readonly int MagicLinkLifeTime;
         static Env()
         {
             SigningKey = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_SIGNING_KEY");
@@ -43,6 +43,7 @@ namespace SeeTrue.Infrastructure.Utils
             InstanceId = Helpers.GetEnvironmentVariable<Guid>("SEETRUE_INSTANCE_ID", Guid.Empty);
             AutoConfirm = Helpers.GetEnvironmentVariable<bool>("SEETRUE_AUTOCONFIRM", false);
             JwtDefaultGroupName = Helpers.GetEnvironmentVariable<string>("SEETRUE_JWT_DEFAULT_GROUP_NAME", "user");
+            MagicLinkLifeTime = Helpers.GetEnvironmentVariable<int>("SEETRUE_MAGIC_LINK_LIFETIME", 5);
 
         }
     }

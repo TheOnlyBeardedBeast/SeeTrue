@@ -10,7 +10,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class Recover
     {
-        public record Command(string Email) : IRequest;
+        public record Command(string Email, string Audience) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
@@ -25,11 +25,11 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await this.queires.FindUserByEmailAndAudience(request.Email, null);
+                var user = await this.queires.FindUserByEmailAndAudience(request.Email, request.Audience);
 
                 if (user is null)
                 {
-                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid token");
+                    throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                 }
 
                 await commands.NewAuditLogEntry(user, AuditAction.UserRecoveryRequestedAction, null);
