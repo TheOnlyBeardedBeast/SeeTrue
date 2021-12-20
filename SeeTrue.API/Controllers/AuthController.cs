@@ -34,9 +34,13 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpGet("settings")]
-        public object Settings()
+        [ProducesResponseType(typeof(Infrastructure.Queries.GetSettings.Response), StatusCodes.Status200OK)]
+        [SwaggerOperation(Summary = "Instance settings", Description = "Returns publicly available settings for the given instance")]
+        public async Task<IActionResult> Settings()
         {
-            throw new NotImplementedException();
+            var settings = await this.m.Send(new Infrastructure.Queries.GetSettings.Query());
+
+            return Ok(settings);
         }
 
         [HttpPost("signup")]
