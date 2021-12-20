@@ -29,7 +29,7 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<User> Handle(Command request, CancellationToken cancellationToken)
             {
-                var instanceId = SeeTrueConfig.InstanceId;
+                var instanceId = Env.InstanceId;
                 var user = await query.FindUserByEmailAndAudience(request.Data.Email, request.Aud);
 
                 if (user is not null && user.IsConfirmed())
@@ -37,7 +37,7 @@ namespace SeeTrue.Infrastructure.Commands
                     throw new SeeTrueException(HttpStatusCode.BadRequest, "A user with this email address has already been registered");
                 }
 
-                if (SeeTrueConfig.AutoConfirm)
+                if (Env.AutoConfirm)
                 {
                     // TODO: trigger eventHook
                     user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, true);

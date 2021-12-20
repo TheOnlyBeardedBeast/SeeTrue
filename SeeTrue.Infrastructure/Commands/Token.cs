@@ -28,7 +28,7 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<UserTokenResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var instanceId = SeeTrueConfig.InstanceId;
+                var instanceId = Env.InstanceId;
 
                 UserTokenResponse response = null;
 
@@ -102,12 +102,10 @@ namespace SeeTrue.Infrastructure.Commands
                 }
 
                 var validationDate = token.CreatedAt;
-                var ttl = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_REFRESH_TOKEN_LIFETIME"));
+                var ttl = Env.RefreshTokenLifetime;
 
                 if (validationDate.AddHours(ttl) < DateTime.UtcNow)
                 {
-                    //alternative validation (date is embedded into the token)
-                    //!Helpers.ValidateExpiringToken(request.data.RefreshToken, 7 * 24 * 60
                     throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                 }
 

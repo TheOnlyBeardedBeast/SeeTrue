@@ -38,5 +38,43 @@ namespace SeeTrue.Infrastructure.Utils
         {
             return source.Split(",");
         }
+
+        public static T GetEnvironmentVariable<T>(string key, T defaultValue)
+        {
+            var value = Environment.GetEnvironmentVariable(key);
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return defaultValue;
+            }
+
+            try
+            {
+                return (T)Convert.ChangeType(Environment.GetEnvironmentVariable(key), typeof(T));
+            }
+            catch (System.Exception)
+            {
+                throw new Exception($"Invalid Environment variable {key}");
+            }
+        }
+
+        public static T GetRequiredEnvironmentVariable<T>(string key)
+        {
+            var value = Environment.GetEnvironmentVariable(key);
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new Exception($"Missing required Environment variable {key}");
+            }
+
+            try
+            {
+                return (T)Convert.ChangeType(Environment.GetEnvironmentVariable(key), typeof(T));
+            }
+            catch (System.Exception)
+            {
+                throw new Exception($"Invalid required Environment variable {key}");
+            }
+        }
     }
 }

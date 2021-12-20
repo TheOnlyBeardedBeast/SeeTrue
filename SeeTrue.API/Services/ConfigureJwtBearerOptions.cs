@@ -8,32 +8,34 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SeeTrue.Infrastructure.Extensions;
 using SeeTrue.Infrastructure.Utils;
+using Microsoft.AspNetCore.Http;
 
 namespace SeeTrue.API.Services
 {
     public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
     {
         private readonly IMemoryCache cache;
+        private readonly IHttpContextAccessor httpContext;
 
-        public ConfigureJwtBearerOptions(IMemoryCache cache)
+        public ConfigureJwtBearerOptions(IMemoryCache cache, IHttpContextAccessor httpContext)
         {
             this.cache = cache;
+            this.httpContext = httpContext;
         }
 
         public void PostConfigure(string name, JwtBearerOptions opt)
         {
-
             opt.SaveToken = true;
 
             opt.TokenValidationParameters = new()
             {
-                ValidateIssuer = bool.Parse(Environment.GetEnvironmentVariable("SEETRUE_VALIDATE_ISSUER")),
-                ValidateAudience = bool.Parse(Environment.GetEnvironmentVariable("SEETRUE_VALIDATE_AUDIENCE")),
+                ValidateIssuer = Env.ValidateIssuer,
+                ValidateAudience = Env.ValidateAudience,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = Environment.GetEnvironmentVariable("SEETRUE_ISSUER"),
-                ValidAudiences = Helpers.ParseAudiences(Environment.GetEnvironmentVariable("SEETRUE_AUIDIENCES")),
-                IssuerSigningKey = new SymmetricSecurityKey(Environment.GetEnvironmentVariable("SEETRUE_SIGNING_KEY").ToByteArray())
+                ValidIssuer = Env.Issuer,
+                ValidAudiences = Env.Audiences,
+                IssuerSigningKey = new SymmetricSecurityKey(Env.SigningKey.ToByteArray())
             };
 
             opt.Events = new JwtBearerEvents
@@ -55,6 +57,9 @@ namespace SeeTrue.API.Services
                     {
                         context.Fail("Invalid token");
                     }
+
+                    // var aud = context.Principal.Claims.FirstOrDefault(e => e.Type == "aud").Value;
+                    // var referer = httpContext.HttpContext.Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
 
                     return Task.CompletedTask;
                 }

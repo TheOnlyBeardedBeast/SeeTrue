@@ -39,7 +39,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <returns></returns>
         public async Task<User> FindUserByEmailAndAudience(string email, string audience)
         {
-            var instanceId = SeeTrueConfig.InstanceId;
+            var instanceId = Env.InstanceId;
 
             var user = await db.Users.Where(e =>
                         e.InstanceID == instanceId &&
@@ -78,7 +78,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <returns></returns>
         public async Task<User> FindUserByConfirmationToken(string confirmationToken)
         {
-            return await this.db.Users.FirstOrDefaultAsync(e => e.ConfirmationToken.Equals(confirmationToken) && e.InstanceID == SeeTrueConfig.InstanceId);
+            return await this.db.Users.FirstOrDefaultAsync(e => e.ConfirmationToken.Equals(confirmationToken) && e.InstanceID == Env.InstanceId);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <returns></returns>
         public async Task<bool> CheckEmailExists(string email, string audience)
         {
-            var instanceId = SeeTrueConfig.InstanceId;
+            var instanceId = Env.InstanceId;
 
             return await this.db.Users.AnyAsync(e => e.InstanceID == instanceId && e.Email == email && e.Aud == audience);
         }

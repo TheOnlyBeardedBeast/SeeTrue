@@ -174,13 +174,13 @@ namespace SeeTrue.Infrastructure.Services
 
             var user = new User
             {
-                InstanceID = SeeTrueConfig.InstanceId,
+                InstanceID = Env.InstanceId,
                 Email = email,
                 Aud = audience,
                 UserMetaData = userMetaData,
                 EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(password),
                 AppMetaData = appMetaData,
-                Role = SeeTrueConfig.JWTDefaultGroupName,
+                Role = Env.JwtDefaultGroupName,
                 ConfirmedAt = confirmed ? DateTime.UtcNow : null,
             };
 
@@ -228,11 +228,9 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task NewAuditLogEntry(User actor, AuditAction action, object traits)
         {
-            // Environment.GetEnvironmentVariable("");
-
             var entry = new AuditLogEntry
             {
-                InstanceId = SeeTrueConfig.InstanceId,
+                InstanceId = Env.InstanceId,
                 Payload = new Dictionary<string, string>
                     {
                         { "Timestamp", DateTime.UtcNow.ToString() },
@@ -255,15 +253,11 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task SendConfirmation(User user)
         {
-            var ttl = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_VERIFICATION_TOKEN_LIFETIME"));
-            // TODO: lifetime from configuration
-            if (user.ConfirmationSentAt != null && user.ConfirmationSentAt > DateTime.UtcNow.AddHours(0 - ttl))
+            if (user.ConfirmationSentAt != null && user.ConfirmationSentAt > DateTime.UtcNow.AddHours(0 - Env.VerificationTokenLifetime))
             {
                 return;
             }
 
-            // TODO: get referer from config
-            // string referer = "http://localhost/confirm/"; // for link generation
             user.ConfirmationToken = Helpers.GenerateUniqueToken();
             user.ConfirmationSentAt = DateTime.UtcNow;
 
@@ -324,9 +318,7 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task SendPasswordRecovery(User user)
         {
-            var maxFrequency = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_RECOVERY_MAX_FREQUENCY"));
-
-            if (user.RecoverySentAt < DateTime.UtcNow.AddMinutes(maxFrequency))
+            if (user.RecoverySentAt < DateTime.UtcNow.AddMinutes(Env.RecoveryMaxFrequency))
             {
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Try again later");
             }
@@ -377,9 +369,7 @@ namespace SeeTrue.Infrastructure.Services
 
         public void RestrictAccesTokenUsage(Guid loginId)
         {
-            var ttl = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_TOKEN_LIFETIME"));
-
-            this.cache.Set(loginId.ToString(), loginId, TimeSpan.FromSeconds(ttl));
+            this.cache.Set(loginId.ToString(), loginId, TimeSpan.FromSeconds(Env.AccessTokenLifetime));
         }
 
         public void RemoveFromCache(string key)

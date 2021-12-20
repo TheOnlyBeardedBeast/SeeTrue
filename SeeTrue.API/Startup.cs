@@ -23,6 +23,7 @@ using SeeTrue.API.Services;
 using SeeTrue.Infrastructure;
 using SeeTrue.Models;
 using SeeTrue.Utils.Services;
+using SeeTrue.Infrastructure.Utils;
 
 namespace SeeTrue.API
 {
@@ -38,6 +39,9 @@ namespace SeeTrue.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var type = typeof(Env);
+            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(type.TypeHandle);
+
             services.AddMemoryCache();
             services.AddDbContext<ISeeTrueDbContext, AppDbContext>(options =>
                  options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
@@ -82,8 +86,6 @@ namespace SeeTrue.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            // Environment.GetEnvironmentVariable
 
             app.UseRouting();
 

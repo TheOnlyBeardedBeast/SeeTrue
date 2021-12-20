@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using SeeTrue.Models;
-
+using SeeTrue.Infrastructure.Utils;
 namespace SeeTrue.Utils.Services
 {
     public interface IMailService
@@ -19,13 +19,8 @@ namespace SeeTrue.Utils.Services
         protected readonly SmtpClient client;
         public MailService()
         {
-            var host = Environment.GetEnvironmentVariable("SEETRUE_SMTP_HOST");
-            var port = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_SMTP_PORT"));
-            var user = Environment.GetEnvironmentVariable("SEETRUE_SMTP_USER");
-            var pass = Environment.GetEnvironmentVariable("SEETRUE_SMTP_PASS");
-
-            this.client = new SmtpClient("localhost", 1025);
-            this.client.Credentials = new NetworkCredential(user, pass);
+            this.client = new SmtpClient(Env.SmtpHost, Env.SmtpPort);
+            this.client.Credentials = new NetworkCredential(Env.SmtpUser, Env.SmtpPass);
         }
 
         public async Task Send(string address, string code)

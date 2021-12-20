@@ -6,6 +6,7 @@ using System.Security.Claims;
 using Jose;
 using Microsoft.AspNetCore.Http;
 using SeeTrue.Infrastructure.Types;
+using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Models;
 
 namespace SeeTrue.Infrastructure.Extensions
@@ -50,15 +51,11 @@ namespace SeeTrue.Infrastructure.Extensions
 
         public static string GenerateAccessToken(this User user, Guid loginId)
         {
-            var ttl = int.Parse(Environment.GetEnvironmentVariable("SEETRUE_TOKEN_LIFETIME"));
-            var issuer = Environment.GetEnvironmentVariable("SEETRUE_ISSUER");
-            var secretKey = Environment.GetEnvironmentVariable("SEETRUE_SIGNING_KEY").ToByteArray();
-
             var payload = new Dictionary<string, object> {
                 { "sub", user.Id.ToString() },
                 { "aud", user.Aud },
-                { "iss",  issuer },
-                { "exp", (int)DateTime.UtcNow.AddSeconds(ttl).GetUnixEpoch() },
+                { "iss",  Env.Issuer },
+                { "exp", (int)DateTime.UtcNow.AddSeconds(Env.AccessTokenLifetime).GetUnixEpoch() },
                 { "lid", loginId.ToString() }
             };
 
@@ -68,7 +65,7 @@ namespace SeeTrue.Infrastructure.Extensions
                 { "user_metadata", user.UserMetaData }
             };
 
-            return Jose.JWT.Encode(payload, secretKey, JwsAlgorithm.HS256, extraHeaders: headers);
+            return Jose.JWT.Encode(payload, Env.SigningKey.ToByteArray(), JwsAlgorithm.HS256, extraHeaders: headers);
         }
 
         public static double GetUnixEpoch(this DateTime dateTime)

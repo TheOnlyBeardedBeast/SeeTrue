@@ -12,9 +12,6 @@ using Microsoft.AspNetCore.Http;
 using System.Net;
 using SeeTrue.Models;
 using Swashbuckle.AspNetCore.Annotations;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace SeeTrue.API.Controllers
 {
     [ApiController]
@@ -49,15 +46,19 @@ namespace SeeTrue.API.Controllers
         public async Task<IActionResult> SignUp([FromBody] SignUpData data)
         {
             var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
-            var audiences = Helpers.ParseAudiences(Environment.GetEnvironmentVariable("SEETRUE_AUIDIENCES")).ToList();
 
-            if (!audiences.Contains(aud))
+            if (Env.ValidateAudience)
             {
-                throw new SeeTrueException(HttpStatusCode.Forbidden, "Not supported client");
+                var audiences = Helpers.ParseAudiences(Environment.GetEnvironmentVariable("SEETRUE_AUIDIENCES")).ToList();
+
+                if (!audiences.Contains(aud))
+                {
+                    throw new SeeTrueException(HttpStatusCode.Forbidden, "Not supported client");
+                }
             }
 
             // TODO: Env
-            if (SeeTrueConfig.DisableSignup)
+            if (Env.SignupDisabled)
             {
                 throw new SeeTrueException(HttpStatusCode.Forbidden, "SignUp is disabled");
             }
@@ -66,8 +67,6 @@ namespace SeeTrue.API.Controllers
             {
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
-
-            var refferer = Request.Headers["Referer"].ToString();
 
             var user = await this.m.Send(new Infrastructure.Commands.SignUp.Command(data, aud));
 
