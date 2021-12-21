@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeTrue.Infrastructure", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeTrue.API", "SeeTrue.API\SeeTrue.API.csproj", "{9AA48196-5DF8-47D3-BB8B-6A1F83B88B50}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeTrue.Tests", "SeeTrue.Tests\SeeTrue.Tests.csproj", "{FE78DF56-DE33-4778-93C5-A591D2A44541}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{9AA48196-5DF8-47D3-BB8B-6A1F83B88B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AA48196-5DF8-47D3-BB8B-6A1F83B88B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AA48196-5DF8-47D3-BB8B-6A1F83B88B50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE78DF56-DE33-4778-93C5-A591D2A44541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE78DF56-DE33-4778-93C5-A591D2A44541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE78DF56-DE33-4778-93C5-A591D2A44541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE78DF56-DE33-4778-93C5-A591D2A44541}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
