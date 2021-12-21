@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,10 +30,11 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
+        [Authorize("Admin")]
         [HttpPost("users")]
-        public object CreateUser()
+        public IActionResult CreateUser()
         {
-            throw new NotImplementedException();
+            return Ok("Hola it works");
         }
 
         [HttpGet("users")]

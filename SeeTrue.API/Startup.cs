@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Security.Claims;
 using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SeeTrue.API.Db;
 using SeeTrue.API.Filters;
@@ -24,6 +18,7 @@ using SeeTrue.Infrastructure;
 using SeeTrue.Models;
 using SeeTrue.Utils.Services;
 using SeeTrue.Infrastructure.Utils;
+using System;
 
 namespace SeeTrue.API
 {
@@ -56,16 +51,26 @@ namespace SeeTrue.API
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
-            services.AddAuthorization()
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                    policy.RequireAssertion(context =>
+                    {
+                        var role = context.User.Claims.FirstOrDefault(c => c.Type == "isa")?.Value;
+
+                        if (bool.TryParse(role, out var isa))
+                        {
+                            return isa;
+                        }
+
+                        return false;
+                    }));
+            }).AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
             services.AddMediatR(typeof(HandlerResponse).Assembly);
             services.AddTransient<IMailService, MailService>();
             services.AddSeeTrue();
             services.AddHttpContextAccessor();
-
-            // services.AddFluentValidation();
-            // services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PersonValidator>());
 
             services.AddSwaggerGen(c =>
             {
