@@ -26,11 +26,11 @@ namespace SeeTrue.API.Controllers
         }
 
         [HttpGet("health")]
-        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(HealthCheckResponse), StatusCodes.Status200OK)]
         [SwaggerOperation(Summary = "Healthcheck", Description = "Returns a healthcheck object")]
         public IActionResult HealthCheck()
         {
-            return Ok(new { Name = "SeeTrue", Version = 1, Description = "SeeTrue is a user registration and authentication API" });
+            return Ok(new HealthCheckResponse("SeeTrue", 1, "SeeTrue is a user registration and authentication API"));
         }
 
         [HttpGet("settings")]
