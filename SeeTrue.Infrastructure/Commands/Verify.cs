@@ -11,7 +11,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class Verify
     {
-        public record Command(string type, string token, string password, string UserAgent) : IRequest<UserTokenResponse>;
+        public record Command(string Type, string Token, string Password, string UserAgent) : IRequest<UserTokenResponse>;
 
         public class Handler : IRequestHandler<Command, UserTokenResponse>
         {
@@ -27,7 +27,7 @@ namespace SeeTrue.Infrastructure.Commands
             public async Task<UserTokenResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 User user;
-                switch (request.type)
+                switch (request.Type)
                 {
                     case "signup":
                         {
@@ -66,7 +66,7 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<User> SignupVerify(Command request)
             {
-                var user = await query.FindUserByConfirmationToken(request.token);
+                var user = await query.FindUserByConfirmationToken(request.Token);
 
                 if (user is null || user.ConfirmedAt != null)
                 {
@@ -78,12 +78,12 @@ namespace SeeTrue.Infrastructure.Commands
                 {
                     if (user.InvitedAt is not null)
                     {
-                        if (string.IsNullOrWhiteSpace(request.password))
+                        if (string.IsNullOrWhiteSpace(request.Password))
                         {
                             throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                         }
 
-                        await command.UpdateUserPassword(user, request.password);
+                        await command.UpdateUserPassword(user, request.Password);
                     }
                 }
 
@@ -96,7 +96,7 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<User> RecoveryVerify(Command request)
             {
-                var user = await query.FindUserByRecoveryToken(request.token);
+                var user = await query.FindUserByRecoveryToken(request.Token);
 
                 if (user is null)
                 {

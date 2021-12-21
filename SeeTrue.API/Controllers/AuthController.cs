@@ -98,9 +98,14 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Signup | Recovery verification", Description = "Handles token verfication for signup and recovery")]
-        public async Task<IActionResult> Verify(Infrastructure.Commands.Verify.Command data)
+        public async Task<IActionResult> Verify(VerifyRequest data)
         {
-            return Ok(await this.m.Send(data with { UserAgent = HttpContext.GetUserAgent() }));
+            if (!data.Validate())
+            {
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
+            }
+
+            return Ok(await this.m.Send(new Infrastructure.Commands.Verify.Command(data.Type, data.Token, data.Password, HttpContext.GetUserAgent())));
         }
 
         [HttpPost("magiclink")]

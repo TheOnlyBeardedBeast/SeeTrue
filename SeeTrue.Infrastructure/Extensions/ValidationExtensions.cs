@@ -22,5 +22,13 @@ namespace SeeTrue.Infrastructure.Extensions
 
             return result.IsValid;
         }
+
+        public static bool Validate(this VerifyRequest data)
+        {
+            var validator = new VerifyRequestValidator();
+            var result = validator.Validate(data);
+
+            return result.IsValid;
+        }
     }
 }
