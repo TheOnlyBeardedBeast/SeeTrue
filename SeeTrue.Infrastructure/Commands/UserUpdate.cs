@@ -12,7 +12,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class UserUpdate
     {
-        public record Command(Guid UserId, string Password, string Email, UserMetaData UserMetaData, string EmailChangeToken) : IRequest<User>;
+        public record Command(Guid UserId, string Password, string Email, UserMetaData UserMetaData) : IRequest<User>;
 
         public class Handler : IRequestHandler<Command, User>
         {

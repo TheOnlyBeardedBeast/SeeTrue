@@ -30,7 +30,7 @@ namespace SeeTrue.API.Controllers
         [SwaggerOperation(Summary = "Healthcheck", Description = "Returns a healthcheck object")]
         public IActionResult HealthCheck()
         {
-            return Ok(new HealthCheckResponse("SeeTrue", 1, "SeeTrue is a user registration and authentication API"));
+            return Ok(new HealthCheckResponse { Name = "SeeTrue", Version = 1, Description = "SeeTrue is a user registration and authentication API" });
         }
 
         [HttpGet("settings")]
@@ -190,11 +190,16 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "User update", Description = "Updates the authentcated users data")]
-        public async Task<IActionResult> UpdateUser([FromBody] Infrastructure.Commands.UserUpdate.Command data)
+        public async Task<IActionResult> UpdateUser([FromBody] UserUpdateRequest data)
         {
+            if (!data.Validate())
+            {
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
+            }
+
             var userId = HttpContext.GetUserId();
 
-            return Ok(await this.m.Send(data with { UserId = userId }));
+            return Ok(await this.m.Send(new Infrastructure.Commands.UserUpdate.Command(userId, data.Password, data.Email, data.UserMetaData)));
         }
 
         [Authorize]
