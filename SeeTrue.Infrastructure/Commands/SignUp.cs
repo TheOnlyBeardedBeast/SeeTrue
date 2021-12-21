@@ -13,7 +13,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class SignUp
     {
-        public record Command(SignUpData Data, string Aud, string Provider = "email") : IRequest<User>;
+        public record Command(SignUpRequest Data, string Aud, string Provider = "email") : IRequest<User>;
 
         public class Handler : IRequestHandler<Command, User>
         {
@@ -39,7 +39,6 @@ namespace SeeTrue.Infrastructure.Commands
 
                 if (Env.AutoConfirm)
                 {
-                    // TODO: trigger eventHook
                     user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, true);
                     await command.NewAuditLogEntry(user, AuditAction.UserSignedUpAction, null);
 

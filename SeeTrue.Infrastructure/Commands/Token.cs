@@ -13,7 +13,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class Token
     {
-        public record Command(TokenData data, string Aud, string UserAgent) : IRequest<UserTokenResponse>;
+        public record Command(TokenRequest data, string Aud, string UserAgent) : IRequest<UserTokenResponse>;
 
         public class Handler : IRequestHandler<Command, UserTokenResponse>
         {

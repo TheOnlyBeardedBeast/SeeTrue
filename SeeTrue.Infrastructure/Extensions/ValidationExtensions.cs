@@ -7,7 +7,7 @@ namespace SeeTrue.Infrastructure.Extensions
     public static class ValidationExtensions
     {
 
-        public static bool Validate(this SignUpData data)
+        public static bool Validate(this SignUpRequest data)
         {
             var validator = new SignUpDataValidator();
             var result = validator.Validate(data);
@@ -15,9 +15,9 @@ namespace SeeTrue.Infrastructure.Extensions
             return result.IsValid;
         }
 
-        public static bool Validate(this TokenData data)
+        public static bool Validate(this TokenRequest data)
         {
-            var validator = new TokenDataValidator();
+            var validator = new TokenRequestValidator();
             var result = validator.Validate(data);
 
             return result.IsValid;

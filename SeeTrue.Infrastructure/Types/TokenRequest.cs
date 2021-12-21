@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SeeTrue.Infrastructure.Types
 {
-    public record TokenData
+    public record TokenRequest
     {
         [JsonPropertyName("grant_type")]
         public string GrantType { get; set; }

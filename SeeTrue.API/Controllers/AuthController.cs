@@ -47,7 +47,7 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Signup", Description = "Handles email password signup")]
-        public async Task<IActionResult> SignUp([FromBody] SignUpData data)
+        public async Task<IActionResult> SignUp([FromBody] SignUpRequest data)
         {
             var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
 
@@ -87,9 +87,9 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Email change confirmation", Description = "Handles email change confirmation")]
-        public async Task<IActionResult> ConfirmEmail([FromBody] Infrastructure.Commands.ConfirmEmailChange.Command data)
+        public async Task<IActionResult> ConfirmEmail([FromBody] EmailConfirmRequest data)
         {
-            await this.m.Send(data);
+            await this.m.Send(new Infrastructure.Commands.ConfirmEmailChange.Command(data.Token));
 
             return NoContent();
         }
@@ -143,7 +143,7 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Login | Refresh", Description = "Handles login via email and password, Handles Refresh token")]
-        public async Task<IActionResult> token([FromBody] TokenData data)
+        public async Task<IActionResult> token([FromBody] TokenRequest data)
         {
             if (!data.Validate())
             {

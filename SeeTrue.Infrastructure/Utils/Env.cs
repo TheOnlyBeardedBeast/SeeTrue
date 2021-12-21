@@ -24,6 +24,7 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly bool AutoConfirm;
         public static readonly string JwtDefaultGroupName;
         public static readonly int MagicLinkLifeTime;
+        public static readonly int MinimumPasswordLength;
         static Env()
         {
             SigningKey = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_SIGNING_KEY");
@@ -44,7 +45,7 @@ namespace SeeTrue.Infrastructure.Utils
             AutoConfirm = Helpers.GetEnvironmentVariable<bool>("SEETRUE_AUTOCONFIRM", false);
             JwtDefaultGroupName = Helpers.GetEnvironmentVariable<string>("SEETRUE_JWT_DEFAULT_GROUP_NAME", "user");
             MagicLinkLifeTime = Helpers.GetEnvironmentVariable<int>("SEETRUE_MAGIC_LINK_LIFETIME", 5);
-
+            MinimumPasswordLength = Helpers.GetEnvironmentVariable<int>("SEETRUE_MINIMUM_PASSWORD_LENGTH", 8);
         }
     }
 }

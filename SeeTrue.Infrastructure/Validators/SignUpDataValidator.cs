@@ -4,7 +4,7 @@ using SeeTrue.Infrastructure.Types;
 
 namespace SeeTrue.Infrastructure.Validators
 {
-    public class SignUpDataValidator : AbstractValidator<SignUpData>
+    public class SignUpDataValidator : AbstractValidator<SignUpRequest>
     {
         public SignUpDataValidator()
         {
