@@ -112,10 +112,15 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Request magic link", Description = "Process a magic link request")]
-        public async Task<IActionResult> MagicLink([FromBody] Infrastructure.Commands.RequestMagicLink.Command data)
+        public async Task<IActionResult> MagicLink([FromBody] MagicLinkRequest data)
         {
+            if (!data.Validate())
+            {
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
+            }
+
             var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
-            await this.m.Send(data with { Audience = aud });
+            await this.m.Send(new Infrastructure.Commands.RequestMagicLink.Command(data.Email, aud));
 
             return NoContent();
         }

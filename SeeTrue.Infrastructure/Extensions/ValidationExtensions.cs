@@ -30,5 +30,13 @@ namespace SeeTrue.Infrastructure.Extensions
 
             return result.IsValid;
         }
+
+        public static bool Validate(this MagicLinkRequest data)
+        {
+            var validator = new MagicLinkRequestValidator();
+            var result = validator.Validate(data);
+
+            return result.IsValid;
+        }
     }
 }
