@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace SeeTrue.Infrastructure.Types
 {
@@ -7,9 +6,9 @@ namespace SeeTrue.Infrastructure.Types
     {
         [JsonPropertyName("grant_type")]
         public string GrantType { get; set; }
-
+        [JsonPropertyName("email")]
         public string Email { get; set; }
-
+        [JsonPropertyName("password")]
         public string Password { get; set; }
 
         [JsonPropertyName("refresh_token")]
