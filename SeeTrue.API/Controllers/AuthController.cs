@@ -140,11 +140,16 @@ namespace SeeTrue.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Recovery request", Description = "Request a recovery token")]
-        public async Task<IActionResult> Recover([FromBody] Infrastructure.Commands.Recover.Command data)
+        public async Task<IActionResult> Recover([FromBody] RecoverRequest data)
         {
+            if (!data.Validate())
+            {
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
+            }
+
             var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
 
-            await this.m.Send(data with { Audience = aud });
+            await this.m.Send(new Infrastructure.Commands.Recover.Command(data.Email, aud));
 
             return NoContent();
         }

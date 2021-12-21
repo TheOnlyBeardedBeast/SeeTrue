@@ -38,5 +38,13 @@ namespace SeeTrue.Infrastructure.Extensions
 
             return result.IsValid;
         }
+
+        public static bool Validate(this RecoverRequest data)
+        {
+            var validator = new RecoverRequestValidator();
+            var result = validator.Validate(data);
+
+            return result.IsValid;
+        }
     }
 }
