@@ -38,15 +38,15 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
-        //[Authorize("Admin")]
-        [HttpPost("users")]
-        public async Task<IActionResult> CreateUser([FromQuery] int page = 1, [FromQuery] int perPgae = 20)
+        [Authorize("ApiKey")]
+        [HttpGet("users")]
+        public async Task<IActionResult> ListUser([FromQuery] int page = 1, [FromQuery] int perPgae = 20)
         {
             return Ok(await this.m.Send(new Infrastructure.Queries.GetUsers.Query(page, perPgae)));
         }
 
-        [HttpGet("users")]
-        public object ListUsers()
+        [HttpPost("users")]
+        public object CreateUsers()
         {
             throw new NotImplementedException();
         }

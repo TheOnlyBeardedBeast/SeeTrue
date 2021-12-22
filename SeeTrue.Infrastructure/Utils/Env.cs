@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using SeeTrue.Infrastructure.Types;
 
 namespace SeeTrue.Infrastructure.Utils
 {
@@ -25,6 +26,7 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly string JwtDefaultGroupName;
         public static readonly int MagicLinkLifeTime;
         public static readonly int MinimumPasswordLength;
+        public static readonly ApiKey ApiKey;
         static Env()
         {
             SigningKey = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_SIGNING_KEY");
@@ -46,6 +48,7 @@ namespace SeeTrue.Infrastructure.Utils
             JwtDefaultGroupName = Helpers.GetEnvironmentVariable<string>("SEETRUE_JWT_DEFAULT_GROUP_NAME", "user");
             MagicLinkLifeTime = Helpers.GetEnvironmentVariable<int>("SEETRUE_MAGIC_LINK_LIFETIME", 5);
             MinimumPasswordLength = Helpers.GetEnvironmentVariable<int>("SEETRUE_MINIMUM_PASSWORD_LENGTH", 8);
+            ApiKey = new ApiKey(Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_API_KEY"),"SeeTrue");
         }
     }
 }

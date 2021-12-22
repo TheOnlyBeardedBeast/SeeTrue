@@ -22,7 +22,8 @@
         "SEETRUE_RECOVERY_MAX_FREQUENCY": "5",
         "SEETRUE_VALIDATE_ISSUER": "true",
         "SEETRUE_VALIDATE_AUDIENCE": "true",
-        "SEETRUE_SIGNUP_DISABLED": "false"
+        "SEETRUE_SIGNUP_DISABLED": "false",
+        "SEETRUE_API_KEY": "SuperSecureApiKey"
       }
     }
   }

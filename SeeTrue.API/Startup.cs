@@ -19,6 +19,7 @@ using SeeTrue.Models;
 using SeeTrue.Utils.Services;
 using SeeTrue.Infrastructure.Utils;
 using System;
+using AspNetCore.Authentication.ApiKey;
 
 namespace SeeTrue.API
 {
@@ -65,7 +66,15 @@ namespace SeeTrue.API
 
                         return false;
                     }));
-            }).AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+                options.AddPolicy("ApiKey", policy => {
+                    policy.AddAuthenticationSchemes(ApiKeyDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                });
+            }).AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer().AddApiKeyInHeaderOrQueryParams<ApiKeyProvider>(options =>
+            {
+                options.Realm = "Sample Web API";
+                options.KeyName = "X-API-KEY";
+            });
 
             services.AddMediatR(typeof(HandlerResponse).Assembly);
             services.AddTransient<IMailService, MailService>();

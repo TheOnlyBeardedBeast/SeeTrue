@@ -17,6 +17,7 @@
     <None Remove="jose-jwt" />
     <None Remove="Microsoft.AspNetCore.Http" />
     <None Remove="FluentValidation.AspNetCore" />
+    <None Remove="AspNetCore.Authentication.ApiKey" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -24,6 +25,7 @@
     <PackageReference Include="jose-jwt" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
+    <PackageReference Include="AspNetCore.Authentication.ApiKey" Version="5.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
