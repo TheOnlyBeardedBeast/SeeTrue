@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,10 +13,17 @@ namespace SeeTrue.API.Controllers
     [Route("[controller]")]
     public class AdminController : ControllerBase
     {
-        [HttpGet("users/{userId}")]
-        public object GetUser([FromRoute] Guid userId)
+        private readonly IMediator m;
+
+        public AdminController(IMediator m)
         {
-            throw new NotImplementedException();
+            this.m = m;
+        }
+
+        [HttpGet("users/{userId}")]
+        public async Task<IActionResult> GetUser([FromRoute] Guid userId)
+        {
+            return Ok(await this.m.Send(new Infrastructure.Queries.GetUser.Query(userId)));
         }
 
         [HttpPut("users/{userId}")]
@@ -30,11 +38,11 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
-        [Authorize("Admin")]
+        //[Authorize("Admin")]
         [HttpPost("users")]
-        public IActionResult CreateUser()
+        public async Task<IActionResult> CreateUser([FromQuery] int page = 1, [FromQuery] int perPgae = 20)
         {
-            return Ok("Hola it works");
+            return Ok(await this.m.Send(new Infrastructure.Queries.GetUsers.Query(page, perPgae)));
         }
 
         [HttpGet("users")]

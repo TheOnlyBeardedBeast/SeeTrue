@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace SeeTrue.Infrastructure.Services
         Task<User> FindUserByEmailChangeToken(string token);
         Task<User> FindUserByRecoveryToken(string token);
         bool TryGetValueFromCache<T>(object key, out T value);
+        Task<List<User>> PaginateUsers(int page = 1, int perPage = 20);
     }
 
     public class QueryService : IQueryService
@@ -107,6 +109,11 @@ namespace SeeTrue.Infrastructure.Services
         public bool TryGetValueFromCache<T>(object key, out T value)
         {
             return this.cache.TryGetValue<T>(key, out value);
+        }
+
+        public async Task<List<User>> PaginateUsers(int page = 1, int perPage = 20)
+        {
+            return await this.db.Users.OrderBy(x => x.Id).Skip((page - 1) * perPage).Take(perPage).ToListAsync();
         }
 
     }
