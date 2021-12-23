@@ -20,31 +20,35 @@ namespace SeeTrue.API.Controllers
             this.m = m;
         }
 
+        [Authorize("Admin")]
         [HttpGet("users/{userId}")]
         public async Task<IActionResult> GetUser([FromRoute] Guid userId)
         {
             return Ok(await this.m.Send(new Infrastructure.Queries.GetUser.Query(userId)));
         }
 
+        [Authorize("Admin")]
         [HttpPut("users/{userId}")]
         public object UpdateUser([FromRoute] Guid userId)
         {
             throw new NotImplementedException();
         }
 
+        [Authorize("Admin")]
         [HttpDelete("users/{userId}")]
         public object DeleterUser([FromRoute] Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        [Authorize("ApiKey")]
+        [Authorize("Admin")]
         [HttpGet("users")]
         public async Task<IActionResult> ListUser([FromQuery] int page = 1, [FromQuery] int perPgae = 20)
         {
             return Ok(await this.m.Send(new Infrastructure.Queries.GetUsers.Query(page, perPgae)));
         }
 
+        [Authorize("Admin")]
         [HttpPost("users")]
         public object CreateUsers()
         {

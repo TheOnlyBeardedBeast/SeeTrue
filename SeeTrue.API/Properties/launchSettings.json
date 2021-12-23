@@ -23,7 +23,8 @@
         "SEETRUE_VALIDATE_ISSUER": "true",
         "SEETRUE_VALIDATE_AUDIENCE": "true",
         "SEETRUE_SIGNUP_DISABLED": "false",
-        "SEETRUE_API_KEY": "SuperSecureApiKey"
+        "SEETRUE_API_KEY": "SuperSecureApiKey",
+        "SEETRUE_ADMIN_ROLE": "admin"
       }
     }
   }

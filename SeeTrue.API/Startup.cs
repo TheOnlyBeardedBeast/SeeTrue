@@ -18,7 +18,6 @@ using SeeTrue.Infrastructure;
 using SeeTrue.Models;
 using SeeTrue.Utils.Services;
 using SeeTrue.Infrastructure.Utils;
-using System;
 using AspNetCore.Authentication.ApiKey;
 
 namespace SeeTrue.API
@@ -54,22 +53,31 @@ namespace SeeTrue.API
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Admin", policy =>
-                    policy.RequireAssertion(context =>
+                if (Env.AdminRole is not null)
+                {
+                    options.AddPolicy("Admin", policy =>
                     {
-                        var role = context.User.Claims.FirstOrDefault(c => c.Type == "isa")?.Value;
-
-                        if (bool.TryParse(role, out var isa))
+                        policy.RequireAssertion(context =>
                         {
-                            return isa;
-                        }
+                            var role = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
-                        return false;
-                    }));
-                options.AddPolicy("ApiKey", policy => {
-                    policy.AddAuthenticationSchemes(ApiKeyDefaults.AuthenticationScheme);
-                    policy.RequireAuthenticatedUser();
-                });
+                            return role is not null && Env.AdminRole is not null && role == Env.AdminRole;
+                        });
+                        policy.RequireAuthenticatedUser();
+                        policy.AddAuthenticationSchemes(ApiKeyDefaults.AuthenticationScheme);
+                        policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+                    });
+                }
+                else
+                {
+                    options.AddPolicy("Admin", policy =>
+                    {
+                        policy.AddAuthenticationSchemes(ApiKeyDefaults.AuthenticationScheme);
+                        policy.RequireAuthenticatedUser();
+
+                    });
+                }
+
             }).AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer().AddApiKeyInHeaderOrQueryParams<ApiKeyProvider>(options =>
             {
                 options.Realm = "Sample Web API";
