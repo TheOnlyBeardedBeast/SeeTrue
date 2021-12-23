@@ -36,9 +36,11 @@ namespace SeeTrue.API.Controllers
 
         [Authorize("Admin")]
         [HttpDelete("users/{userId}")]
-        public object DeleterUser([FromRoute] Guid userId)
+        public async Task<NoContentResult> DeleterUser([FromRoute] Guid userId)
         {
-            throw new NotImplementedException();
+            await this.m.Send(new Infrastructure.Commands.DeleteUser.Command(userId));
+
+            return NoContent();
         }
 
         [Authorize("Admin")]

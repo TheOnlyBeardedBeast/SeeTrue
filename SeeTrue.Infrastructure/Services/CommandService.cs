@@ -152,6 +152,13 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="value"></param>
         /// <param name="ttl">Relative time to live</param>
         TItem SetCache<TItem>(object key, TItem value, TimeSpan ttl);
+
+        /// <summary>
+        /// Removes a user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task RemoveUser(User user);
     }
 
     public class CommandService : ICommandService
@@ -385,6 +392,13 @@ namespace SeeTrue.Infrastructure.Services
         public TItem SetCache<TItem>(object key, TItem value, TimeSpan ttl)
         {
             return this.cache.Set(key, value, ttl);
+        }
+
+        public async Task RemoveUser(User user)
+        {
+            this.db.Users.Remove(user);
+
+            await this.db.SaveChangesAsync();
         }
     }
 }
