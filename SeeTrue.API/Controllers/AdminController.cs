@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SeeTrue.Infrastructure.Types;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,9 +30,11 @@ namespace SeeTrue.API.Controllers
 
         [Authorize("Admin")]
         [HttpPut("users/{userId}")]
-        public object UpdateUser([FromRoute] Guid userId)
+        public async Task<IActionResult> UpdateUser([FromRoute] Guid userId, [FromBody] AdminUpdateUserRequest data)
         {
-            throw new NotImplementedException();
+            var updatedUser = await this.m.Send(new Infrastructure.Commands.AdminUpdateUser.Command(userId, data));
+
+            return Ok(updatedUser);
         }
 
         [Authorize("Admin")]
@@ -52,7 +55,7 @@ namespace SeeTrue.API.Controllers
 
         [Authorize("Admin")]
         [HttpPost("users")]
-        public object CreateUsers()
+        public object CreateUsers([FromBody] AdminUpdateUserRequest data)
         {
             throw new NotImplementedException();
         }

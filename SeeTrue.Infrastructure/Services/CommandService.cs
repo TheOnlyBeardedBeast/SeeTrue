@@ -159,6 +159,22 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="user"></param>
         /// <returns></returns>
         Task RemoveUser(User user);
+
+        /// <summary>
+        /// Updates a users email
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        Task UpdateUserEmail(User user, string email);
+
+        /// <summary>
+        /// Updates the AppMetaData for a given user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="appMetaData"></param>
+        /// <returns></returns>
+        Task UpdateAppMetaData(User user, Dictionary<string, object> appMetaData);
     }
 
     public class CommandService : ICommandService
@@ -300,6 +316,14 @@ namespace SeeTrue.Infrastructure.Services
             await this.db.SaveChangesAsync();
         }
 
+        public async Task UpdateAppMetaData(User user, Dictionary<string, object> appMetaData)
+        {
+            user.UpdateAppMetaData(appMetaData);
+            this.db.Update(user);
+
+            await this.db.SaveChangesAsync();
+        }
+
         public async Task SendEmailChange(User user, string email)
         {
             user.EmailChangeToken = Helpers.GenerateUniqueToken();
@@ -397,6 +421,14 @@ namespace SeeTrue.Infrastructure.Services
         public async Task RemoveUser(User user)
         {
             this.db.Users.Remove(user);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task UpdateUserEmail(User user, string email)
+        {
+            user.Email = email;
+            this.db.Users.Update(user);
 
             await this.db.SaveChangesAsync();
         }

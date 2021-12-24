@@ -28,8 +28,6 @@ namespace SeeTrue.Infrastructure.Extensions
             if (user.UserMetaData is null)
             {
                 user.UserMetaData = userMetaData;
-
-                //db.Users.Update(user);
             }
             else if (userMetaData is not null)
             {
@@ -44,8 +42,28 @@ namespace SeeTrue.Infrastructure.Extensions
                         user.UserMetaData.Remove(entry.Key);
                     }
                 }
+            }
+        }
 
-                //db.Users.Update(user);
+        public static void UpdateAppMetaData(this User user, Dictionary<string, object> appMetaData)
+        {
+            if (user.AppMetaData is null)
+            {
+                user.AppMetaData = appMetaData;
+            }
+            else if (appMetaData is not null)
+            {
+                foreach (KeyValuePair<string, object> entry in appMetaData)
+                {
+                    if (entry.Value != null)
+                    {
+                        user.AppMetaData[entry.Key] = entry.Value;
+                    }
+                    else
+                    {
+                        user.AppMetaData.Remove(entry.Key);
+                    }
+                }
             }
         }
 
