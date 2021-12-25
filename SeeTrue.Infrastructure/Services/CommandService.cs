@@ -182,6 +182,8 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="userData"></param>
         /// <returns></returns>
         Task<User> CreateUser(AdminUpdateUserRequest userData);
+
+        Task<User> InviteUser(string email, string Aud, string provider);
     }
 
     public class CommandService : ICommandService
@@ -455,6 +457,26 @@ namespace SeeTrue.Infrastructure.Services
 
             this.db.Add(user);
             await this.db.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<User> InviteUser(string email, string Aud, string provider)
+        {
+            var appMetaData = new Dictionary<string, object>();
+            appMetaData["provider"] = provider;
+
+            var user = new User
+            {
+                InstanceID = Env.InstanceId,
+                Aud = Aud,
+                Email = email,
+                AppMetaData = appMetaData,
+                Role = Env.JwtDefaultGroupName,
+            };
+
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
 
             return user;
         }

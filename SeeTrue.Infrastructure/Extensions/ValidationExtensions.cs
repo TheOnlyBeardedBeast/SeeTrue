@@ -62,5 +62,13 @@ namespace SeeTrue.Infrastructure.Extensions
 
             return result.IsValid;
         }
+
+        public static bool Validate(this InviteRequest data)
+        {
+            var validator = new InviteRequestValidator();
+            var result = validator.Validate(data);
+
+            return result.IsValid;
+        }
     }
 }

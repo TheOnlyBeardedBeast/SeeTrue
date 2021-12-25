@@ -78,9 +78,16 @@ namespace SeeTrue.API.Controllers
 
         [Authorize]
         [HttpPost("invite")]
-        public object Invite()
+        public async Task<IActionResult> Invite([FromBody] InviteRequest data)
         {
-            throw new NotImplementedException();
+            if(!data.Validate())
+            {
+                throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
+            }
+
+            await this.m.Send(new Infrastructure.Commands.Invite.Command(data.Email, HttpContext.GetAudience()));
+
+            return NoContent();
         }
 
         [HttpPost("confirm-email")]
