@@ -176,6 +176,11 @@ namespace SeeTrue.Infrastructure.Services
         /// <returns></returns>
         Task UpdateAppMetaData(User user, Dictionary<string, object> appMetaData);
 
+        /// <summary>
+        /// Creates a user
+        /// </summary>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         Task<User> CreateUser(AdminUpdateUserRequest userData);
     }
 

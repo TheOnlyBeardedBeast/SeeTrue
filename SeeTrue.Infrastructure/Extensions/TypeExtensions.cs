@@ -134,6 +134,11 @@ namespace SeeTrue.Infrastructure.Extensions
             return context.Request.Headers["User-Agent"];
         }
 
+        public static string GetAudience(this HttpContext context)
+        {
+            return context.Request.Headers["X-JWT-AUD"];
+        }
+
         public static byte[] ToByteArray(this string str)
         {
             return System.Text.Encoding.ASCII.GetBytes(str);

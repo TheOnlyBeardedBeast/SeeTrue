@@ -49,7 +49,7 @@ namespace SeeTrue.API.Controllers
         [SwaggerOperation(Summary = "Signup", Description = "Handles email password signup")]
         public async Task<IActionResult> SignUp([FromBody] SignUpRequest data)
         {
-            var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
+            var aud = HttpContext.GetAudience();
 
             if (Env.ValidateAudience)
             {
@@ -119,7 +119,7 @@ namespace SeeTrue.API.Controllers
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
+            var aud = HttpContext.GetAudience();
             await this.m.Send(new Infrastructure.Commands.RequestMagicLink.Command(data.Email, aud));
 
             return NoContent();
@@ -147,7 +147,7 @@ namespace SeeTrue.API.Controllers
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
+            var aud = HttpContext.GetAudience();
 
             await this.m.Send(new Infrastructure.Commands.Recover.Command(data.Email, aud));
 
@@ -165,7 +165,7 @@ namespace SeeTrue.API.Controllers
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            var aud = Request.GetTypedHeaders().Referer.GetLeftPart(UriPartial.Authority);
+            var aud = HttpContext.GetAudience();
             var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, aud, HttpContext.GetUserAgent()));
 
             return Ok(result);
