@@ -175,6 +175,8 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="appMetaData"></param>
         /// <returns></returns>
         Task UpdateAppMetaData(User user, Dictionary<string, object> appMetaData);
+
+        Task<User> CreateUser(AdminUpdateUserRequest userData);
     }
 
     public class CommandService : ICommandService
@@ -431,6 +433,25 @@ namespace SeeTrue.Infrastructure.Services
             this.db.Users.Update(user);
 
             await this.db.SaveChangesAsync();
+        }
+
+        public async Task<User> CreateUser(AdminUpdateUserRequest userData)
+        {
+            var user = new User
+            {
+                Email = userData.Email,
+                EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(userData.Password),
+                Aud = Env.Audiences[0],
+                Role = userData.Role ?? Env.JwtDefaultGroupName,
+                UserMetaData = userData.UserMetaData,
+                AppMetaData = userData.AppMetaData,
+                ConfirmedAt = (userData.Confirm.HasValue && userData.Confirm.Value) ? DateTime.UtcNow : null,
+            };
+
+            this.db.Add(user);
+            await this.db.SaveChangesAsync();
+
+            return user;
         }
     }
 }

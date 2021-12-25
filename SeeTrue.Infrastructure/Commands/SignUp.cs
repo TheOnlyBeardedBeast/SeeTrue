@@ -13,7 +13,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class SignUp
     {
-        public record Command(SignUpRequest Data, string Aud, string Provider = "email") : IRequest<User>;
+        public record Command(SignUpRequest Data, string Aud, string Provider = "email", bool Confirm = false) : IRequest<User>;
 
         public class Handler : IRequestHandler<Command, User>
         {
@@ -37,7 +37,7 @@ namespace SeeTrue.Infrastructure.Commands
                     throw new SeeTrueException(HttpStatusCode.BadRequest, "A user with this email address has already been registered");
                 }
 
-                if (Env.AutoConfirm)
+                if (Env.AutoConfirm || request.Confirm)
                 {
                     user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, true);
                     await command.NewAuditLogEntry(user, AuditAction.UserSignedUpAction, null);

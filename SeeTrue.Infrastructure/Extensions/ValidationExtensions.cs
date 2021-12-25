@@ -54,5 +54,13 @@ namespace SeeTrue.Infrastructure.Extensions
 
             return result.IsValid;
         }
+
+        public static bool Validate(this AdminUpdateUserRequest data)
+        {
+            var validator = new AdminUpdateUserRequestValidator();
+            var result = validator.Validate(data);
+
+            return result.IsValid;
+        }
     }
 }

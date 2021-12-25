@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SeeTrue.Infrastructure.Extensions;
 using SeeTrue.Infrastructure.Types;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SeeTrue.API.Controllers
 {
@@ -55,9 +52,23 @@ namespace SeeTrue.API.Controllers
 
         [Authorize("Admin")]
         [HttpPost("users")]
-        public object CreateUsers([FromBody] AdminUpdateUserRequest data)
+        public async Task<IActionResult> CreateUsers([FromBody] AdminUpdateUserRequest data)
         {
-            throw new NotImplementedException();
+            if(!data.Validate())
+            {
+                throw new SeeTrueException(System.Net.HttpStatusCode.BadRequest, "Invalid data");
+            }
+
+            var user = await this.m.Send(new Infrastructure.Commands.CreateUser.Command {
+                Email = data.Email,
+                Password = data.Password,
+                Role = data.Role,
+                UserMetaData = data.UserMetaData,
+                AppMetaData = data.AppMetaData,
+                Confirm = data.Confirm
+            });
+
+            return Ok(user);
         }
 
 
