@@ -1,0 +1,31 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "SeeTrue.API": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": false,
+      "launchUrl": "swagger/index.html",
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SEETRUE_SIGNING_KEY": "Uvz9WCdELTkqaZLVYgLHdzURl6YBe38t",
+        "SEETRUE_TOKEN_LIFETIME": "3600",
+        "SEETRUE_ISSUER": "http://localhost:5000",
+        "SEETRUE_AUIDIENCES": "http://localhost:5000",
+        "SEETRUE_REFRESH_TOKEN_LIFETIME": "336",
+        "SEETRUE_SMTP_HOST": "localhost",
+        "SEETRUE_SMTP_PORT": "1025",
+        "SEETRUE_SMTP_USER": "service@mailhog.example",
+        "SEETRUE_SMTP_PASS": "12345678",
+        "SEETRUE_VERIFICATION_TOKEN_LIFETIME": "24",
+        "SEETRUE_RECOVERY_MAX_FREQUENCY": "5",
+        "SEETRUE_VALIDATE_ISSUER": "true",
+        "SEETRUE_VALIDATE_AUDIENCE": "true",
+        "SEETRUE_SIGNUP_DISABLED": "false",
+        "SEETRUE_API_KEY": "SuperSecureApiKey",
+        "SEETRUE_ADMIN_ROLE": "admin"
+      }
+    }
+  }
+}
