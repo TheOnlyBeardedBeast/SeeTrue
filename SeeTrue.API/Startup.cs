@@ -84,7 +84,7 @@ namespace SeeTrue.API
                 options.KeyName = "X-API-KEY";
             });
 
-            services.AddMediatR(typeof(HandlerResponse).Assembly);
+            services.AddMediatR(typeof(ServiceExtension).Assembly);
             services.AddTransient<IMailService, MailService>();
             services.AddSeeTrue();
             services.AddHttpContextAccessor();

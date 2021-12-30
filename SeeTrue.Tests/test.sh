@@ -1,0 +1,2 @@
+﻿dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput="Opencover.xml" /p:Exclude="[*]SeeTrue.Infrastructure.Types*%2c[*]SeeTrue.Utils*%2c[*]SeeTrue.Infrastructure.Extensions*%2c[*]SeeTrue.Infrastructure.Validators*%2c[*]SeeTrue.Infrastructure.ServiceExtension";
+dotnet reportgenerator "-reports:Opencover.xml" "-targetdir:coveragereport" -reporttypes:Html;

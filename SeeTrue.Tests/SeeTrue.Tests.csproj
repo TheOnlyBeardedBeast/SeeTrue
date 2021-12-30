@@ -24,6 +24,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="jose-jwt" Version="3.2.0" />
+    <PackageReference Include="ReportGenerator" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,5 +36,6 @@
     <None Remove="Xunit.Priority" />
     <None Remove="coverlet.msbuild" />
     <None Remove="jose-jwt" />
+    <None Remove="ReportGenerator" />
   </ItemGroup>
 </Project>
