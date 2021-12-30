@@ -1,0 +1,3811 @@
+{
+  "SeeTrue.Models.dll": {
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Models/AuditLogEntry.cs": {
+      "SeeTrue.Models.AuditLogEntry": {
+        "System.Guid SeeTrue.Models.AuditLogEntry::get_Id()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Guid SeeTrue.Models.AuditLogEntry::get_InstanceId()": {
+          "Lines": {
+            "13": 3
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,System.String> SeeTrue.Models.AuditLogEntry::get_Payload()": {
+          "Lines": {
+            "16": 3
+          },
+          "Branches": []
+        },
+        "System.DateTime SeeTrue.Models.AuditLogEntry::get_CreatedAt()": {
+          "Lines": {
+            "18": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Models/Login.cs": {
+      "SeeTrue.Models.Login": {
+        "System.Guid SeeTrue.Models.Login::get_Id()": {
+          "Lines": {
+            "11": 2
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.Login::get_UserAgent()": {
+          "Lines": {
+            "13": 2
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.ICollection`1<SeeTrue.Models.RefreshToken> SeeTrue.Models.Login::get_RefreshTokens()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.Guid SeeTrue.Models.Login::get_UserId()": {
+          "Lines": {
+            "19": 2
+          },
+          "Branches": []
+        },
+        "SeeTrue.Models.User SeeTrue.Models.Login::get_User()": {
+          "Lines": {
+            "20": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime SeeTrue.Models.Login::get_CreatedAt()": {
+          "Lines": {
+            "22": 2
+          },
+          "Branches": []
+        },
+        "System.DateTime SeeTrue.Models.Login::get_UpdatedAt()": {
+          "Lines": {
+            "23": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Models/RefreshToken.cs": {
+      "SeeTrue.Models.RefreshToken": {
+        "System.Nullable`1<System.Guid> SeeTrue.Models.RefreshToken::get_InstanceID()": {
+          "Lines": {
+            "8": 14
+          },
+          "Branches": []
+        },
+        "System.Guid SeeTrue.Models.RefreshToken::get_Id()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.RefreshToken::get_Token()": {
+          "Lines": {
+            "12": 8
+          },
+          "Branches": []
+        },
+        "System.Guid SeeTrue.Models.RefreshToken::get_UserId()": {
+          "Lines": {
+            "14": 9
+          },
+          "Branches": []
+        },
+        "SeeTrue.Models.User SeeTrue.Models.RefreshToken::get_User()": {
+          "Lines": {
+            "15": 5
+          },
+          "Branches": []
+        },
+        "System.Guid SeeTrue.Models.RefreshToken::get_LoginId()": {
+          "Lines": {
+            "18": 9
+          },
+          "Branches": []
+        },
+        "SeeTrue.Models.Login SeeTrue.Models.RefreshToken::get_Login()": {
+          "Lines": {
+            "19": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Models.RefreshToken::get_Revoked()": {
+          "Lines": {
+            "21": 12
+          },
+          "Branches": []
+        },
+        "System.DateTime SeeTrue.Models.RefreshToken::get_CreatedAt()": {
+          "Lines": {
+            "23": 8
+          },
+          "Branches": []
+        },
+        "System.DateTime SeeTrue.Models.RefreshToken::get_UpdatedAt()": {
+          "Lines": {
+            "24": 8
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Models/SeeTrueDbContext.cs": {
+      "SeeTrue.Models.SeeTrueDbContext": {
+        "Microsoft.EntityFrameworkCore.DbSet`1<SeeTrue.Models.User> SeeTrue.Models.SeeTrueDbContext::get_Users()": {
+          "Lines": {
+            "10": 15
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<SeeTrue.Models.AuditLogEntry> SeeTrue.Models.SeeTrueDbContext::get_AuditLogEntries()": {
+          "Lines": {
+            "11": 5
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<SeeTrue.Models.RefreshToken> SeeTrue.Models.SeeTrueDbContext::get_RefreshTokens()": {
+          "Lines": {
+            "12": 16
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<SeeTrue.Models.Login> SeeTrue.Models.SeeTrueDbContext::get_Logins()": {
+          "Lines": {
+            "13": 4
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Models.SeeTrueDbContext::OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)": {
+          "Lines": {
+            "20": 1,
+            "21": 1,
+            "22": 1,
+            "24": 1,
+            "25": 1
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Models.SeeTrueDbContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions)": {
+          "Lines": {
+            "15": 2,
+            "16": 2,
+            "17": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Models/User.cs": {
+      "SeeTrue.Models.User": {
+        "System.Nullable`1<System.Guid> SeeTrue.Models.User::get_InstanceID()": {
+          "Lines": {
+            "13": 9
+          },
+          "Branches": []
+        },
+        "System.Guid SeeTrue.Models.User::get_Id()": {
+          "Lines": {
+            "15": 26
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_Aud()": {
+          "Lines": {
+            "16": 10
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_Role()": {
+          "Lines": {
+            "17": 10
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_Email()": {
+          "Lines": {
+            "18": 15
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_EncryptedPassword()": {
+          "Lines": {
+            "20": 5
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SeeTrue.Models.User::get_ConfirmedAt()": {
+          "Lines": {
+            "21": 8
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SeeTrue.Models.User::get_InvitedAt()": {
+          "Lines": {
+            "22": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_ConfirmationToken()": {
+          "Lines": {
+            "24": 6
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SeeTrue.Models.User::get_ConfirmationSentAt()": {
+          "Lines": {
+            "26": 2
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_RecoveryToken()": {
+          "Lines": {
+            "28": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SeeTrue.Models.User::get_RecoverySentAt()": {
+          "Lines": {
+            "29": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_EmailChangeToken()": {
+          "Lines": {
+            "31": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_EmailChange()": {
+          "Lines": {
+            "32": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SeeTrue.Models.User::get_EmailChangeSentAt()": {
+          "Lines": {
+            "33": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> SeeTrue.Models.User::get_LastSignInAt()": {
+          "Lines": {
+            "34": 7
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_AppMetaDataJson()": {
+          "Lines": {
+            "39": 45
+          },
+          "Branches": []
+        },
+        "System.Void modreq(System.Runtime.CompilerServices.IsExternalInit) SeeTrue.Models.User::set_AppMetaDataJson(System.String)": {
+          "Lines": {
+            "41": 0,
+            "42": 0,
+            "43": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,System.Object> SeeTrue.Models.User::get_AppMetaData()": {
+          "Lines": {
+            "46": 54
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Models.User::get_UserMetaDataJson()": {
+          "Lines": {
+            "51": 45
+          },
+          "Branches": []
+        },
+        "System.Void modreq(System.Runtime.CompilerServices.IsExternalInit) SeeTrue.Models.User::set_UserMetaDataJson(System.String)": {
+          "Lines": {
+            "53": 0,
+            "54": 0,
+            "55": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,System.Object> SeeTrue.Models.User::get_UserMetaData()": {
+          "Lines": {
+            "58": 60
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Boolean> SeeTrue.Models.User::get_IsSuperAdmin()": {
+          "Lines": {
+            "59": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime SeeTrue.Models.User::get_CreatedAt()": {
+          "Lines": {
+            "60": 2
+          },
+          "Branches": []
+        },
+        "System.DateTime SeeTrue.Models.User::get_UpdatedAt()": {
+          "Lines": {
+            "61": 2
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.ICollection`1<SeeTrue.Models.RefreshToken> SeeTrue.Models.User::get_RefreshTokens()": {
+          "Lines": {
+            "63": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "SeeTrue.Infrastructure.dll": {
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Extensions/MailSender.cs": {
+      "SeeTrue.Utils.Services.MailService": {
+        "System.Void SeeTrue.Utils.Services.MailService::.ctor()": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Utils.Services.MailService/<>c__DisplayClass2_0": {
+        "System.Void SeeTrue.Utils.Services.MailService/<>c__DisplayClass2_0::<Send>b__0()": {
+          "Lines": {
+            "39": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Utils.Services.MailService/<>c__DisplayClass3_0": {
+        "System.Void SeeTrue.Utils.Services.MailService/<>c__DisplayClass3_0::<NotifyEmailChange>b__0()": {
+          "Lines": {
+            "54": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Utils.Services.MailService/<>c__DisplayClass4_0": {
+        "System.Void SeeTrue.Utils.Services.MailService/<>c__DisplayClass4_0::<NotifyRecovery>b__0()": {
+          "Lines": {
+            "69": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Utils.Services.MailService/<>c__DisplayClass5_0": {
+        "System.Void SeeTrue.Utils.Services.MailService/<>c__DisplayClass5_0::<NotifyMagicLink>b__0()": {
+          "Lines": {
+            "84": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Utils.Services.MailService/<NotifyEmailChange>d__3": {
+        "System.Void SeeTrue.Utils.Services.MailService/<NotifyEmailChange>d__3::MoveNext()": {
+          "Lines": {
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "55": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Utils.Services.MailService/<NotifyMagicLink>d__5": {
+        "System.Void SeeTrue.Utils.Services.MailService/<NotifyMagicLink>d__5::MoveNext()": {
+          "Lines": {
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "85": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Utils.Services.MailService/<NotifyRecovery>d__4": {
+        "System.Void SeeTrue.Utils.Services.MailService/<NotifyRecovery>d__4::MoveNext()": {
+          "Lines": {
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "70": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Utils.Services.MailService/<Send>d__2": {
+        "System.Void SeeTrue.Utils.Services.MailService/<Send>d__2::MoveNext()": {
+          "Lines": {
+            "27": 0,
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "40": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/HandlerResponse.cs": {
+      "SeeTrue.Infrastructure.HandlerResponse`1": {
+        "System.Net.HttpStatusCode SeeTrue.Infrastructure.HandlerResponse`1::get_Code()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.HandlerResponse`1::get_ErrorMessage()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "T SeeTrue.Infrastructure.HandlerResponse`1::get_Data()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/ServiceExtension.cs": {
+      "SeeTrue.Infrastructure.ServiceExtension": {
+        "System.Void SeeTrue.Infrastructure.ServiceExtension::AddSeeTrue(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
+          "Lines": {
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Validators/AdminUpdateUserRequestValidator.cs": {
+      "SeeTrue.Infrastructure.Validators.AdminUpdateUserRequestValidator": {
+        "System.Void SeeTrue.Infrastructure.Validators.AdminUpdateUserRequestValidator::.ctor()": {
+          "Lines": {
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Validators/InviteRequestValidator.cs": {
+      "SeeTrue.Infrastructure.Validators.InviteRequestValidator": {
+        "System.Void SeeTrue.Infrastructure.Validators.InviteRequestValidator::.ctor()": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Validators/MagicLinkRequestValidator.cs": {
+      "SeeTrue.Infrastructure.Validators.MagicLinkRequestValidator": {
+        "System.Void SeeTrue.Infrastructure.Validators.MagicLinkRequestValidator::.ctor()": {
+          "Lines": {
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Validators/RecoverRequestValidator.cs": {
+      "SeeTrue.Infrastructure.Validators.RecoverRequestValidator": {
+        "System.Void SeeTrue.Infrastructure.Validators.RecoverRequestValidator::.ctor()": {
+          "Lines": {
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Validators/SignUpDataValidator.cs": {
+      "SeeTrue.Infrastructure.Validators.SignUpDataValidator": {
+        "System.Void SeeTrue.Infrastructure.Validators.SignUpDataValidator::.ctor()": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Validators/TokenDataValidator.cs": {
+      "SeeTrue.Infrastructure.Validators.TokenRequestValidator": {
+        "System.Void SeeTrue.Infrastructure.Validators.TokenRequestValidator::.ctor()": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0
+          },
+          "Branches": [
+            {
+              "Line": 11,
+              "Offset": 11,
+              "EndOffset": 13,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 11,
+              "Offset": 11,
+              "EndOffset": 26,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Validators/UserUpdateRequestValidator.cs": {
+      "SeeTrue.Infrastructure.Validators.UserUpdateRequestValidator": {
+        "System.Void SeeTrue.Infrastructure.Validators.UserUpdateRequestValidator::.ctor()": {
+          "Lines": {
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0
+          },
+          "Branches": [
+            {
+              "Line": 10,
+              "Offset": 11,
+              "EndOffset": 13,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 10,
+              "Offset": 24,
+              "EndOffset": 26,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 10,
+              "Offset": 11,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 10,
+              "Offset": 24,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Validators/VerifyRequestValidator.cs": {
+      "SeeTrue.Infrastructure.Validators.VerifyRequestValidator": {
+        "System.Void SeeTrue.Infrastructure.Validators.VerifyRequestValidator::.ctor()": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": [
+            {
+              "Line": 11,
+              "Offset": 11,
+              "EndOffset": 13,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 11,
+              "Offset": 11,
+              "EndOffset": 26,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Utils/Contants.cs": {
+      "SeeTrue.Infrastructure.Utils.Constants": {
+        "System.Void SeeTrue.Infrastructure.Utils.Constants::.cctor()": {
+          "Lines": {
+            "10": 1,
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1,
+            "19": 1,
+            "20": 1,
+            "21": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Utils/Env.cs": {
+      "SeeTrue.Infrastructure.Utils.Env": {
+        "System.Void SeeTrue.Infrastructure.Utils.Env::.cctor()": {
+          "Lines": {
+            "33": 1,
+            "34": 1,
+            "35": 1,
+            "36": 1,
+            "37": 1,
+            "38": 1,
+            "39": 1,
+            "40": 1,
+            "41": 1,
+            "42": 1,
+            "43": 1,
+            "44": 1,
+            "45": 1,
+            "46": 1,
+            "47": 1,
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "52": 1,
+            "53": 1,
+            "54": 1,
+            "55": 1
+          },
+          "Branches": [
+            {
+              "Line": 37,
+              "Offset": 68,
+              "EndOffset": 70,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 68,
+              "EndOffset": 74,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 37,
+              "Offset": 91,
+              "EndOffset": 93,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 91,
+              "EndOffset": 99,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Utils/Helpers.cs": {
+      "SeeTrue.Infrastructure.Utils.Helpers": {
+        "System.String SeeTrue.Infrastructure.Utils.Helpers::GenerateUniqueToken()": {
+          "Lines": {
+            "12": 1,
+            "13": 1,
+            "14": 1
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Utils.Helpers::GenerateTimestampedToken()": {
+          "Lines": {
+            "17": 7,
+            "18": 7,
+            "19": 7,
+            "21": 7,
+            "22": 7
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Utils.Helpers::ValidateExpiringToken(System.String,System.Int32)": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "34": 0,
+            "35": 0
+          },
+          "Branches": [
+            {
+              "Line": 29,
+              "Offset": 42,
+              "EndOffset": 44,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 42,
+              "EndOffset": 49,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Collections.Generic.IEnumerable`1<System.String> SeeTrue.Infrastructure.Utils.Helpers::ParseAudiences(System.String)": {
+          "Lines": {
+            "38": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": []
+        },
+        "T SeeTrue.Infrastructure.Utils.Helpers::GetEnvironmentVariable(System.String,T)": {
+          "Lines": {
+            "43": 15,
+            "44": 15,
+            "46": 15,
+            "47": 5,
+            "48": 5,
+            "52": 10,
+            "53": 10,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "59": 15
+          },
+          "Branches": [
+            {
+              "Line": 46,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 5
+            },
+            {
+              "Line": 46,
+              "Offset": 16,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 10
+            }
+          ]
+        },
+        "T SeeTrue.Infrastructure.Utils.Helpers::GetRequiredEnvironmentVariable(System.String)": {
+          "Lines": {
+            "62": 6,
+            "63": 6,
+            "65": 6,
+            "66": 0,
+            "67": 0,
+            "71": 6,
+            "72": 6,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "78": 6
+          },
+          "Branches": [
+            {
+              "Line": 65,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 16,
+              "EndOffset": 36,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/AdminUpdateUserRequest.cs": {
+      "SeeTrue.Infrastructure.Types.AdminUpdateUserRequest": {
+        "System.String SeeTrue.Infrastructure.Types.AdminUpdateUserRequest::get_Role()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Boolean> SeeTrue.Infrastructure.Types.AdminUpdateUserRequest::get_Confirm()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.AdminUpdateUserRequest::get_Password()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.AdminUpdateUserRequest::get_Email()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,System.Object> SeeTrue.Infrastructure.Types.AdminUpdateUserRequest::get_AppMetaData()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,System.Object> SeeTrue.Infrastructure.Types.AdminUpdateUserRequest::get_UserMetaData()": {
+          "Lines": {
+            "20": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/ApiKey.cs": {
+      "SeeTrue.Infrastructure.Types.ApiKey": {
+        "System.String SeeTrue.Infrastructure.Types.ApiKey::get_Key()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.ApiKey::get_OwnerName()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IReadOnlyCollection`1<System.Security.Claims.Claim> SeeTrue.Infrastructure.Types.ApiKey::get_Claims()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Infrastructure.Types.ApiKey::.ctor(System.String,System.String,System.Collections.Generic.List`1<System.Security.Claims.Claim>)": {
+          "Lines": {
+            "9": 1,
+            "10": 1,
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 25,
+              "EndOffset": 27,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 13,
+              "Offset": 25,
+              "EndOffset": 33,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/EmailConfirmRequest.cs": {
+      "SeeTrue.Infrastructure.Types.EmailConfirmRequest": {
+        "System.String SeeTrue.Infrastructure.Types.EmailConfirmRequest::get_Token()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/HealthCheckResponse.cs": {
+      "SeeTrue.Infrastructure.Types.HealthCheckResponse": {
+        "System.String SeeTrue.Infrastructure.Types.HealthCheckResponse::get_Name()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.Single SeeTrue.Infrastructure.Types.HealthCheckResponse::get_Version()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.HealthCheckResponse::get_Description()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/InviteRequest.cs": {
+      "SeeTrue.Infrastructure.Types.InviteRequest": {
+        "System.String SeeTrue.Infrastructure.Types.InviteRequest::get_Email()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/MagicLinkRequest.cs": {
+      "SeeTrue.Infrastructure.Types.MagicLinkRequest": {
+        "System.String SeeTrue.Infrastructure.Types.MagicLinkRequest::get_Email()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/RecoverRequest.cs": {
+      "SeeTrue.Infrastructure.Types.RecoverRequest": {
+        "System.String SeeTrue.Infrastructure.Types.RecoverRequest::get_Email()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/SeeTrueException.cs": {
+      "SeeTrue.Infrastructure.Types.SeeTrueException": {
+        "System.Net.HttpStatusCode SeeTrue.Infrastructure.Types.SeeTrueException::get_StatusCode()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Infrastructure.Types.SeeTrueException::.ctor(System.Net.HttpStatusCode,System.String)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Types.SeeTrueExceptionResponse": {
+        "System.String SeeTrue.Infrastructure.Types.SeeTrueExceptionResponse::get_Message()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.SeeTrueExceptionResponse::ToString()": {
+          "Lines": {
+            "34": 0,
+            "35": 0,
+            "36": 0
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Infrastructure.Types.SeeTrueExceptionResponse::.ctor(SeeTrue.Infrastructure.Types.SeeTrueException)": {
+          "Lines": {
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Infrastructure.Types.SeeTrueExceptionResponse::.ctor(System.String)": {
+          "Lines": {
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/SignUpRequest.cs": {
+      "SeeTrue.Infrastructure.Types.SignUpRequest": {
+        "System.String SeeTrue.Infrastructure.Types.SignUpRequest::get_Email()": {
+          "Lines": {
+            "9": 3
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.SignUpRequest::get_Password()": {
+          "Lines": {
+            "11": 2
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,System.Object> SeeTrue.Infrastructure.Types.SignUpRequest::get_UserMetaData()": {
+          "Lines": {
+            "13": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/TokenRequest.cs": {
+      "SeeTrue.Infrastructure.Types.TokenRequest": {
+        "System.String SeeTrue.Infrastructure.Types.TokenRequest::get_GrantType()": {
+          "Lines": {
+            "8": 4
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.TokenRequest::get_Email()": {
+          "Lines": {
+            "10": 2
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.TokenRequest::get_Password()": {
+          "Lines": {
+            "12": 2
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.TokenRequest::get_RefreshToken()": {
+          "Lines": {
+            "15": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/TokenResponse.cs": {
+      "SeeTrue.Infrastructure.Types.TokenResponse": {
+        "System.String SeeTrue.Infrastructure.Types.TokenResponse::get_AccessToken()": {
+          "Lines": {
+            "9": 17
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.TokenResponse::get_TokenType()": {
+          "Lines": {
+            "12": 12
+          },
+          "Branches": []
+        },
+        "System.Int32 SeeTrue.Infrastructure.Types.TokenResponse::get_ExpiresIn()": {
+          "Lines": {
+            "15": 19
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.TokenResponse::get_RefreshToken()": {
+          "Lines": {
+            "18": 24
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/UserTokenResponse.cs": {
+      "SeeTrue.Infrastructure.Types.UserTokenResponse": {
+        "SeeTrue.Models.User SeeTrue.Infrastructure.Types.UserTokenResponse::get_User()": {
+          "Lines": {
+            "10": 5
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/UserUpdateRequest.cs": {
+      "SeeTrue.Infrastructure.Types.UserUpdateRequest": {
+        "System.String SeeTrue.Infrastructure.Types.UserUpdateRequest::get_Password()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.UserUpdateRequest::get_Email()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,System.Object> SeeTrue.Infrastructure.Types.UserUpdateRequest::get_UserMetaData()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Types/VerifyRequest.cs": {
+      "SeeTrue.Infrastructure.Types.VerifyRequest": {
+        "System.String SeeTrue.Infrastructure.Types.VerifyRequest::get_Type()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.VerifyRequest::get_Token()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Types.VerifyRequest::get_Password()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Services/CommandService.cs": {
+      "SeeTrue.Infrastructure.Services.CommandService": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService::RestrictAccesTokenUsage(System.Guid)": {
+          "Lines": {
+            "411": 1,
+            "412": 1,
+            "413": 1
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Infrastructure.Services.CommandService::RemoveFromCache(System.String)": {
+          "Lines": {
+            "416": 0,
+            "417": 0,
+            "418": 0
+          },
+          "Branches": []
+        },
+        "TItem SeeTrue.Infrastructure.Services.CommandService::SetCache(System.Object,TItem)": {
+          "Lines": {
+            "421": 0,
+            "422": 0,
+            "423": 0
+          },
+          "Branches": []
+        },
+        "TItem SeeTrue.Infrastructure.Services.CommandService::SetCache(System.Object,TItem,System.TimeSpan)": {
+          "Lines": {
+            "426": 0,
+            "427": 0,
+            "428": 0
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Infrastructure.Services.CommandService::.ctor(SeeTrue.Models.ISeeTrueDbContext,SeeTrue.Utils.Services.IMailService,Microsoft.Extensions.Caching.Memory.IMemoryCache)": {
+          "Lines": {
+            "195": 2,
+            "196": 2,
+            "197": 2,
+            "198": 2,
+            "199": 2,
+            "200": 2
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<>c": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<>c::<InvalidateRefreshTokenByLoginId>b__18_0(SeeTrue.Models.RefreshToken)": {
+          "Lines": {
+            "402": 1,
+            "403": 1,
+            "404": 1,
+            "405": 2
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<ConfirmEmailChange>d__14": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<ConfirmEmailChange>d__14::MoveNext()": {
+          "Lines": {
+            "350": 0,
+            "351": 0,
+            "352": 0,
+            "353": 0,
+            "355": 0,
+            "356": 0,
+            "357": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<ConfirmUser>d__10": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<ConfirmUser>d__10::MoveNext()": {
+          "Lines": {
+            "311": 1,
+            "312": 1,
+            "313": 1,
+            "315": 1,
+            "316": 1,
+            "317": 1
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<CreateUser>d__25": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<CreateUser>d__25::MoveNext()": {
+          "Lines": {
+            "446": 0,
+            "447": 0,
+            "448": 0,
+            "449": 0,
+            "450": 0,
+            "451": 0,
+            "452": 0,
+            "453": 0,
+            "454": 0,
+            "455": 0,
+            "456": 0,
+            "458": 0,
+            "459": 0,
+            "461": 0,
+            "462": 0
+          },
+          "Branches": [
+            {
+              "Line": 447,
+              "Offset": 96,
+              "EndOffset": 98,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 447,
+              "Offset": 96,
+              "EndOffset": 104,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 447,
+              "Offset": 166,
+              "EndOffset": 168,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 447,
+              "Offset": 166,
+              "EndOffset": 189,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 447,
+              "Offset": 187,
+              "EndOffset": 189,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 447,
+              "Offset": 187,
+              "EndOffset": 200,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<GrantTokenSwap>d__5": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<GrantTokenSwap>d__5::MoveNext()": {
+          "Lines": {
+            "227": 2,
+            "228": 2,
+            "229": 2,
+            "230": 2,
+            "232": 2,
+            "233": 2,
+            "234": 2
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<InvalidateRefreshTokenByLoginId>d__18": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<InvalidateRefreshTokenByLoginId>d__18::MoveNext()": {
+          "Lines": {
+            "398": 1,
+            "399": 1,
+            "401": 1,
+            "407": 1,
+            "408": 1
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<InviteUser>d__26": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<InviteUser>d__26::MoveNext()": {
+          "Lines": {
+            "465": 0,
+            "466": 0,
+            "467": 0,
+            "469": 0,
+            "470": 0,
+            "471": 0,
+            "472": 0,
+            "473": 0,
+            "474": 0,
+            "475": 0,
+            "476": 0,
+            "478": 0,
+            "479": 0,
+            "481": 0,
+            "482": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<IssueTokens>d__6": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<IssueTokens>d__6::MoveNext()": {
+          "Lines": {
+            "237": 7,
+            "238": 7,
+            "240": 7,
+            "241": 7,
+            "243": 7,
+            "244": 7,
+            "245": 7,
+            "246": 7,
+            "247": 7,
+            "248": 7,
+            "249": 7,
+            "251": 7,
+            "253": 7,
+            "254": 7,
+            "255": 7,
+            "256": 7,
+            "257": 7,
+            "258": 7,
+            "259": 7
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<NewAuditLogEntry>d__7": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<NewAuditLogEntry>d__7::MoveNext()": {
+          "Lines": {
+            "262": 3,
+            "263": 3,
+            "264": 3,
+            "265": 3,
+            "266": 3,
+            "267": 3,
+            "268": 3,
+            "269": 3,
+            "270": 3,
+            "271": 3,
+            "272": 3,
+            "273": 3,
+            "274": 3,
+            "277": 3,
+            "278": 0,
+            "279": 0,
+            "280": 0,
+            "282": 3,
+            "283": 3,
+            "284": 3
+          },
+          "Branches": [
+            {
+              "Line": 277,
+              "Offset": 225,
+              "EndOffset": 227,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 277,
+              "Offset": 225,
+              "EndOffset": 256,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 277,
+              "Offset": 261,
+              "EndOffset": 263,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 277,
+              "Offset": 261,
+              "EndOffset": 298,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<Recover>d__16": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<Recover>d__16::MoveNext()": {
+          "Lines": {
+            "376": 0,
+            "377": 0,
+            "378": 0,
+            "380": 0,
+            "381": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<RemoveUser>d__23": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<RemoveUser>d__23::MoveNext()": {
+          "Lines": {
+            "431": 0,
+            "432": 0,
+            "434": 0,
+            "435": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<SendConfirmation>d__8": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<SendConfirmation>d__8::MoveNext()": {
+          "Lines": {
+            "287": 1,
+            "288": 1,
+            "289": 0,
+            "290": 0,
+            "293": 1,
+            "294": 1,
+            "296": 1,
+            "298": 1,
+            "299": 1,
+            "300": 1
+          },
+          "Branches": [
+            {
+              "Line": 288,
+              "Offset": 48,
+              "EndOffset": 50,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 288,
+              "Offset": 92,
+              "EndOffset": 94,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 288,
+              "Offset": 92,
+              "EndOffset": 97,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 288,
+              "Offset": 48,
+              "EndOffset": 112,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 288,
+              "Offset": 115,
+              "EndOffset": 117,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 288,
+              "Offset": 115,
+              "EndOffset": 123,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<SendEmailChange>d__13": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<SendEmailChange>d__13::MoveNext()": {
+          "Lines": {
+            "337": 0,
+            "338": 0,
+            "339": 0,
+            "341": 0,
+            "343": 0,
+            "345": 0,
+            "346": 0,
+            "347": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<SendPasswordRecovery>d__15": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<SendPasswordRecovery>d__15::MoveNext()": {
+          "Lines": {
+            "360": 0,
+            "361": 0,
+            "362": 0,
+            "363": 0,
+            "366": 0,
+            "367": 0,
+            "369": 0,
+            "371": 0,
+            "372": 0,
+            "373": 0
+          },
+          "Branches": [
+            {
+              "Line": 361,
+              "Offset": 69,
+              "EndOffset": 71,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 361,
+              "Offset": 69,
+              "EndOffset": 74,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 361,
+              "Offset": 89,
+              "EndOffset": 91,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 361,
+              "Offset": 89,
+              "EndOffset": 108,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<SignUpNewUser>d__4": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<SignUpNewUser>d__4::MoveNext()": {
+          "Lines": {
+            "203": 2,
+            "204": 2,
+            "205": 2,
+            "207": 2,
+            "208": 2,
+            "209": 2,
+            "210": 2,
+            "211": 2,
+            "212": 2,
+            "213": 2,
+            "214": 2,
+            "215": 2,
+            "216": 2,
+            "217": 2,
+            "220": 2,
+            "221": 2,
+            "223": 2,
+            "224": 2
+          },
+          "Branches": [
+            {
+              "Line": 207,
+              "Offset": 164,
+              "EndOffset": 166,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 207,
+              "Offset": 164,
+              "EndOffset": 177,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<StoreLogin>d__17": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<StoreLogin>d__17::MoveNext()": {
+          "Lines": {
+            "384": 2,
+            "385": 2,
+            "386": 2,
+            "387": 2,
+            "388": 2,
+            "389": 2,
+            "391": 2,
+            "392": 2,
+            "394": 2,
+            "395": 2
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<UpdateAppMetaData>d__12": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<UpdateAppMetaData>d__12::MoveNext()": {
+          "Lines": {
+            "329": 0,
+            "330": 0,
+            "331": 0,
+            "333": 0,
+            "334": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<UpdateUserEmail>d__24": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<UpdateUserEmail>d__24::MoveNext()": {
+          "Lines": {
+            "438": 0,
+            "439": 0,
+            "440": 0,
+            "442": 0,
+            "443": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<UpdateUserMetaData>d__11": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<UpdateUserMetaData>d__11::MoveNext()": {
+          "Lines": {
+            "321": 0,
+            "322": 0,
+            "323": 0,
+            "325": 0,
+            "326": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.CommandService/<UpdateUserPassword>d__9": {
+        "System.Void SeeTrue.Infrastructure.Services.CommandService/<UpdateUserPassword>d__9::MoveNext()": {
+          "Lines": {
+            "303": 0,
+            "304": 0,
+            "305": 0,
+            "307": 0,
+            "308": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Services/QueryService.cs": {
+      "SeeTrue.Infrastructure.Services.QueryService": {
+        "System.Boolean SeeTrue.Infrastructure.Services.QueryService::TryGetValueFromCache(System.Object,T&)": {
+          "Lines": {
+            "110": 0,
+            "111": 0,
+            "112": 0
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Infrastructure.Services.QueryService::.ctor(SeeTrue.Models.ISeeTrueDbContext,Microsoft.Extensions.Caching.Memory.IMemoryCache)": {
+          "Lines": {
+            "30": 2,
+            "31": 2,
+            "32": 2,
+            "33": 2,
+            "34": 2
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.QueryService/<CheckEmailExists>d__7": {
+        "System.Void SeeTrue.Infrastructure.Services.QueryService/<CheckEmailExists>d__7::MoveNext()": {
+          "Lines": {
+            "93": 1,
+            "94": 1,
+            "96": 1,
+            "97": 1
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.QueryService/<FindRefreshTokenWithUser>d__5": {
+        "System.Void SeeTrue.Infrastructure.Services.QueryService/<FindRefreshTokenWithUser>d__5::MoveNext()": {
+          "Lines": {
+            "71": 4,
+            "72": 4,
+            "73": 4,
+            "74": 4
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.QueryService/<FindUserByConfirmationToken>d__6": {
+        "System.Void SeeTrue.Infrastructure.Services.QueryService/<FindUserByConfirmationToken>d__6::MoveNext()": {
+          "Lines": {
+            "82": 1,
+            "83": 1,
+            "84": 1
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.QueryService/<FindUserByEmailAndAudience>d__3": {
+        "System.Void SeeTrue.Infrastructure.Services.QueryService/<FindUserByEmailAndAudience>d__3::MoveNext()": {
+          "Lines": {
+            "43": 7,
+            "44": 7,
+            "46": 7,
+            "47": 7,
+            "48": 7,
+            "49": 7,
+            "50": 7,
+            "52": 7,
+            "53": 7
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.QueryService/<FindUserByEmailChangeToken>d__8": {
+        "System.Void SeeTrue.Infrastructure.Services.QueryService/<FindUserByEmailChangeToken>d__8::MoveNext()": {
+          "Lines": {
+            "100": 0,
+            "101": 0,
+            "102": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.QueryService/<FindUserById>d__4": {
+        "System.Void SeeTrue.Infrastructure.Services.QueryService/<FindUserById>d__4::MoveNext()": {
+          "Lines": {
+            "61": 2,
+            "62": 2,
+            "63": 2
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.QueryService/<FindUserByRecoveryToken>d__9": {
+        "System.Void SeeTrue.Infrastructure.Services.QueryService/<FindUserByRecoveryToken>d__9::MoveNext()": {
+          "Lines": {
+            "105": 0,
+            "106": 0,
+            "107": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Services.QueryService/<PaginateUsers>d__11": {
+        "System.Void SeeTrue.Infrastructure.Services.QueryService/<PaginateUsers>d__11::MoveNext()": {
+          "Lines": {
+            "115": 0,
+            "116": 0,
+            "117": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Queries/Authorize.cs": {
+      "SeeTrue.Infrastructure.Queries.Authorize/Query": {
+        "System.String SeeTrue.Infrastructure.Queries.Authorize/Query::get_Provider()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Queries.Authorize/Handler": {
+        "System.Threading.Tasks.Task`1<System.String> SeeTrue.Infrastructure.Queries.Authorize/Handler::Handle(SeeTrue.Infrastructure.Queries.Authorize/Query,System.Threading.CancellationToken)": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": [
+            {
+              "Line": 20,
+              "Offset": 19,
+              "EndOffset": 21,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 20,
+              "Offset": 19,
+              "EndOffset": 38,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Queries/GetSettings.cs": {
+      "SeeTrue.Infrastructure.Queries.GetSettings/Handler": {
+        "System.Threading.Tasks.Task`1<SeeTrue.Infrastructure.Queries.GetSettings/Response> SeeTrue.Infrastructure.Queries.GetSettings/Handler::Handle(SeeTrue.Infrastructure.Queries.GetSettings/Query,System.Threading.CancellationToken)": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Queries.GetSettings/Response": {
+        "System.Boolean SeeTrue.Infrastructure.Queries.GetSettings/Response::get_SignupDisabled()": {
+          "Lines": {
+            "24": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Queries.GetSettings/Response::get_Autoconfirm()": {
+          "Lines": {
+            "26": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Queries/GetUser.cs": {
+      "SeeTrue.Infrastructure.Queries.GetUser/Query": {
+        "System.Guid SeeTrue.Infrastructure.Queries.GetUser/Query::get_UserId()": {
+          "Lines": {
+            "12": 3
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Queries.GetUser/Handler": {
+        "System.Void SeeTrue.Infrastructure.Queries.GetUser/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService)": {
+          "Lines": {
+            "18": 1,
+            "19": 1,
+            "20": 1,
+            "21": 1
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Queries.GetUser/Handler/<Handle>d__2": {
+        "System.Void SeeTrue.Infrastructure.Queries.GetUser/Handler/<Handle>d__2::MoveNext()": {
+          "Lines": {
+            "24": 1,
+            "25": 1,
+            "26": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Queries/GetUsers.cs": {
+      "SeeTrue.Infrastructure.Queries.GetUsers/Query": {
+        "System.Int32 SeeTrue.Infrastructure.Queries.GetUsers/Query::get_Page()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Queries.GetUsers/Handler": {
+        "System.Void SeeTrue.Infrastructure.Queries.GetUsers/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService)": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Queries.GetUsers/Handler/<Handle>d__2": {
+        "System.Void SeeTrue.Infrastructure.Queries.GetUsers/Handler/<Handle>d__2::MoveNext()": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Extensions/TypeExtensions.cs": {
+      "SeeTrue.Infrastructure.Extensions.TypeExtensions": {
+        "System.Boolean SeeTrue.Infrastructure.Extensions.TypeExtensions::IsConfirmed(SeeTrue.Models.User)": {
+          "Lines": {
+            "17": 1,
+            "18": 1,
+            "19": 1
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Extensions.TypeExtensions::HasRole(SeeTrue.Models.User,System.String)": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        },
+        "System.Void SeeTrue.Infrastructure.Extensions.TypeExtensions::UpdateUserMetaData(SeeTrue.Models.User,System.Collections.Generic.Dictionary`2<System.String,System.Object>)": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 12,
+              "EndOffset": 26,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 32,
+              "EndOffset": 34,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 129,
+              "EndOffset": 45,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 68,
+              "EndOffset": 70,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 68,
+              "EndOffset": 100,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 129,
+              "EndOffset": 131,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 32,
+              "EndOffset": 149,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void SeeTrue.Infrastructure.Extensions.TypeExtensions::UpdateAppMetaData(SeeTrue.Models.User,System.Collections.Generic.Dictionary`2<System.String,System.Object>)": {
+          "Lines": {
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0
+          },
+          "Branches": [
+            {
+              "Line": 50,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 12,
+              "EndOffset": 26,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 32,
+              "EndOffset": 34,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 129,
+              "EndOffset": 45,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 68,
+              "EndOffset": 70,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 68,
+              "EndOffset": 100,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 129,
+              "EndOffset": 131,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 32,
+              "EndOffset": 149,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String SeeTrue.Infrastructure.Extensions.TypeExtensions::GenerateAccessToken(SeeTrue.Models.User,System.Guid)": {
+          "Lines": {
+            "71": 7,
+            "72": 7,
+            "73": 7,
+            "74": 7,
+            "75": 7,
+            "76": 7,
+            "77": 7,
+            "78": 7,
+            "79": 7,
+            "80": 7,
+            "82": 7,
+            "83": 7,
+            "84": 7,
+            "85": 7,
+            "86": 7,
+            "88": 7,
+            "89": 7
+          },
+          "Branches": []
+        },
+        "System.Double SeeTrue.Infrastructure.Extensions.TypeExtensions::GetUnixEpoch(System.DateTime)": {
+          "Lines": {
+            "92": 7,
+            "93": 7,
+            "94": 7,
+            "96": 7,
+            "97": 7
+          },
+          "Branches": []
+        },
+        "System.Guid SeeTrue.Infrastructure.Extensions.TypeExtensions::GetUserId(Microsoft.AspNetCore.Http.HttpContext)": {
+          "Lines": {
+            "100": 0,
+            "101": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "113": 0,
+            "114": 0
+          },
+          "Branches": [
+            {
+              "Line": 103,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 103,
+              "Offset": 60,
+              "EndOffset": 79,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 108,
+              "Offset": 89,
+              "EndOffset": 91,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 108,
+              "Offset": 89,
+              "EndOffset": 97,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Guid SeeTrue.Infrastructure.Extensions.TypeExtensions::GetLoginId(Microsoft.AspNetCore.Http.HttpContext)": {
+          "Lines": {
+            "117": 0,
+            "118": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "125": 0,
+            "126": 0,
+            "127": 0,
+            "130": 0,
+            "131": 0
+          },
+          "Branches": [
+            {
+              "Line": 120,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 120,
+              "Offset": 60,
+              "EndOffset": 79,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 125,
+              "Offset": 89,
+              "EndOffset": 91,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 125,
+              "Offset": 89,
+              "EndOffset": 97,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String SeeTrue.Infrastructure.Extensions.TypeExtensions::GetUserAgent(Microsoft.AspNetCore.Http.HttpContext)": {
+          "Lines": {
+            "134": 0,
+            "135": 0,
+            "136": 0
+          },
+          "Branches": []
+        },
+        "System.String SeeTrue.Infrastructure.Extensions.TypeExtensions::GetAudience(Microsoft.AspNetCore.Http.HttpContext)": {
+          "Lines": {
+            "139": 0,
+            "140": 0,
+            "141": 0
+          },
+          "Branches": []
+        },
+        "System.Byte[] SeeTrue.Infrastructure.Extensions.TypeExtensions::ToByteArray(System.String)": {
+          "Lines": {
+            "144": 9,
+            "145": 9,
+            "146": 9
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Extensions/ValidationExtensions.cs": {
+      "SeeTrue.Infrastructure.Extensions.ValidationExtensions": {
+        "System.Boolean SeeTrue.Infrastructure.Extensions.ValidationExtensions::Validate(SeeTrue.Infrastructure.Types.SignUpRequest)": {
+          "Lines": {
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "15": 0,
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Extensions.ValidationExtensions::Validate(SeeTrue.Infrastructure.Types.TokenRequest)": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Extensions.ValidationExtensions::Validate(SeeTrue.Infrastructure.Types.VerifyRequest)": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Extensions.ValidationExtensions::Validate(SeeTrue.Infrastructure.Types.MagicLinkRequest)": {
+          "Lines": {
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Extensions.ValidationExtensions::Validate(SeeTrue.Infrastructure.Types.RecoverRequest)": {
+          "Lines": {
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "47": 0,
+            "48": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Extensions.ValidationExtensions::Validate(SeeTrue.Infrastructure.Types.UserUpdateRequest)": {
+          "Lines": {
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "55": 0,
+            "56": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Extensions.ValidationExtensions::Validate(SeeTrue.Infrastructure.Types.AdminUpdateUserRequest)": {
+          "Lines": {
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "63": 0,
+            "64": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean SeeTrue.Infrastructure.Extensions.ValidationExtensions::Validate(SeeTrue.Infrastructure.Types.InviteRequest)": {
+          "Lines": {
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "71": 0,
+            "72": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/AdminUpdateUser.cs": {
+      "SeeTrue.Infrastructure.Commands.AdminUpdateUser/Command": {
+        "System.Guid SeeTrue.Infrastructure.Commands.AdminUpdateUser/Command::get_UserId()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.AdminUpdateUser/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.AdminUpdateUser/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.AdminUpdateUser/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.AdminUpdateUser/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "61": 0,
+            "63": 0,
+            "64": 0
+          },
+          "Branches": [
+            {
+              "Line": 31,
+              "Offset": 230,
+              "EndOffset": 232,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 31,
+              "Offset": 230,
+              "EndOffset": 249,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 277,
+              "EndOffset": 282,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 277,
+              "EndOffset": 415,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 440,
+              "EndOffset": 442,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 440,
+              "EndOffset": 469,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 474,
+              "EndOffset": 476,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 474,
+              "EndOffset": 593,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 621,
+              "EndOffset": 626,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 46,
+              "Offset": 621,
+              "EndOffset": 759,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 51,
+              "Offset": 780,
+              "EndOffset": 785,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 51,
+              "Offset": 780,
+              "EndOffset": 918,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 939,
+              "EndOffset": 944,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 939,
+              "EndOffset": 1077,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/ConfirmEmailChange.cs": {
+      "SeeTrue.Infrastructure.Commands.ConfirmEmailChange/Command": {
+        "System.String SeeTrue.Infrastructure.Commands.ConfirmEmailChange/Command::get_Token()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.ConfirmEmailChange/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.ConfirmEmailChange/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.ConfirmEmailChange/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.ConfirmEmailChange/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 180,
+              "EndOffset": 182,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 180,
+              "EndOffset": 199,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/CreateUser.cs": {
+      "SeeTrue.Infrastructure.Commands.CreateUser/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.CreateUser/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.CreateUser/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.CreateUser/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": [
+            {
+              "Line": 32,
+              "Offset": 191,
+              "EndOffset": 193,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 191,
+              "EndOffset": 210,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/DeleteUser.cs": {
+      "SeeTrue.Infrastructure.Commands.DeleteUser/Command": {
+        "System.Guid SeeTrue.Infrastructure.Commands.DeleteUser/Command::get_UserId()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.DeleteUser/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.DeleteUser/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.DeleteUser/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.DeleteUser/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 180,
+              "EndOffset": 182,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 180,
+              "EndOffset": 199,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/Invite.cs": {
+      "SeeTrue.Infrastructure.Commands.Invite/Command": {
+        "System.String SeeTrue.Infrastructure.Commands.Invite/Command::get_Email()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Invite/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.Invite/Handler::.ctor(SeeTrue.Infrastructure.Services.ICommandService,SeeTrue.Infrastructure.Services.IQueryService)": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Invite/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.Invite/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 181,
+              "EndOffset": 183,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 181,
+              "EndOffset": 200,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/Logout.cs": {
+      "SeeTrue.Infrastructure.Commands.Logout/Command": {
+        "System.Guid SeeTrue.Infrastructure.Commands.Logout/Command::get_LoginId()": {
+          "Lines": {
+            "11": 4
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Logout/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.Logout/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "18": 1,
+            "19": 1,
+            "20": 1,
+            "21": 1,
+            "22": 1
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Logout/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.Logout/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "25": 1,
+            "26": 1,
+            "27": 1,
+            "29": 1,
+            "30": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/ProcessMagicLink.cs": {
+      "SeeTrue.Infrastructure.Commands.ProcessMagicLink/Command": {
+        "System.String SeeTrue.Infrastructure.Commands.ProcessMagicLink/Command::get_Token()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.ProcessMagicLink/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.ProcessMagicLink/Handler::.ctor(SeeTrue.Infrastructure.Services.ICommandService,SeeTrue.Infrastructure.Services.IQueryService)": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.ProcessMagicLink/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.ProcessMagicLink/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "49": 0,
+            "51": 0
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 78,
+              "EndOffset": 83,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 234,
+              "EndOffset": 236,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 234,
+              "EndOffset": 253,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 78,
+              "EndOffset": 640,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/Recover.cs": {
+      "SeeTrue.Infrastructure.Commands.Recover/Command": {
+        "System.String SeeTrue.Infrastructure.Commands.Recover/Command::get_Email()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Recover/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.Recover/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Recover/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.Recover/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "35": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 205,
+              "EndOffset": 207,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 205,
+              "EndOffset": 224,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/RequestMagicLink.cs": {
+      "SeeTrue.Infrastructure.Commands.RequestMagicLink/Command": {
+        "System.String SeeTrue.Infrastructure.Commands.RequestMagicLink/Command::get_Email()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.RequestMagicLink/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.RequestMagicLink/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService,SeeTrue.Utils.Services.IMailService)": {
+          "Lines": {
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.RequestMagicLink/Handler/<Handle>d__4": {
+        "System.Void SeeTrue.Infrastructure.Commands.RequestMagicLink/Handler/<Handle>d__4::MoveNext()": {
+          "Lines": {
+            "32": 0,
+            "33": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "40": 0,
+            "42": 0,
+            "44": 0,
+            "46": 0,
+            "47": 0
+          },
+          "Branches": [
+            {
+              "Line": 35,
+              "Offset": 191,
+              "EndOffset": 193,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 191,
+              "EndOffset": 210,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/SignUp.cs": {
+      "SeeTrue.Infrastructure.Commands.SignUp/Command": {
+        "SeeTrue.Infrastructure.Types.SignUpRequest SeeTrue.Infrastructure.Commands.SignUp/Command::get_Data()": {
+          "Lines": {
+            "16": 13
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.SignUp/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.SignUp/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "24": 1,
+            "25": 1,
+            "26": 1,
+            "27": 1,
+            "28": 1
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.SignUp/Handler/<Handle>d__4": {
+        "System.Void SeeTrue.Infrastructure.Commands.SignUp/Handler/<Handle>d__4::MoveNext()": {
+          "Lines": {
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "35": 1,
+            "36": 0,
+            "37": 0,
+            "40": 1,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "47": 1,
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "52": 1,
+            "53": 1
+          },
+          "Branches": [
+            {
+              "Line": 35,
+              "Offset": 235,
+              "EndOffset": 237,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 235,
+              "EndOffset": 250,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 35,
+              "Offset": 255,
+              "EndOffset": 257,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 255,
+              "EndOffset": 274,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 40,
+              "Offset": 279,
+              "EndOffset": 281,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 40,
+              "Offset": 279,
+              "EndOffset": 294,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 40,
+              "Offset": 299,
+              "EndOffset": 304,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 40,
+              "Offset": 299,
+              "EndOffset": 632,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/Token.cs": {
+      "SeeTrue.Infrastructure.Commands.Token/Command": {
+        "SeeTrue.Infrastructure.Types.TokenRequest SeeTrue.Infrastructure.Commands.Token/Command::get_data()": {
+          "Lines": {
+            "16": 15
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Token/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.Token/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "23": 2,
+            "24": 2,
+            "25": 2,
+            "26": 2,
+            "27": 2
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Token/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.Token/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "30": 2,
+            "31": 2,
+            "33": 2,
+            "35": 2,
+            "38": 1,
+            "39": 1,
+            "40": 1,
+            "43": 1,
+            "44": 1,
+            "45": 1,
+            "48": 0,
+            "49": 0,
+            "53": 2,
+            "54": 2
+          },
+          "Branches": [
+            {
+              "Line": 35,
+              "Offset": 89,
+              "EndOffset": 91,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 35,
+              "Offset": 89,
+              "EndOffset": 112,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 35,
+              "Offset": 102,
+              "EndOffset": 259,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 35,
+              "Offset": 102,
+              "EndOffset": 403,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Token/Handler/<HandlePassword>d__4": {
+        "System.Void SeeTrue.Infrastructure.Commands.Token/Handler/<HandlePassword>d__4::MoveNext()": {
+          "Lines": {
+            "57": 1,
+            "59": 1,
+            "61": 1,
+            "62": 0,
+            "63": 0,
+            "66": 1,
+            "67": 0,
+            "68": 0,
+            "71": 1,
+            "72": 0,
+            "73": 0,
+            "76": 1,
+            "78": 1,
+            "79": 1,
+            "81": 1,
+            "82": 1,
+            "83": 1,
+            "84": 1,
+            "85": 1,
+            "86": 1,
+            "87": 1
+          },
+          "Branches": [
+            {
+              "Line": 61,
+              "Offset": 219,
+              "EndOffset": 221,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 61,
+              "Offset": 219,
+              "EndOffset": 238,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 66,
+              "Offset": 256,
+              "EndOffset": 258,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 66,
+              "Offset": 256,
+              "EndOffset": 275,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 71,
+              "Offset": 316,
+              "EndOffset": 318,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 71,
+              "Offset": 316,
+              "EndOffset": 335,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Token/Handler/<HandleRefresh>d__5": {
+        "System.Void SeeTrue.Infrastructure.Commands.Token/Handler/<HandleRefresh>d__5::MoveNext()": {
+          "Lines": {
+            "90": 1,
+            "91": 1,
+            "93": 1,
+            "94": 0,
+            "95": 0,
+            "98": 1,
+            "99": 0,
+            "101": 0,
+            "104": 1,
+            "105": 1,
+            "107": 1,
+            "108": 0,
+            "109": 0,
+            "112": 1,
+            "113": 1,
+            "115": 1,
+            "116": 1,
+            "117": 1,
+            "118": 1,
+            "119": 1,
+            "120": 1,
+            "121": 1
+          },
+          "Branches": [
+            {
+              "Line": 93,
+              "Offset": 192,
+              "EndOffset": 194,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 93,
+              "Offset": 192,
+              "EndOffset": 210,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 93,
+              "Offset": 215,
+              "EndOffset": 217,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 93,
+              "Offset": 215,
+              "EndOffset": 234,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 98,
+              "Offset": 249,
+              "EndOffset": 251,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 98,
+              "Offset": 249,
+              "EndOffset": 268,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            },
+            {
+              "Line": 107,
+              "Offset": 328,
+              "EndOffset": 330,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 107,
+              "Offset": 328,
+              "EndOffset": 347,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/UserUpdate.cs": {
+      "SeeTrue.Infrastructure.Commands.UserUpdate/Command": {
+        "System.Guid SeeTrue.Infrastructure.Commands.UserUpdate/Command::get_UserId()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.UserUpdate/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.UserUpdate/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.UserUpdate/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.UserUpdate/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "56": 0,
+            "57": 0,
+            "59": 0,
+            "60": 0
+          },
+          "Branches": [
+            {
+              "Line": 32,
+              "Offset": 212,
+              "EndOffset": 214,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 212,
+              "EndOffset": 231,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 254,
+              "EndOffset": 259,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 254,
+              "EndOffset": 387,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 42,
+              "Offset": 408,
+              "EndOffset": 413,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 42,
+              "Offset": 408,
+              "EndOffset": 541,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 47,
+              "Offset": 557,
+              "EndOffset": 559,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 47,
+              "Offset": 557,
+              "EndOffset": 588,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 47,
+              "Offset": 593,
+              "EndOffset": 598,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 51,
+              "Offset": 757,
+              "EndOffset": 759,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 51,
+              "Offset": 757,
+              "EndOffset": 776,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 47,
+              "Offset": 593,
+              "EndOffset": 900,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Commands/Verify.cs": {
+      "SeeTrue.Infrastructure.Commands.Verify/Command": {
+        "System.String SeeTrue.Infrastructure.Commands.Verify/Command::get_Type()": {
+          "Lines": {
+            "14": 8
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Verify/Handler": {
+        "System.Void SeeTrue.Infrastructure.Commands.Verify/Handler::.ctor(SeeTrue.Infrastructure.Services.IQueryService,SeeTrue.Infrastructure.Services.ICommandService)": {
+          "Lines": {
+            "21": 1,
+            "22": 1,
+            "23": 1,
+            "24": 1,
+            "25": 1
+          },
+          "Branches": []
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Verify/Handler/<Handle>d__3": {
+        "System.Void SeeTrue.Infrastructure.Commands.Verify/Handler/<Handle>d__3::MoveNext()": {
+          "Lines": {
+            "28": 1,
+            "30": 1,
+            "33": 1,
+            "34": 1,
+            "35": 1,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "49": 1,
+            "50": 0,
+            "51": 0,
+            "54": 1,
+            "55": 1,
+            "57": 1,
+            "58": 1,
+            "59": 1,
+            "60": 1,
+            "61": 1,
+            "62": 1,
+            "63": 1,
+            "64": 1,
+            "65": 1
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 89,
+              "EndOffset": 91,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 89,
+              "EndOffset": 112,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 30,
+              "Offset": 102,
+              "EndOffset": 253,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 102,
+              "EndOffset": 391,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 421,
+              "EndOffset": 423,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 421,
+              "EndOffset": 440,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Verify/Handler/<RecoveryVerify>d__5": {
+        "System.Void SeeTrue.Infrastructure.Commands.Verify/Handler/<RecoveryVerify>d__5::MoveNext()": {
+          "Lines": {
+            "98": 0,
+            "99": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "106": 0,
+            "108": 0,
+            "109": 0
+          },
+          "Branches": [
+            {
+              "Line": 101,
+              "Offset": 180,
+              "EndOffset": 182,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 101,
+              "Offset": 180,
+              "EndOffset": 199,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "SeeTrue.Infrastructure.Commands.Verify/Handler/<SignupVerify>d__4": {
+        "System.Void SeeTrue.Infrastructure.Commands.Verify/Handler/<SignupVerify>d__4::MoveNext()": {
+          "Lines": {
+            "68": 1,
+            "69": 1,
+            "71": 1,
+            "72": 0,
+            "73": 0,
+            "77": 1,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "91": 1,
+            "92": 1,
+            "94": 1,
+            "95": 1
+          },
+          "Branches": [
+            {
+              "Line": 71,
+              "Offset": 196,
+              "EndOffset": 198,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 71,
+              "Offset": 196,
+              "EndOffset": 220,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 71,
+              "Offset": 225,
+              "EndOffset": 227,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 71,
+              "Offset": 225,
+              "EndOffset": 244,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 77,
+              "Offset": 264,
+              "EndOffset": 269,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 300,
+              "EndOffset": 305,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 326,
+              "EndOffset": 328,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 326,
+              "EndOffset": 345,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 300,
+              "EndOffset": 472,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 264,
+              "EndOffset": 473,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    }
+  }
+}
