@@ -266,15 +266,15 @@ namespace SeeTrue.Infrastructure.Services
                 Payload = new Dictionary<string, string>
                     {
                         { "Timestamp", DateTime.UtcNow.ToString() },
-                        { "ActorId", actor.Id.ToString() },
-                        { "ActorEmail", actor.Email.ToString() },
+                        { "ActorId", actor?.Id.ToString() ?? Guid.Empty.ToString() },
+                        { "ActorEmail", actor?.Email.ToString() ?? "" },
                         { "Action", action.ToString() },
                         { "LogType", Constants.ActionLogTypeMap[action].ToString() }
                     }
             };
 
 
-            if (actor.UserMetaData != null && actor.UserMetaData.TryGetValue("full_name", out object fullName))
+            if (actor?.UserMetaData != null && actor.UserMetaData.TryGetValue("full_name", out object fullName))
             {
                 entry.Payload.Add("actore_name", fullName.ToString());
             }

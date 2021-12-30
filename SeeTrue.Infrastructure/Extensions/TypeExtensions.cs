@@ -75,7 +75,8 @@ namespace SeeTrue.Infrastructure.Extensions
                 { "iss",  Env.Issuer },
                 { "exp", (int)DateTime.UtcNow.AddSeconds(Env.AccessTokenLifetime).GetUnixEpoch() },
                 { "lid", loginId.ToString() },
-                { "role", user.Role }
+                { "role", user.Role },
+                { "gid", Guid.NewGuid() }
             };
 
             var headers = new Dictionary<string, object>{
