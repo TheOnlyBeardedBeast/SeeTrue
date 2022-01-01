@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CoverageSession>
-  <Summary numSequencePoints="744" visitedSequencePoints="581" numBranchPoints="130" visitedBranchPoints="75" sequenceCoverage="78.09" branchCoverage="57.69" maxCyclomaticComplexity="200" minCyclomaticComplexity="53" visitedClasses="81" numClasses="90" visitedMethods="126" numMethods="149" />
+  <Summary numSequencePoints="747" visitedSequencePoints="581" numBranchPoints="130" visitedBranchPoints="75" sequenceCoverage="77.77" branchCoverage="57.69" maxCyclomaticComplexity="200" minCyclomaticComplexity="53" visitedClasses="81" numClasses="90" visitedMethods="126" numMethods="149" />
   <Modules>
-    <Module hash="6AE9173D-9586-4256-A1A9-DE692985D55B">
+    <Module hash="7DD6244B-8162-453A-8BD9-FD57C8B3EC03">
       <ModulePath>SeeTrue.Models.dll</ModulePath>
-      <ModuleTime>2021-12-30T08:24:56</ModuleTime>
+      <ModuleTime>2022-01-01T11:51:20</ModuleTime>
       <ModuleName>SeeTrue.Models</ModuleName>
       <Files>
         <File uid="1" fullPath="/Users/polak/projects/personal/SeeTrue/SeeTrue.Models/AuditLogEntry.cs" />
@@ -639,9 +639,9 @@
         </Class>
       </Classes>
     </Module>
-    <Module hash="B2C1C927-DEEF-4DD5-84CD-19590B97796E">
+    <Module hash="91C92A45-41CB-4B91-BA5D-AFFD9D912CC9">
       <ModulePath>SeeTrue.Infrastructure.dll</ModulePath>
-      <ModuleTime>2021-12-30T08:24:56</ModuleTime>
+      <ModuleTime>2022-01-01T11:51:20</ModuleTime>
       <ModuleName>SeeTrue.Infrastructure</ModuleName>
       <Files>
         <File uid="6" fullPath="/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Utils/Contants.cs" />
@@ -1078,11 +1078,11 @@
           </Methods>
         </Class>
         <Class>
-          <Summary numSequencePoints="15" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="1" />
+          <Summary numSequencePoints="18" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="1" />
           <FullName>SeeTrue.Infrastructure.Services.CommandService/&lt;InviteUser&gt;d__26</FullName>
           <Methods>
             <Method cyclomaticComplexity="1" nPathComplexity="1" sequenceCoverage="0" branchCoverage="100" isConstructor="False" isGetter="False" isSetter="False" isStatic="True">
-              <Summary numSequencePoints="15" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <Summary numSequencePoints="18" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
               <MetadataToken />
               <Name>System.Void SeeTrue.Infrastructure.Services.CommandService/&lt;InviteUser&gt;d__26::MoveNext()</Name>
               <FileRef uid="9" />
@@ -1098,13 +1098,16 @@
                 <SequencePoint vc="0" uspid="474" ordinal="8" sl="474" sc="1" el="474" ec="2" bec="0" bev="0" fileid="9" />
                 <SequencePoint vc="0" uspid="475" ordinal="9" sl="475" sc="1" el="475" ec="2" bec="0" bev="0" fileid="9" />
                 <SequencePoint vc="0" uspid="476" ordinal="10" sl="476" sc="1" el="476" ec="2" bec="0" bev="0" fileid="9" />
-                <SequencePoint vc="0" uspid="478" ordinal="11" sl="478" sc="1" el="478" ec="2" bec="0" bev="0" fileid="9" />
-                <SequencePoint vc="0" uspid="479" ordinal="12" sl="479" sc="1" el="479" ec="2" bec="0" bev="0" fileid="9" />
-                <SequencePoint vc="0" uspid="481" ordinal="13" sl="481" sc="1" el="481" ec="2" bec="0" bev="0" fileid="9" />
+                <SequencePoint vc="0" uspid="477" ordinal="11" sl="477" sc="1" el="477" ec="2" bec="0" bev="0" fileid="9" />
+                <SequencePoint vc="0" uspid="478" ordinal="12" sl="478" sc="1" el="478" ec="2" bec="0" bev="0" fileid="9" />
+                <SequencePoint vc="0" uspid="480" ordinal="13" sl="480" sc="1" el="480" ec="2" bec="0" bev="0" fileid="9" />
                 <SequencePoint vc="0" uspid="482" ordinal="14" sl="482" sc="1" el="482" ec="2" bec="0" bev="0" fileid="9" />
+                <SequencePoint vc="0" uspid="483" ordinal="15" sl="483" sc="1" el="483" ec="2" bec="0" bev="0" fileid="9" />
+                <SequencePoint vc="0" uspid="485" ordinal="16" sl="485" sc="1" el="485" ec="2" bec="0" bev="0" fileid="9" />
+                <SequencePoint vc="0" uspid="486" ordinal="17" sl="486" sc="1" el="486" ec="2" bec="0" bev="0" fileid="9" />
               </SequencePoints>
               <BranchPoints />
-              <MethodPoint vc="0" uspid="0" p8:type="SequencePoint" ordinal="0" offset="0" sc="0" sl="465" ec="1" el="482" bec="0" bev="0" fileid="9" xmlns:p8="xsi" />
+              <MethodPoint vc="0" uspid="0" p8:type="SequencePoint" ordinal="0" offset="0" sc="0" sl="465" ec="1" el="486" bec="0" bev="0" fileid="9" xmlns:p8="xsi" />
             </Method>
           </Methods>
         </Class>

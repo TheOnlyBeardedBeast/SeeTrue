@@ -473,7 +473,11 @@ namespace SeeTrue.Infrastructure.Services
                 Email = email,
                 AppMetaData = appMetaData,
                 Role = Env.JwtDefaultGroupName,
+                ConfirmationToken = Helpers.GenerateUniqueToken(),
+                ConfirmationSentAt = DateTime.UtcNow,
             };
+
+            await mailer.NotifyInviteUser(user);
 
             db.Users.Add(user);
             await db.SaveChangesAsync();

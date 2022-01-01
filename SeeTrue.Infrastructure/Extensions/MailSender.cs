@@ -12,6 +12,7 @@ namespace SeeTrue.Utils.Services
         Task NotifyEmailChange(User user, string email);
         Task NotifyRecovery(User user);
         Task NotifyMagicLink(User user, string token);
+        Task NotifyInviteUser(User user);
     }
 
     public class MailService : IMailService
@@ -78,6 +79,21 @@ namespace SeeTrue.Utils.Services
             {
                 Subject = "Passwordless MagicLink",
                 Body = $"<a href=\"http://localhost:5000/verify/{token}\">magiclink {token}</a>",
+                IsBodyHtml = true
+            };
+
+            await Task.Run(() => client.Send(message));
+        }
+
+        public async Task NotifyInviteUser(User user)
+        {
+            MailAddress from = new("service@mailhog.example", "Confirm user invitation");
+            MailAddress to = new(user.Email);
+
+            MailMessage message = new MailMessage(from, to)
+            {
+                Subject = "Passwordless Confirm",
+                Body = $"<a href=\"http://localhost:5000/confirm/{user.ConfirmationToken}\">Confirm notification</a>",
                 IsBodyHtml = true
             };
 
