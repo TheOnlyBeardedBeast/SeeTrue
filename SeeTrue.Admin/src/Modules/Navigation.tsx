@@ -1,41 +1,42 @@
 import * as React from "react";
 import { AppNavBar, NavItemT, setItemActive } from "baseui/app-nav-bar";
-import { ChevronDown, Delete, Overflow, Upload } from "baseui/icon";
+import { Delete } from "baseui/icon";
+import { useLocation } from "wouter";
 
 export const Navigation = () => {
+  const [location, setLocation] = useLocation();
   const [mainItems, setMainItems] = React.useState([
     {
-      icon: Upload,
       label: "Users",
+      active: true,
       children: [
-        { icon: Upload, label: "All Users" },
-        { icon: Upload, label: "Create User" },
+        { label: "All Users", active: true, info: "/users" },
+        { label: "Create User", info: "/users/create" },
       ],
     },
     {
-      active: true,
-      icon: ChevronDown,
       label: "Emails",
       navExitIcon: Delete,
       children: [
-        { icon: Upload, label: "All Emails" },
-        { icon: Upload, label: "Create Email" },
+        { label: "All Emails", info: "/emails" },
+        { label: "Create Email", info: "/emails/create" },
       ],
     },
   ]);
+
   return (
     <AppNavBar
       title="SeeTrue"
       mainItems={mainItems}
       onMainItemSelect={(item) => {
-        setMainItems(((prev: any) => setItemActive(prev, item)) as any);
+        console.log(item.children?.[0].info ?? item.info);
+        setLocation(item.children?.[0].info ?? item.info);
+        setMainItems(((prev: any) =>
+          setItemActive(prev, item.children?.[0] ?? item)) as any);
       }}
-      username="Umka Marshmallow"
-      usernameSubtitle="5 Stars"
-      userItems={[
-        { icon: Overflow, label: "Users" },
-        { icon: Overflow, label: "User B" },
-      ]}
+      username="Administrator"
+      usernameSubtitle="SeeTrue Administrator"
+      userItems={[{ label: "Logout" }]}
       onUserItemSelect={(item) => console.log(item)}
     />
   );

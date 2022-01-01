@@ -1,8 +1,7 @@
 import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider as StyletronProvider } from "styletron-react";
 import { DarkTheme, BaseProvider, styled } from "baseui";
-import { StatefulInput } from "baseui/input";
-import { Navigation } from "./Modules";
+import { Navigation, AppRouter } from "./Modules";
 
 const engine = new Styletron();
 const Container = styled("div", {
@@ -15,7 +14,7 @@ export default function Hello() {
       <BaseProvider theme={DarkTheme}>
         <Container>
           <Navigation />
-          <StatefulInput />
+          <AppRouter />
         </Container>
       </BaseProvider>
     </StyletronProvider>
