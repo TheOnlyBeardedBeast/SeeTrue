@@ -14,7 +14,7 @@ namespace SeeTrue.API.Services
                 return Task.FromResult(Env.ApiKey);
             }
 
-            return Task.FromResult(null);
+            return null;
         }
     }
 }

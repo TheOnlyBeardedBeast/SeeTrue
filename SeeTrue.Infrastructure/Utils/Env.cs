@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using SeeTrue.Infrastructure.Types;
 using System.Security.Claims;
+using AspNetCore.Authentication.ApiKey;
 
 namespace SeeTrue.Infrastructure.Utils
 {
@@ -27,8 +28,9 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly string JwtDefaultGroupName;
         public static readonly int MagicLinkLifeTime;
         public static readonly int MinimumPasswordLength;
-        public static readonly ApiKey ApiKey;
+        public static readonly IApiKey ApiKey;
         public static readonly string AdminRole;
+        //public static readonly string ConfirmationUrl;
         static Env()
         {
             SigningKey = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_SIGNING_KEY");
@@ -52,6 +54,7 @@ namespace SeeTrue.Infrastructure.Utils
             MinimumPasswordLength = Helpers.GetEnvironmentVariable<int>("SEETRUE_MINIMUM_PASSWORD_LENGTH", 8);
             AdminRole = Helpers.GetEnvironmentVariable<string>("SEETRUE_ADMIN_ROLE", null);
             ApiKey = new ApiKey(Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_API_KEY"), Issuer, new List<Claim> { new Claim(ClaimTypes.Role, AdminRole) });
+            //ConfirmationUrl = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_CONFIRMATION_URL");
         }
     }
 }
