@@ -16,6 +16,7 @@ namespace SeeTrue.Models
         public string Aud { get; set; }
         public string Role { get; set; }
         public string Email { get; set; }
+        public string Language { get; set; }
         [JsonIgnore]
         public string EncryptedPassword { get; set; }
         public DateTime? ConfirmedAt { get; set; }

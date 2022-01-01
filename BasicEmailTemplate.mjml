@@ -10,7 +10,7 @@
     <mj-section>
       <mj-column>
         <mj-text align="center" font-size="20px" color="#000000" font-family="roboto" line-height="1.5"><p>Hi <strong>{{name}}</strong>,<br/> please confirm your registration.<br/></p></mj-text>
-        <mj-button href="{{url}}" background-color="#ffffff" color="#000000" font-size="20px" border="2px solid #000000">Confirm</mj-button>
+        <mj-button href="https://frontendurl.com/confirm{{token}}" background-color="#ffffff" color="#000000" font-size="20px" border="2px solid #000000">Confirm</mj-button>
       </mj-column>
     </mj-section>
     <mj-section>

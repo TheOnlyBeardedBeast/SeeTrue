@@ -20,8 +20,10 @@ namespace SeeTrue.Utils.Services
         protected readonly SmtpClient client;
         public MailService()
         {
-            this.client = new SmtpClient(Env.SmtpHost, Env.SmtpPort);
-            this.client.Credentials = new NetworkCredential(Env.SmtpUser, Env.SmtpPass);
+            this.client = new SmtpClient(Env.SmtpHost, Env.SmtpPort)
+            {
+                Credentials = new NetworkCredential(Env.SmtpUser, Env.SmtpPass)
+            };
         }
 
         public async Task NotifyConfirmation(User user)

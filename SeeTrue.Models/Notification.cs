@@ -16,10 +16,16 @@ namespace SeeTrue.Models
     {
         [Key]
         public Guid Id { get; set; }
+        [Required]
         public NotificationType Type { get; set; }
+        [Required]
         public string Language { get; set; }
         public string Template { get; set; }
+        [Required]
         public string Content { get; set; }
+        [Required]
         public string Audience { get; set; }
+        [Required]
+        public string Subject { get; set; }
     }
 }
