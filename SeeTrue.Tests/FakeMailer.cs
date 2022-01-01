@@ -9,6 +9,13 @@ namespace SeeTrue.Tests
     {
         public (string, string) mail;
 
+        public Task NotifyConfirmation(User user)
+        {
+            mail = (user.Email, user.ConfirmationToken);
+
+            return Task.CompletedTask;
+        }
+
         public Task NotifyEmailChange(User user, string email)
         {
             mail = (user.Email, email);
@@ -33,13 +40,6 @@ namespace SeeTrue.Tests
         public Task NotifyRecovery(User user)
         {
             mail = (user.Email, user.RecoveryToken);
-
-            return Task.CompletedTask;
-        }
-
-        public Task Send(string address, string code)
-        {
-            mail = (address, code);
 
             return Task.CompletedTask;
         }

@@ -293,7 +293,7 @@ namespace SeeTrue.Infrastructure.Services
             user.ConfirmationToken = Helpers.GenerateUniqueToken();
             user.ConfirmationSentAt = DateTime.UtcNow;
 
-            await mailer.Send(user.Email, user.ConfirmationToken);
+            await mailer.NotifyConfirmation(user);
 
             db.Update(user);
             await db.SaveChangesAsync();

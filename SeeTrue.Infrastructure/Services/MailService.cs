@@ -8,7 +8,7 @@ namespace SeeTrue.Utils.Services
 {
     public interface IMailService
     {
-        Task Send(string address, string code);
+        Task NotifyConfirmation(User user);
         Task NotifyEmailChange(User user, string email);
         Task NotifyRecovery(User user);
         Task NotifyMagicLink(User user, string token);
@@ -24,16 +24,16 @@ namespace SeeTrue.Utils.Services
             this.client.Credentials = new NetworkCredential(Env.SmtpUser, Env.SmtpPass);
         }
 
-        public async Task Send(string address, string code)
+        public async Task NotifyConfirmation(User user)
         {
 
             MailAddress from = new("service@mailhog.example", "Confirm user registration");
-            MailAddress to = new(address);
+            MailAddress to = new(user.Email);
 
             MailMessage message = new MailMessage(from, to)
             {
                 Subject = "Passwordless Confirm",
-                Body = $"<a href=\"http://localhost:5000/confirm/{code}\">confirm</a>",
+                Body = $"<a href=\"http://localhost:5000/confirm/{user.ConfirmationToken}\">confirm</a>",
                 IsBodyHtml = true
             };
 

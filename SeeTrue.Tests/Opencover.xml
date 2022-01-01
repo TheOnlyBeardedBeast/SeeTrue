@@ -2,9 +2,9 @@
 <CoverageSession>
   <Summary numSequencePoints="747" visitedSequencePoints="581" numBranchPoints="130" visitedBranchPoints="75" sequenceCoverage="77.77" branchCoverage="57.69" maxCyclomaticComplexity="200" minCyclomaticComplexity="53" visitedClasses="81" numClasses="90" visitedMethods="126" numMethods="149" />
   <Modules>
-    <Module hash="7DD6244B-8162-453A-8BD9-FD57C8B3EC03">
+    <Module hash="ECE63996-4C86-49EE-AE0E-4DDD3D00BD51">
       <ModulePath>SeeTrue.Models.dll</ModulePath>
-      <ModuleTime>2022-01-01T11:51:20</ModuleTime>
+      <ModuleTime>2022-01-01T12:50:00</ModuleTime>
       <ModuleName>SeeTrue.Models</ModuleName>
       <Files>
         <File uid="1" fullPath="/Users/polak/projects/personal/SeeTrue/SeeTrue.Models/AuditLogEntry.cs" />
@@ -639,9 +639,9 @@
         </Class>
       </Classes>
     </Module>
-    <Module hash="91C92A45-41CB-4B91-BA5D-AFFD9D912CC9">
+    <Module hash="71624E5D-269C-466C-B657-ACF772AA7DBC">
       <ModulePath>SeeTrue.Infrastructure.dll</ModulePath>
-      <ModuleTime>2022-01-01T11:51:20</ModuleTime>
+      <ModuleTime>2022-01-01T12:50:00</ModuleTime>
       <ModuleName>SeeTrue.Infrastructure</ModuleName>
       <Files>
         <File uid="6" fullPath="/Users/polak/projects/personal/SeeTrue/SeeTrue.Infrastructure/Utils/Contants.cs" />
