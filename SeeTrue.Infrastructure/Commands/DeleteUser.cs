@@ -27,7 +27,7 @@ namespace SeeTrue.Infrastructure.Commands
             {
                 var user = await queries.FindUserById(request.UserId);
 
-                if(user is null)
+                if (user is null)
                 {
                     throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
                 }

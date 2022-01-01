@@ -21,21 +21,21 @@ namespace SeeTrue.Tests
         [Fact, Priority(0)]
         public async Task SignUpNewUser()
         {
-            var user = await fixture.commands.SignUpNewUser("test@user.com", "12345678", "testaudience", "email", new Dictionary<string,object>(), true);
+            var user = await fixture.commands.SignUpNewUser("test@user.com", "12345678", "testaudience", "email", new Dictionary<string, object>(), true);
 
             Assert.NotEqual(Guid.Empty, user.Id);
             Assert.Equal("test@user.com", user.Email);
             Assert.NotEqual("12345678", user.EncryptedPassword);
             Assert.NotNull(user.ConfirmedAt);
             Assert.Equal(Env.JwtDefaultGroupName, user.Role);
-            Assert.Equal("testaudience", user.Aud); 
+            Assert.Equal("testaudience", user.Aud);
         }
 
         [Fact, Priority(1)]
         public async Task FindUserByEmailAndAudience()
         {
             var user = await fixture.queries.FindUserByEmailAndAudience("test@user.com", "testaudience");
-            
+
             Assert.NotNull(user);
         }
 
@@ -93,7 +93,7 @@ namespace SeeTrue.Tests
             var user = await fixture.queries.FindUserByEmailAndAudience("test@user.com", "testaudience");
 
             var tokens = await fixture.commands.IssueTokens(user, Guid.NewGuid());
-            
+
             var token = await fixture.queries.FindRefreshTokenWithUser(tokens.RefreshToken);
             var newTokens = await fixture.commands.GrantTokenSwap(token);
             var oldToken = await fixture.queries.FindRefreshTokenWithUser(tokens.RefreshToken);

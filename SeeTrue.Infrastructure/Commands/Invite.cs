@@ -10,7 +10,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class Invite
     {
-        public record Command(string Email, string Aud): IRequest;
+        public record Command(string Email, string Aud) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {

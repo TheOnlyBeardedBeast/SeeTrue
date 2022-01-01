@@ -5,16 +5,16 @@ using SeeTrue.Infrastructure.Utils;
 
 namespace SeeTrue.API.Services
 {
-    public class ApiKeyProvider: IApiKeyProvider
+    public class ApiKeyProvider : IApiKeyProvider
     {
-		public async Task<IApiKey> ProvideAsync(string key)
-		{
-			if(Env.ApiKey.Key == key)
+        public Task<IApiKey> ProvideAsync(string key)
+        {
+            if (Env.ApiKey.Key == key)
             {
-				return Env.ApiKey;
+                return Task.FromResult(Env.ApiKey);
             }
 
-			return null;
-		}
-	}
+            return Task.FromResult(null);
+        }
+    }
 }

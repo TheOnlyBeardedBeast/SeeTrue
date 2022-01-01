@@ -54,12 +54,13 @@ namespace SeeTrue.API.Controllers
         [HttpPost("users")]
         public async Task<IActionResult> CreateUsers([FromBody] AdminUpdateUserRequest data)
         {
-            if(!data.Validate())
+            if (!data.Validate())
             {
                 throw new SeeTrueException(System.Net.HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            var user = await this.m.Send(new Infrastructure.Commands.CreateUser.Command {
+            var user = await this.m.Send(new Infrastructure.Commands.CreateUser.Command
+            {
                 Email = data.Email,
                 Password = data.Password,
                 Role = data.Role,

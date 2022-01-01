@@ -80,7 +80,7 @@ namespace SeeTrue.API.Controllers
         [HttpPost("invite")]
         public async Task<IActionResult> Invite([FromBody] InviteRequest data)
         {
-            if(!data.Validate())
+            if (!data.Validate())
             {
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }

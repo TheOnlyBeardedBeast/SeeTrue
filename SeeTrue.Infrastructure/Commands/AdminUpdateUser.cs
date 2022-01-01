@@ -28,7 +28,7 @@ namespace SeeTrue.Infrastructure.Commands
             {
                 var user = await queries.FindUserById(request.UserId);
 
-                if(user is null)
+                if (user is null)
                 {
                     throw new SeeTrueException(HttpStatusCode.BadRequest, "User not found");
                 }
@@ -38,17 +38,17 @@ namespace SeeTrue.Infrastructure.Commands
                     await commands.UpdateUserPassword(user, request.data.Password);
                 }
 
-                if(request.data.Confirm.HasValue && request.data.Confirm.Value)
+                if (request.data.Confirm.HasValue && request.data.Confirm.Value)
                 {
                     await commands.ConfirmUser(user);
                 }
 
-                if(!string.IsNullOrWhiteSpace(request.data.Email))
+                if (!string.IsNullOrWhiteSpace(request.data.Email))
                 {
                     await commands.UpdateUserEmail(user, request.data.Email);
                 }
 
-                if(user.AppMetaData is not null)
+                if (user.AppMetaData is not null)
                 {
                     await commands.UpdateAppMetaData(user, request.data.AppMetaData);
                 }

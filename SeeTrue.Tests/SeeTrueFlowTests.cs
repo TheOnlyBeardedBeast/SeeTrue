@@ -92,7 +92,7 @@ namespace SeeTrue.Tests
             var handler = new Token.Handler(fixture.queries, fixture.commands);
 
             var token = fixture.testCache.Get<string>("refreshToken");
-            var requestData = new TokenRequest { GrantType = "refresh_token", RefreshToken = token};
+            var requestData = new TokenRequest { GrantType = "refresh_token", RefreshToken = token };
 
             var command = new Token.Command(requestData, Env.Audiences[0], "Test user agent");
 
@@ -123,12 +123,12 @@ namespace SeeTrue.Tests
         [Fact, Priority(3)]
         public async Task UserUpdate()
         {
-            var handler = new UserUpdate.Handler(fixture.queries,fixture.commands);
+            var handler = new UserUpdate.Handler(fixture.queries, fixture.commands);
 
             var token = fixture.testCache.Get<string>("accessToken");
             var decoded = Jose.JWT.Decode<DecodedJWT>(token, Env.SigningKey.ToByteArray());
 
-            var metaCommand = new UserUpdate.Command(decoded.sub, null, null, new Dictionary<string, object>{ { "name","testUserUpdated" } });
+            var metaCommand = new UserUpdate.Command(decoded.sub, null, null, new Dictionary<string, object> { { "name", "testUserUpdated" } });
             var metaResponse = await handler.Handle(metaCommand, new System.Threading.CancellationToken());
 
             Assert.NotNull(metaResponse);
@@ -221,7 +221,7 @@ namespace SeeTrue.Tests
 
             Assert.NotNull(response);
 
-            fixture.mailer.mail = (null,null);
+            fixture.mailer.mail = (null, null);
         }
 
         [Fact, Priority(8)]
@@ -271,7 +271,7 @@ namespace SeeTrue.Tests
         {
             var handler = new CreateUser.Handler(fixture.queries, fixture.commands);
 
-            for(var i = 0; i < 20; i++)
+            for (var i = 0; i < 20; i++)
             {
                 var command = new CreateUser.Command
                 {
@@ -280,9 +280,9 @@ namespace SeeTrue.Tests
                     Confirm = true
                 };
 
-               var response = await handler.Handle(command, new System.Threading.CancellationToken());
+                var response = await handler.Handle(command, new System.Threading.CancellationToken());
 
-                if(i == 1)
+                if (i == 1)
                 {
                     fixture.testCache.Set("firstUser", response);
                 }
@@ -329,10 +329,10 @@ namespace SeeTrue.Tests
 
             var updateRequest = new AdminUpdateUserRequest
             {
-                Email = "updated"+user.Email,
+                Email = "updated" + user.Email,
             };
 
-            var response = await handler.Handle(new AdminUpdateUser.Command(user.Id,updateRequest), new System.Threading.CancellationToken());
+            var response = await handler.Handle(new AdminUpdateUser.Command(user.Id, updateRequest), new System.Threading.CancellationToken());
 
             Assert.NotEqual(oldEmail, response.Email);
         }
