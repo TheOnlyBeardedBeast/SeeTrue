@@ -71,10 +71,19 @@ export const Users: React.FC = () => {
           )}
         </TableBuilderColumn>
         <TableBuilderColumn header="Email">
-          {(row) => <Link href={row.email}>{row.email}</Link>}
+          {(row) => <Link href={`mailTo:${row.email}`}>{row.email}</Link>}
         </TableBuilderColumn>
         <TableBuilderColumn header="Confirmed">
           {(row) => (row.confirmed ? <span>True</span> : <span>False</span>)}
+        </TableBuilderColumn>
+        <TableBuilderColumn header="Role">
+          {(row) => row.role}
+        </TableBuilderColumn>
+        <TableBuilderColumn header="Created">
+          {(row) => row.createdAt}
+        </TableBuilderColumn>
+        <TableBuilderColumn header="Las Sign In">
+          {(row) => row.lastSignInAt}
         </TableBuilderColumn>
       </CustomTableBuilder>
       <DataPagination
