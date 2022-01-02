@@ -79,6 +79,9 @@ export const Users: React.FC = () => {
         <TableBuilderColumn header="Role">
           {(row) => row.role}
         </TableBuilderColumn>
+        <TableBuilderColumn header="Language">
+          {(row) => row.language ?? "EN"}
+        </TableBuilderColumn>
         <TableBuilderColumn header="Created">
           {(row) => row.createdAt}
         </TableBuilderColumn>
