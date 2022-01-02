@@ -51,6 +51,19 @@ namespace SeeTrue.API
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("cors",
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3001");
+                                      builder.AllowAnyHeader();
+                                      builder.AllowAnyMethod();
+                                      builder.AllowCredentials();
+                                  });
+            });
+
             services.AddAuthorization(options =>
             {
                 if (Env.AdminRole is not null)
@@ -110,7 +123,7 @@ namespace SeeTrue.API
             }
 
             app.UseRouting();
-
+            app.UseCors("cors");
 
             app.UseAuthentication();
             app.UseAuthorization();
