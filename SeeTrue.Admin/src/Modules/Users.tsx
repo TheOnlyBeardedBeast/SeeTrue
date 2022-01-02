@@ -10,14 +10,18 @@ const CustomTableBuilder = styled(TableBuilder, {
   margin: "20px auto",
 });
 
+const client = new Api("http://localhost:5000", "SuperSecureApiKey");
+
 export const Users: React.FC = () => {
   const [data, setData] = useState<UsersResponse>();
   const [selections, setSelections] = useState<Set<string>>(new Set());
 
   React.useEffect(() => {
-    const client = new Api("http://localhost:5000", "SuperSecureApiKey");
     client.getUsers().then((data) => setData(data));
   }, []);
+
+  const onPage = (page: number) =>
+    client.getUsers(page).then((data) => setData(data));
 
   const hasAny = Boolean(data?.perPage);
   const hasAll = hasAny && selections.size === data?.perPage;
@@ -42,7 +46,7 @@ export const Users: React.FC = () => {
     }
   }
 
-  return (
+  return data ? (
     <>
       <CustomTableBuilder data={data?.items}>
         <TableBuilderColumn
@@ -73,7 +77,11 @@ export const Users: React.FC = () => {
           {(row) => (row.confirmed ? <span>True</span> : <span>False</span>)}
         </TableBuilderColumn>
       </CustomTableBuilder>
-      <DataPagination />
+      <DataPagination
+        page={data.page}
+        numPages={Math.ceil(data.itemCount / data.perPage)}
+        onPage={onPage}
+      />
     </>
-  );
+  ) : null;
 };

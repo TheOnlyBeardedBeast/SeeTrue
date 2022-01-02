@@ -8,15 +8,24 @@ const Container = styled("div", {
   alignItems: "center",
 });
 
-export const DataPagination: React.FC = () => {
-  const [currentPage, setCurrentPage] = React.useState(1);
+interface DataPaginationProps {
+  page: number;
+  numPages: number;
+  onPage: (nextPage: number) => void;
+}
+
+export const DataPagination: React.FC<DataPaginationProps> = ({
+  page,
+  numPages,
+  onPage,
+}) => {
   return (
     <Container>
       <Pagination
-        numPages={20}
-        currentPage={currentPage}
+        numPages={numPages}
+        currentPage={page}
         onPageChange={({ nextPage }) => {
-          setCurrentPage(Math.min(Math.max(nextPage, 1), 20));
+          onPage(Math.min(Math.max(nextPage, 1), 20));
         }}
       />
     </Container>
