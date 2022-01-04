@@ -72,6 +72,12 @@ namespace SeeTrue.API.Controllers
             return Ok(user);
         }
 
+        [Authorize("Admin")]
+        [HttpPost("authorize")]
+        public IActionResult Authorize()
+        {
+            return NoContent();
+        }
 
     }
 }
