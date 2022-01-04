@@ -3,13 +3,6 @@ import Editor from "@monaco-editor/react";
 // @ts-ignore
 import mjml2html from "mjml-browser";
 import debounce from "lodash.debounce";
-import { styled } from "baseui";
-
-// const HtmlRender = styled("div", {
-//   height: "100%",
-//   width: "50%",
-//   background: "#fff",
-// });
 
 const iFrameContent = `<html><head><script type="module"> window.addEventListener('message', (event)=>{const{type, value}=event.data; if (type==='html'){document.body.innerHTML=value;}})</script></head><body></body></html>`;
 
@@ -97,14 +90,6 @@ export const EmailEditor: React.FC = () => {
         style={{ height: "100%", width: "50%", background: "#fff" }}
         srcDoc={iFrameContent}
       />
-      {/* <HtmlRender
-        key={tick}
-        dangerouslySetInnerHTML={{
-          __html: editorRef?.current?.getValue()
-            ? mjml2html(editorRef?.current?.getValue()).html
-            : undefined,
-        }}
-      /> */}
     </div>
   );
 };
