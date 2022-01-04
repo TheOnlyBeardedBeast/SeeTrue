@@ -5,6 +5,7 @@ interface ISeeTrueContext {
   authorized: boolean;
   api?: Api;
   authorize: (apikey: string) => Promise<void>;
+  logout: () => void;
 }
 
 const SeeTrueContext = React.createContext<ISeeTrueContext | null>(null);
@@ -36,9 +37,15 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
     setAuthorized(result);
   }, []);
 
+  const logout = () => {
+    api.apiKey = undefined;
+    setAuthorized(false);
+  };
+
   const context = {
     authorized,
     authorize,
+    logout,
     api,
   };
 

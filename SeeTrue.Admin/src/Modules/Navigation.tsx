@@ -43,7 +43,7 @@ export const Navigation = () => {
       username="Administrator"
       usernameSubtitle="SeeTrue Administrator"
       userItems={[{ label: "Logout" }]}
-      onUserItemSelect={(item) => console.log(item)}
+      onUserItemSelect={(item) => item.label == "Logout" && seeTrue.logout()}
     />
   );
 };

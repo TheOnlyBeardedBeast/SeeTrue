@@ -9,6 +9,12 @@ const Container = styled("div", {
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
+  minHeight: "100%",
+});
+
+const Form = styled("form", {
+  width: "100%",
+  maxWidth: "400px",
 });
 
 export const Authorize: React.FC = () => {
@@ -22,10 +28,17 @@ export const Authorize: React.FC = () => {
 
   return (
     <Container>
-      <form onSubmit={handleSubmit}>
-        <Input inputRef={inputRef} placeholder="ApiKey" clearOnEscape />
-        <Button type="submit">Authorize</Button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="password"
+          inputRef={inputRef}
+          placeholder="ApiKey"
+          clearOnEscape
+        />
+        <Button $style={{ marginTop: "20px", width: "100%" }} type="submit">
+          Authorize
+        </Button>
+      </Form>
     </Container>
   );
 };
