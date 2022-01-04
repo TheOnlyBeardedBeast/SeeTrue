@@ -51,12 +51,14 @@ export const EmailEditor: React.FC = () => {
 
   const contentRefHandler = React.useCallback((node: HTMLIFrameElement) => {
     contentRef.current = node;
+    handleChange();
   }, []);
 
   const editorRef = React.useRef<any>(null);
 
   const handleEditorDidMount = (editor: any, _monaco: any) => {
     editorRef.current = editor;
+    handleChange();
   };
 
   const handleChange = () => {
@@ -73,7 +75,7 @@ export const EmailEditor: React.FC = () => {
   const debounceChange = React.useCallback(debounce(handleChange, 500), []);
 
   return (
-    <div style={{ display: "flex", height: "100%" }}>
+    <div style={{ display: "flex", height: "100%", overflow: "hidden" }}>
       <Editor
         height="100%"
         width="50%"

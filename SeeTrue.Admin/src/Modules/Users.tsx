@@ -1,27 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { Checkbox } from "baseui/checkbox";
 import { StyledLink as Link } from "baseui/link";
 import { TableBuilder, TableBuilderColumn } from "baseui/table-semantic";
 import { styled } from "baseui";
-import { Api, DataPagination, UsersResponse } from ".";
+import { DataPagination, UsersResponse, useSeeTrue } from ".";
 
 const CustomTableBuilder = styled(TableBuilder, {
   maxWidth: "1307px",
   margin: "20px auto",
 });
 
-const client = new Api("http://localhost:5000", "SuperSecureApiKey");
-
 export const Users: React.FC = () => {
-  const [data, setData] = useState<UsersResponse>();
-  const [selections, setSelections] = useState<Set<string>>(new Set());
+  const seeTrue = useSeeTrue();
+  const [data, setData] = React.useState<UsersResponse>();
+  const [selections, setSelections] = React.useState<Set<string>>(new Set());
 
   React.useEffect(() => {
-    client.getUsers().then((data) => setData(data));
+    seeTrue.api?.getUsers().then((data) => setData(data));
   }, []);
 
   const onPage = (page: number) =>
-    client.getUsers(page).then((data) => setData(data));
+    seeTrue.api?.getUsers(page).then((data) => setData(data));
 
   const hasAny = Boolean(data?.perPage);
   const hasAll = hasAny && selections.size === data?.perPage;

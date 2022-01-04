@@ -32,11 +32,28 @@ export interface UsersResponse<T = any> {
 export class Api {
   protected path: string = "admin/users";
   public readonly host: string;
-  public readonly apiKey?: string;
+  public apiKey?: string;
 
   constructor(host: string, apiKey?: string) {
     this.host = host;
     this.apiKey = apiKey;
+  }
+
+  public async authorize(config: { accessToken?: string; apiKey?: string }) {
+    const auth = this.getAuthHeader(config.accessToken, config.apiKey);
+
+    const response = await fetch(`${this.host}/Admin/authorize`, {
+      method: "POST",
+      headers: {
+        ...auth,
+      } as any,
+    });
+
+    if (response.status === 204 && config.apiKey) {
+      this.apiKey = config.apiKey;
+    }
+
+    return response.status === 204;
   }
 
   public async getUser(id: string, accessToken?: string) {
@@ -99,13 +116,13 @@ export class Api {
     }
   }
 
-  protected getAuthHeader(accessToken?: string) {
-    if (!this.apiKey && !accessToken) {
+  protected getAuthHeader(accessToken?: string, apikey?: string) {
+    if (!this.apiKey && !accessToken && !apikey) {
       throw new Error("Authorization not configured");
     }
 
-    return this.apiKey
-      ? { "X-API-KEY": this.apiKey }
-      : { Authorization: `Bearer ${accessToken}` };
+    return accessToken
+      ? { Authorization: `Bearer ${accessToken}` }
+      : { "X-API-KEY": this.apiKey ?? apikey };
   }
 }

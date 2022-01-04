@@ -2,8 +2,10 @@ import * as React from "react";
 import { AppNavBar, NavItemT, setItemActive } from "baseui/app-nav-bar";
 import { Delete } from "baseui/icon";
 import { useLocation } from "wouter";
+import { useSeeTrue } from ".";
 
 export const Navigation = () => {
+  const seeTrue = useSeeTrue();
   const [location, setLocation] = useLocation();
   const [mainItems, setMainItems] = React.useState([
     {
@@ -23,6 +25,10 @@ export const Navigation = () => {
       ],
     },
   ]);
+
+  if (!seeTrue.authorized) {
+    return null;
+  }
 
   return (
     <AppNavBar
