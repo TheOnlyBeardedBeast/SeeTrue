@@ -1,8 +1,10 @@
 import React from "react";
 import { Input } from "baseui/input";
 import { Button } from "baseui/button";
+import { FormControl } from "baseui/form-control";
 import { styled } from "baseui";
 import { useSeeTrue } from ".";
+import { toaster } from "baseui/toast";
 
 const Container = styled("div", {
   display: "flex",
@@ -23,19 +25,24 @@ export const Authorize: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    inputRef.current?.value && seeTrue.authorize(inputRef.current?.value);
+    inputRef.current?.value &&
+      seeTrue.authorize(inputRef.current?.value).catch(() => {
+        toaster.negative(<>Authorization error!</>, {});
+      });
   };
 
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <Input
-          type="password"
-          inputRef={inputRef}
-          placeholder="ApiKey"
-          clearOnEscape
-        />
-        <Button $style={{ marginTop: "20px", width: "100%" }} type="submit">
+        <FormControl label="Api key">
+          <Input
+            type="password"
+            inputRef={inputRef}
+            placeholder="ApiKey"
+            clearOnEscape
+          />
+        </FormControl>
+        <Button $style={{ width: "100%" }} type="submit">
           Authorize
         </Button>
       </Form>

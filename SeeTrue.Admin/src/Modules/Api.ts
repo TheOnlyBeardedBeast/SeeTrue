@@ -110,10 +110,16 @@ export class Api {
       throw new Error("Authorization not configured");
     }
   }
-  deleteUser(id: string, accessToken?: string) {
-    if (!this.apiKey || !accessToken) {
-      throw new Error("Authorization not configured");
-    }
+  public async deleteUser(id: string, accessToken?: string) {
+    const auth = this.getAuthHeader(accessToken);
+
+    await fetch(`${this.host}/${this.path}/${id.toString()}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        ...auth,
+      } as any,
+    });
   }
 
   protected getAuthHeader(accessToken?: string, apikey?: string) {

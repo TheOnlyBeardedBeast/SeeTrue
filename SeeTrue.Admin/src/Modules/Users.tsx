@@ -4,6 +4,8 @@ import { StyledLink as Link } from "baseui/link";
 import { TableBuilder, TableBuilderColumn } from "baseui/table-semantic";
 import { styled } from "baseui";
 import { DataPagination, UsersResponse, useSeeTrue } from ".";
+import { Button, SHAPE, SIZE } from "baseui/button";
+import { X, PencilSimple } from "phosphor-react";
 
 const CustomTableBuilder = styled(TableBuilder, {
   maxWidth: "1307px",
@@ -44,6 +46,11 @@ export const Users: React.FC = () => {
       setSelections(new Set(items.filter((e) => e != name)));
     }
   }
+
+  const deleteUser = (id: string) => async () => {
+    await seeTrue.api?.deleteUser(id);
+    await seeTrue.api?.getUsers(data?.page).then((data) => setData(data));
+  };
 
   return data ? (
     <>
@@ -86,6 +93,22 @@ export const Users: React.FC = () => {
         </TableBuilderColumn>
         <TableBuilderColumn header="Las Sign In">
           {(row) => row.lastSignInAt}
+        </TableBuilderColumn>
+        <TableBuilderColumn header="Las Sign In">
+          {(row) => (
+            <>
+              <Button
+                onClick={deleteUser(row.id)}
+                size={SIZE.mini}
+                shape={SHAPE.circle}
+              >
+                <X />
+              </Button>
+              <Button size={SIZE.mini} shape={SHAPE.circle}>
+                <PencilSimple />
+              </Button>
+            </>
+          )}
         </TableBuilderColumn>
       </CustomTableBuilder>
       <DataPagination

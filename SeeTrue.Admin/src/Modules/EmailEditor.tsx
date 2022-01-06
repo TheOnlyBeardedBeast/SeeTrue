@@ -3,6 +3,8 @@ import Editor from "@monaco-editor/react";
 // @ts-ignore
 import mjml2html from "mjml-browser";
 import debounce from "lodash.debounce";
+import { Tabs, Tab } from "baseui/tabs-motion";
+import { styled } from "baseui";
 
 const iFrameContent = `<html><head><script type="module"> window.addEventListener('message', (event)=>{const{type, value}=event.data; if (type==='html'){document.body.innerHTML=value;}})</script></head><body></body></html>`;
 
@@ -46,8 +48,33 @@ const devValue = `<mjml>
 </mj-body>
 </mjml>`;
 
+const tabsOverrides = {
+  Root: {
+    style: () => ({
+      paddingTop: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingBottom: 0,
+      height: "100%",
+    }),
+  },
+};
+
+const tabOverrides = {
+  TabPanel: {
+    style: {
+      paddingTop: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingBottom: 0,
+      height: "100%",
+    },
+  },
+};
+
 export const EmailEditor: React.FC = () => {
   const contentRef = React.useRef<HTMLIFrameElement | null>(null);
+  const [activeTab, setActiveTab] = React.useState<React.Key>(0);
 
   const contentRefHandler = React.useCallback((node: HTMLIFrameElement) => {
     contentRef.current = node;
@@ -61,6 +88,13 @@ export const EmailEditor: React.FC = () => {
     handleChange();
   };
 
+  const htmlRef = React.useRef<any>(null);
+
+  const handleHtmlDidMount = (editor: any, _monaco: any) => {
+    htmlRef.current = editor;
+    handleChange();
+  };
+
   const handleChange = () => {
     const html = {
       type: "html",
@@ -70,9 +104,16 @@ export const EmailEditor: React.FC = () => {
     };
 
     contentRef?.current?.contentWindow?.postMessage(html, "*");
+    if (htmlRef?.current) {
+      htmlRef.current.setValue(html.value);
+    }
   };
 
   const debounceChange = React.useCallback(debounce(handleChange, 500), []);
+
+  const handleTabChange = ({ activeKey }: { activeKey: React.Key }) => {
+    setActiveTab(activeKey);
+  };
 
   return (
     <div style={{ display: "flex", height: "100%", overflow: "hidden" }}>
@@ -85,13 +126,35 @@ export const EmailEditor: React.FC = () => {
         theme="hc-black"
         onMount={handleEditorDidMount}
       />
-      {/* Big thanks https://joyofcode.xyz/avoid-flashing-iframe */}
-      <iframe
-        onLoad={handleChange}
-        ref={contentRefHandler}
-        style={{ height: "100%", width: "50%", background: "#fff" }}
-        srcDoc={iFrameContent}
-      />
+      <div style={{ height: "100%", width: "50%" }}>
+        <Tabs
+          activeKey={activeTab}
+          onChange={handleTabChange}
+          overrides={tabsOverrides}
+        >
+          <Tab title="Render" overrides={tabOverrides}>
+            {/* Big thanks https://joyofcode.xyz/avoid-flashing-iframe */}
+            <iframe
+              onLoad={handleChange}
+              ref={contentRefHandler}
+              style={{ height: "100%", width: "100%", background: "#fff" }}
+              srcDoc={iFrameContent}
+            />
+          </Tab>
+          <Tab title="HTML (readonly)" overrides={tabOverrides}>
+            <Editor
+              height="100%"
+              width="100%"
+              defaultLanguage="html"
+              theme="hc-black"
+              onMount={handleHtmlDidMount}
+              options={{
+                readOnly: true,
+              }}
+            />
+          </Tab>
+        </Tabs>
+      </div>
     </div>
   );
 };

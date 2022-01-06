@@ -12,20 +12,21 @@
     "@types/styletron-react": "^5.0.3",
     "@types/styletron-standard": "^2.0.2",
     "baseui": "^10.6.0",
+    "lodash.debounce": "^4.0.8",
     "mjml-browser": "^4.11.0",
+    "phosphor-react": "^1.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styletron-engine-atomic": "^1.4.8",
     "styletron-react": "^6.0.2",
-    "wouter": "^2.8.0-alpha.2",
-    "lodash.debounce": "^4.0.8"
+    "wouter": "^2.8.0-alpha.2"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.6",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",
     "typescript": "^4.4.4",
-    "vite": "^2.7.2",
-    "@types/lodash.debounce": "^4.0.6"
+    "vite": "^2.7.2"
   }
 }

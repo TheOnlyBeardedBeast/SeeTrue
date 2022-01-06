@@ -10,7 +10,6 @@ export const Navigation = () => {
   const [mainItems, setMainItems] = React.useState([
     {
       label: "Users",
-      active: true,
       children: [
         { label: "All Users", active: true, info: "/users" },
         { label: "Create User", info: "/users/create" },
@@ -35,7 +34,13 @@ export const Navigation = () => {
       title="SeeTrue"
       mainItems={mainItems}
       onMainItemSelect={(item) => {
-        console.log(item.children?.[0].info ?? item.info);
+        if (item.info === "/users/create") {
+          return;
+        }
+        //  else if (item.info === "/emails/create") {
+        //   return;
+        // }
+
         setLocation(item.children?.[0].info ?? item.info);
         setMainItems(((prev: any) =>
           setItemActive(prev, item.children?.[0] ?? item)) as any);
