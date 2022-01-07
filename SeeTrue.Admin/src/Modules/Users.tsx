@@ -7,6 +7,7 @@ import { DataPagination, UsersResponse, useSeeTrue, useConfirmation } from ".";
 import { Button, SHAPE, SIZE } from "baseui/button";
 import { X, PencilSimple } from "phosphor-react";
 import { toaster } from "baseui/toast";
+import { Notification, KIND } from "baseui/notification";
 
 const CustomTableBuilder = styled(TableBuilder, {
   maxWidth: "1307px",
@@ -76,6 +77,25 @@ export const Users: React.FC = () => {
       });
     }
   };
+
+  if (!data) {
+    return null;
+  }
+
+  if (data?.itemCount === 0 && data.page === 1) {
+    return (
+      <Notification
+        overrides={{
+          Body: {
+            style: { width: "auto", maxWidth: "1307px", margin: "20px auto" },
+          },
+        }}
+        kind={KIND.negative}
+      >
+        {() => "There are no users in the database."}
+      </Notification>
+    );
+  }
 
   return data ? (
     <>
