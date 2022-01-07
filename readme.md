@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="256px" src="./src/Assets/SeeTrueIcon.png" />
+  <img width="256px" src="./SeeTrue.Admin/src/Assets/SeeTrueIcon.png" />
 </p>
 
 # SeeTrue
