@@ -79,5 +79,26 @@ namespace SeeTrue.API.Controllers
             return NoContent();
         }
 
+        [Authorize("Admin")]
+        [HttpGet("mails")]
+        public async Task<IActionResult> ListMails([FromQuery] int page = 1, [FromQuery] int perPgae = 20)
+        {
+            return Ok(await this.m.Send(new Infrastructure.Queries.GetMails.Query(page, perPgae)));
+        }
+
+        [HttpPost("mails")]
+        public IActionResult CreateMail()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPut("mails")]
+        public IActionResult UpdateMail()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
     }
 }

@@ -2,6 +2,7 @@ export * from "./Api";
 export * from "./Authorize";
 export * from "./ConfirmationProvider";
 export * from "./EmailEditor";
+export * from "./Emails";
 export * from "./Navigation";
 export * from "./Pagination";
 export * from "./Router";

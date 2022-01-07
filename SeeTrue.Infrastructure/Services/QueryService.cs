@@ -21,6 +21,7 @@ namespace SeeTrue.Infrastructure.Services
         Task<User> FindUserByRecoveryToken(string token);
         bool TryGetValueFromCache<T>(object key, out T value);
         Task<Pagination<User>> PaginateUsers(int page = 1, int perPage = 20);
+        Task<Pagination<Mail>> PaginateMails(int page = 1, int perPage = 20);
     }
 
     public class QueryService : IQueryService
@@ -120,5 +121,12 @@ namespace SeeTrue.Infrastructure.Services
             return new Pagination<User>(page, perPage, count, items);
         }
 
+        public async Task<Pagination<Mail>> PaginateMails(int page = 1, int perPage = 20)
+        {
+            var items = await this.db.Mails.OrderBy(x => x.Id).Skip((page - 1) * perPage).Take(perPage).ToListAsync();
+            var count = await this.db.Mails.CountAsync();
+
+            return new Pagination<Mail>(page, perPage, count, items);
+        }
     }
 }

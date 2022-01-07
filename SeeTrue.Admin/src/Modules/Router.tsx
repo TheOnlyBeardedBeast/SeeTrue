@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Route, Router, Switch } from "wouter";
-import { Authorize, EmailEditor, Users, useSeeTrue } from ".";
+import { Authorize, EmailEditor, Emails, Users, useSeeTrue } from ".";
 
 export const AppRouter: React.FC = () => {
   const seeTrue = useSeeTrue();
@@ -13,7 +13,9 @@ export const AppRouter: React.FC = () => {
             <Users />
           </Route>
           <Route path="/users/create">Users create</Route>
-          <Route path="/emails">Emails</Route>
+          <Route path="/emails">
+            <Emails />
+          </Route>
           <Route path="/emails/create">
             <EmailEditor />
           </Route>

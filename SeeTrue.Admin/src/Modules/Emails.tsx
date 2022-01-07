@@ -7,12 +7,12 @@ import {
   DataPagination,
   PaginationResponse,
   useSeeTrue,
-  useConfirmation,
-  UserResponse,
+  // useConfirmation,
+  MailResponse,
 } from ".";
 import { Button, SHAPE, SIZE } from "baseui/button";
 import { X, PencilSimple } from "phosphor-react";
-import { toaster } from "baseui/toast";
+// import { toaster } from "baseui/toast";
 import { Notification, KIND } from "baseui/notification";
 
 const CustomTableBuilder = styled(TableBuilder, {
@@ -24,18 +24,18 @@ const ActionButton = styled(Button, {
   margin: "0 5px",
 });
 
-export const Users: React.FC = () => {
+export const Emails: React.FC = () => {
   const seeTrue = useSeeTrue();
-  const [data, setData] = React.useState<PaginationResponse<UserResponse>>();
+  const [data, setData] = React.useState<PaginationResponse<MailResponse>>();
   const [selections, setSelections] = React.useState<Set<string>>(new Set());
-  const { confirm, close } = useConfirmation();
+  // const { confirm, close } = useConfirmation();
 
   React.useEffect(() => {
-    seeTrue.api?.getUsers().then((data) => setData(data));
+    seeTrue.api?.getMails().then((data) => setData(data));
   }, []);
 
   const onPage = (page: number) =>
-    seeTrue.api?.getUsers(page).then((data) => setData(data));
+    seeTrue.api?.getMails(page).then((data) => setData(data));
 
   const hasAny = Boolean(data?.perPage);
   const hasAll = hasAny && selections.size === data?.perPage;
@@ -60,29 +60,29 @@ export const Users: React.FC = () => {
     }
   }
 
-  const deleteUser = async (id: string) => {
-    try {
-      await seeTrue.api?.deleteUser(id);
-      await seeTrue.api?.getUsers(data?.page).then((data) => setData(data));
+  // const deleteUser = async (id: string) => {
+  //   try {
+  //     await seeTrue.api?.deleteUser(id);
+  //     await seeTrue.api?.getUsers(data?.page).then((data) => setData(data));
 
-      toaster.positive(<>User deleted.</>, {});
-    } catch (error) {
-      toaster.negative(<>User delete failed!</>, {});
-    } finally {
-      close();
-    }
-  };
+  //     toaster.positive(<>User deleted.</>, {});
+  //   } catch (error) {
+  //     toaster.negative(<>User delete failed!</>, {});
+  //   } finally {
+  //     close();
+  //   }
+  // };
 
-  const deleteUserClick = (id: string) => async () => {
-    const item = data?.items.find((e) => e.id === id);
-    if (item) {
-      await confirm({
-        message: `Do you wish to delete ${item?.email}`,
-        header: "Remove user",
-        action: () => deleteUser(item.id),
-      });
-    }
-  };
+  // const deleteUserClick = (id: string) => async () => {
+  //   const item = data?.items.find((e) => e.id === id);
+  //   if (item) {
+  //     await confirm({
+  //       message: `Do you wish to delete ${item?.email}`,
+  //       header: "Remove user",
+  //       action: () => deleteUser(item.id),
+  //     });
+  //   }
+  // };
 
   if (!data) {
     return null;
@@ -98,7 +98,7 @@ export const Users: React.FC = () => {
         }}
         kind={KIND.negative}
       >
-        {() => "There are no users in the database."}
+        {() => "There are no emails in the database."}
       </Notification>
     );
   }
@@ -119,7 +119,7 @@ export const Users: React.FC = () => {
             />
           }
         >
-          {(row) => (
+          {(row: MailResponse) => (
             <Checkbox
               name={row.id}
               checked={selections.has(row.id)}
@@ -127,32 +127,20 @@ export const Users: React.FC = () => {
             />
           )}
         </TableBuilderColumn>
-        <TableBuilderColumn header="Email">
-          {(row) => <Link href={`mailTo:${row.email}`}>{row.email}</Link>}
+        <TableBuilderColumn header="Type">
+          {(row: MailResponse) => row.type}
         </TableBuilderColumn>
         <TableBuilderColumn header="Confirmed">
-          {(row) => (row.confirmed ? <span>True</span> : <span>False</span>)}
+          {(row: MailResponse) => row.language}
         </TableBuilderColumn>
         <TableBuilderColumn header="Audience">
-          {(row) => row.aud}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Role">
-          {(row) => row.role}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Language">
-          {(row) => row.language ?? "EN"}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Created">
-          {(row) => row.createdAt}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Las Sign In">
-          {(row) => row.lastSignInAt}
+          {(row: MailResponse) => row.audience}
         </TableBuilderColumn>
         <TableBuilderColumn header="Actions">
           {(row) => (
             <>
               <ActionButton
-                onClick={deleteUserClick(row.id)}
+                // onClick={deleteUserClick(row.id)}
                 size={SIZE.mini}
                 shape={SHAPE.circle}
               >

@@ -22,11 +22,29 @@ export interface UserResponse<T = any> {
   updatedAt: Date;
 }
 
-export interface UsersResponse<T = any> {
+export interface PaginationResponse<T = any> {
   page: number;
   perPage: number;
   itemCount: number;
-  items: UserResponse<T>[];
+  items: T[];
+}
+
+export enum NotificationType {
+  Confirmation,
+  EmailChange,
+  InviteUser,
+  MagicLink,
+  Recovery,
+}
+
+export interface MailResponse {
+  id: string;
+  type: NotificationType;
+  language: string;
+  template: string;
+  content: string;
+  audience: string;
+  subject: string;
 }
 
 export class Api {
@@ -102,7 +120,34 @@ export class Api {
 
     const result = await response.json();
 
-    return result as UsersResponse;
+    return result as PaginationResponse<UserResponse>;
+  }
+
+  public async getMails(
+    page: number = 1,
+    perPage: number = 20,
+    accessToken?: string
+  ) {
+    const auth = this.getAuthHeader(accessToken);
+
+    const params = new URLSearchParams();
+    params.append("page", page.toString());
+    params.append("perPage", perPage.toString());
+
+    const response = await fetch(
+      `${this.host}/admin/mails?${params.toString()}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          ...auth,
+        } as any,
+      }
+    );
+
+    const result = await response.json();
+
+    return result as PaginationResponse<MailResponse>;
   }
 
   createUser(accessToken?: string) {

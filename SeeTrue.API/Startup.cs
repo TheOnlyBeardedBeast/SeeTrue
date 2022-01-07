@@ -34,8 +34,10 @@ namespace SeeTrue.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             var type = typeof(Env);
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(type.TypeHandle);
+            
 
             services.AddMemoryCache();
             services.AddDbContext<ISeeTrueDbContext, AppDbContext>(options =>
@@ -87,7 +89,6 @@ namespace SeeTrue.API
                     {
                         policy.AddAuthenticationSchemes(ApiKeyDefaults.AuthenticationScheme);
                         policy.RequireAuthenticatedUser();
-
                     });
                 }
 

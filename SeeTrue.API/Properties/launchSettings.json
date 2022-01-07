@@ -24,7 +24,8 @@
         "SEETRUE_VALIDATE_AUDIENCE": "true",
         "SEETRUE_SIGNUP_DISABLED": "false",
         "SEETRUE_API_KEY": "SuperSecureApiKey",
-        "SEETRUE_ADMIN_ROLE": "admin"
+        "SEETRUE_ADMIN_ROLE": "admin",
+        "SEETRUE_DB_CONNECTION": "Host=localhost;Database=seetrue;Username=postgres;Password=postgres"
       }
     }
   }

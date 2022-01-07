@@ -11,6 +11,7 @@ namespace SeeTrue.Models
         public DbSet<AuditLogEntry> AuditLogEntries { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Login> Logins { get; set; }
+        public DbSet<Mail> Mails { get; set; }
 
         public SeeTrueDbContext(DbContextOptions options) : base(options)
         {

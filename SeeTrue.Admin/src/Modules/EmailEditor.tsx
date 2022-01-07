@@ -5,6 +5,7 @@ import mjml2html from "mjml-browser";
 import debounce from "lodash.debounce";
 import { Tabs, Tab } from "baseui/tabs-motion";
 import { styled } from "baseui";
+import { toaster } from "baseui/toast";
 
 const iFrameContent = `<html><head><script type="module"> window.addEventListener('message', (event)=>{const{type, value}=event.data; if (type==='html'){document.body.innerHTML=value;}})</script></head><body></body></html>`;
 
@@ -96,16 +97,20 @@ export const EmailEditor: React.FC = () => {
   };
 
   const handleChange = () => {
-    const html = {
-      type: "html",
-      value: editorRef?.current?.getValue()
-        ? mjml2html(editorRef?.current?.getValue()).html
-        : "",
-    };
+    try {
+      const html = {
+        type: "html",
+        value: editorRef?.current?.getValue()
+          ? mjml2html(editorRef?.current?.getValue()).html
+          : "",
+      };
 
-    contentRef?.current?.contentWindow?.postMessage(html, "*");
-    if (htmlRef?.current) {
-      htmlRef.current.setValue(html.value);
+      contentRef?.current?.contentWindow?.postMessage(html, "*");
+      if (htmlRef?.current) {
+        htmlRef.current.setValue(html.value);
+      }
+    } catch (error) {
+      toaster.negative(<>Invalid mjml value!</>, {});
     }
   };
 

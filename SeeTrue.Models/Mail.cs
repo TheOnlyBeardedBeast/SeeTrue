@@ -12,7 +12,7 @@ namespace SeeTrue.Models
         Recovery
     }
 
-    public class Notification
+    public class Mail
     {
         [Key]
         public Guid Id { get; set; }
