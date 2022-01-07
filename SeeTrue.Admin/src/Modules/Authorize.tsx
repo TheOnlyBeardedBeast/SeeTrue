@@ -5,6 +5,8 @@ import { FormControl } from "baseui/form-control";
 import { styled } from "baseui";
 import { useSeeTrue } from ".";
 import { toaster } from "baseui/toast";
+import Logo from "../Assets/SeeTrueIcon.png";
+import { Display2 } from "baseui/typography";
 
 const Container = styled("div", {
   display: "flex",
@@ -33,6 +35,8 @@ export const Authorize: React.FC = () => {
 
   return (
     <Container>
+      <img src={Logo} style={{ width: "256px" }} />
+      <Display2>SeeTrue</Display2>
       <Form onSubmit={handleSubmit}>
         <FormControl label="Api key">
           <Input
