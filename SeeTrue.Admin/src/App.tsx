@@ -2,7 +2,12 @@ import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider as StyletronProvider } from "styletron-react";
 import { DarkTheme, BaseProvider, styled } from "baseui";
 import { ToasterContainer } from "baseui/toast";
-import { Navigation, AppRouter, SeeTrueProvider } from "./Modules";
+import {
+  Navigation,
+  AppRouter,
+  SeeTrueProvider,
+  ConfirmationProvider,
+} from "./Modules";
 
 const engine = new Styletron();
 const Container = styled("div", {
@@ -15,10 +20,12 @@ export default function Hello() {
       <BaseProvider theme={DarkTheme}>
         <SeeTrueProvider>
           <ToasterContainer />
-          <Container>
-            <Navigation />
-            <AppRouter />
-          </Container>
+          <ConfirmationProvider>
+            <Container>
+              <Navigation />
+              <AppRouter />
+            </Container>
+          </ConfirmationProvider>
         </SeeTrueProvider>
       </BaseProvider>
     </StyletronProvider>

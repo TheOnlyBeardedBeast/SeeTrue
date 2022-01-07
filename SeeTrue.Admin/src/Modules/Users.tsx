@@ -3,19 +3,25 @@ import { Checkbox } from "baseui/checkbox";
 import { StyledLink as Link } from "baseui/link";
 import { TableBuilder, TableBuilderColumn } from "baseui/table-semantic";
 import { styled } from "baseui";
-import { DataPagination, UsersResponse, useSeeTrue } from ".";
+import { DataPagination, UsersResponse, useSeeTrue, useConfirmation } from ".";
 import { Button, SHAPE, SIZE } from "baseui/button";
 import { X, PencilSimple } from "phosphor-react";
+import { toaster } from "baseui/toast";
 
 const CustomTableBuilder = styled(TableBuilder, {
   maxWidth: "1307px",
   margin: "20px auto",
 });
 
+const ActionButton = styled(Button, {
+  margin: "0 5px",
+});
+
 export const Users: React.FC = () => {
   const seeTrue = useSeeTrue();
   const [data, setData] = React.useState<UsersResponse>();
   const [selections, setSelections] = React.useState<Set<string>>(new Set());
+  const { confirm, close } = useConfirmation();
 
   React.useEffect(() => {
     seeTrue.api?.getUsers().then((data) => setData(data));
@@ -47,9 +53,28 @@ export const Users: React.FC = () => {
     }
   }
 
-  const deleteUser = (id: string) => async () => {
-    await seeTrue.api?.deleteUser(id);
-    await seeTrue.api?.getUsers(data?.page).then((data) => setData(data));
+  const deleteUser = async (id: string) => {
+    try {
+      await seeTrue.api?.deleteUser(id);
+      await seeTrue.api?.getUsers(data?.page).then((data) => setData(data));
+
+      toaster.positive(<>User deleted.</>, {});
+    } catch (error) {
+      toaster.negative(<>User delete failed!</>, {});
+    } finally {
+      close();
+    }
+  };
+
+  const deleteUserClick = (id: string) => async () => {
+    const item = data?.items.find((e) => e.id === id);
+    if (item) {
+      await confirm({
+        message: `Do you wish to delete ${item?.email}`,
+        header: "Remove user",
+        action: () => deleteUser(item.id),
+      });
+    }
   };
 
   return data ? (
@@ -94,19 +119,19 @@ export const Users: React.FC = () => {
         <TableBuilderColumn header="Las Sign In">
           {(row) => row.lastSignInAt}
         </TableBuilderColumn>
-        <TableBuilderColumn header="Las Sign In">
+        <TableBuilderColumn header="Actions">
           {(row) => (
             <>
-              <Button
-                onClick={deleteUser(row.id)}
+              <ActionButton
+                onClick={deleteUserClick(row.id)}
                 size={SIZE.mini}
                 shape={SHAPE.circle}
               >
                 <X />
-              </Button>
-              <Button size={SIZE.mini} shape={SHAPE.circle}>
+              </ActionButton>
+              <ActionButton size={SIZE.mini} shape={SHAPE.circle}>
                 <PencilSimple />
-              </Button>
+              </ActionButton>
             </>
           )}
         </TableBuilderColumn>
