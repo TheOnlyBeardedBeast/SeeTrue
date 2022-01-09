@@ -76,5 +76,21 @@ namespace SeeTrue.Infrastructure.Utils
                 throw new Exception($"Invalid required Environment variable {key}");
             }
         }
+
+        public static IDictionary<string, int> ConvertToDictionary<T>() where T : struct
+        {
+            var dictionary = new Dictionary<string, int>();
+
+            var values = Enum.GetValues(typeof(T));
+
+            foreach (var value in values)
+            {
+                int key = (int)value;
+
+                dictionary.Add(value.ToString(), key);
+            }
+
+            return dictionary;
+        }
     }
 }
