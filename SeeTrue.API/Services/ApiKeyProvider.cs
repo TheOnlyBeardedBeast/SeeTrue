@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AspNetCore.Authentication.ApiKey;
+using SeeTrue.Infrastructure.Types;
 using SeeTrue.Infrastructure.Utils;
 
 namespace SeeTrue.API.Services
@@ -14,7 +15,7 @@ namespace SeeTrue.API.Services
                 return Task.FromResult(Env.ApiKey);
             }
 
-            return null;
+            return Task.FromResult(new ApiKey(null, null, null) as IApiKey);
         }
     }
 }
