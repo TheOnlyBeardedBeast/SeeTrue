@@ -11,6 +11,7 @@ import { Textarea } from "baseui/textarea";
 import { useForm, Controller } from "react-hook-form";
 import { useSeeTrue } from ".";
 import { Button } from "baseui/button";
+import { useLocation } from "wouter";
 
 const iFrameContent = `<html><head><script type="module"> window.addEventListener('message', (event)=>{const{type, value}=event.data; if (type==='html'){document.body.innerHTML=value;}})</script></head><body></body></html>`;
 
@@ -80,8 +81,14 @@ const tabOverrides = {
 
 export const EmailEditor: React.FC = () => {
   const contentRef = React.useRef<HTMLIFrameElement | null>(null);
+  const [template, setTemplater] = React.useState<string>(devValue);
   const [activeTab, setActiveTab] = React.useState<React.Key>(0);
   const seeTrue = useSeeTrue();
+  const [location, setLocation] = useLocation();
+
+  React.useEffect(() => {
+    console.log("value changed");
+  }, [template]);
 
   const { register, control, handleSubmit } = useForm();
 
@@ -117,6 +124,7 @@ export const EmailEditor: React.FC = () => {
       if (htmlRef?.current) {
         htmlRef.current.setValue(html.value);
       }
+      setTemplater(editorRef?.current?.getValue() ?? "");
     } catch (error) {
       toaster.negative(<>Invalid mjml value!</>, {});
     }
@@ -138,7 +146,7 @@ export const EmailEditor: React.FC = () => {
       subject: values.subject,
     };
 
-    console.log(result);
+    seeTrue.api?.createMail(result).then(() => setLocation("/emails"));
   };
 
   return (
@@ -148,7 +156,7 @@ export const EmailEditor: React.FC = () => {
         width="50%"
         onChange={debounceChange}
         defaultLanguage="html"
-        defaultValue={devValue}
+        defaultValue={template}
         theme="hc-black"
         onMount={handleEditorDidMount}
       />

@@ -128,10 +128,14 @@ export const Emails: React.FC = () => {
           )}
         </TableBuilderColumn>
         <TableBuilderColumn header="Type">
-          {(row: MailResponse) => row.type}
+          {(row: MailResponse) =>
+            Object.entries(seeTrue.settings.emailTypes).find(
+              ([key, value]) => value === row.type
+            )?.[0]
+          }
         </TableBuilderColumn>
-        <TableBuilderColumn header="Confirmed">
-          {(row: MailResponse) => row.language}
+        <TableBuilderColumn header="Language">
+          {(row: MailResponse) => row.language.toUpperCase()}
         </TableBuilderColumn>
         <TableBuilderColumn header="Audience">
           {(row: MailResponse) => row.audience}

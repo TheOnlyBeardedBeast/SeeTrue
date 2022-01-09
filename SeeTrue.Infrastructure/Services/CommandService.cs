@@ -184,6 +184,8 @@ namespace SeeTrue.Infrastructure.Services
         Task<User> CreateUser(AdminUpdateUserRequest userData);
 
         Task<User> InviteUser(string email, string Aud, string provider);
+
+        Task<Mail> CreateMail(Mail mail);
     }
 
     public class CommandService : ICommandService
@@ -483,6 +485,15 @@ namespace SeeTrue.Infrastructure.Services
             await db.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task<Mail> CreateMail(Mail mail)
+        {
+            this.db.Mails.Add(mail);
+
+            await this.db.SaveChangesAsync();
+
+            return mail;
         }
     }
 }

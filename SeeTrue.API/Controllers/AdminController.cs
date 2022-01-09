@@ -86,10 +86,13 @@ namespace SeeTrue.API.Controllers
             return Ok(await this.m.Send(new Infrastructure.Queries.GetMails.Query(page, perPgae)));
         }
 
+        [Authorize("Admin")]
         [HttpPost("mails")]
-        public IActionResult CreateMail()
+        public async Task<IActionResult> CreateMail([FromBody] Infrastructure.Commands.AdminAddEmail.Command data)
         {
-            throw new NotImplementedException();
+            var result = await this.m.Send(data);
+
+            return Ok(result);
         }
 
         [HttpPut("mails")]

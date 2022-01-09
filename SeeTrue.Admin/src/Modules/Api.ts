@@ -37,14 +37,16 @@ export enum NotificationType {
   Recovery,
 }
 
-export interface MailResponse {
-  id: string;
+export interface MailRequest {
   type: NotificationType;
   language: string;
   template: string;
   content: string;
   audience: string;
   subject: string;
+}
+export interface MailResponse extends MailRequest {
+  id: string;
 }
 
 export interface IAdminSettings {
@@ -183,6 +185,24 @@ export class Api {
         "Content-Type": "application/json",
         ...auth,
       } as any,
+    });
+
+    return response.json();
+  }
+
+  public async createMail(
+    data: MailRequest,
+    accessToken?: string
+  ): Promise<MailResponse> {
+    const auth = this.getAuthHeader(accessToken);
+
+    const response = await fetch(`${this.host}/admin/mails`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...auth,
+      } as any,
+      body: JSON.stringify(data),
     });
 
     return response.json();
