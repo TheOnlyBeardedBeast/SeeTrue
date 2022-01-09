@@ -9,6 +9,8 @@ import { FormControl } from "baseui/form-control";
 import { Select } from "baseui/select";
 import { Textarea } from "baseui/textarea";
 import { useForm, Controller } from "react-hook-form";
+import { useSeeTrue } from ".";
+import { Button } from "baseui/button";
 
 const iFrameContent = `<html><head><script type="module"> window.addEventListener('message', (event)=>{const{type, value}=event.data; if (type==='html'){document.body.innerHTML=value;}})</script></head><body></body></html>`;
 
@@ -79,8 +81,9 @@ const tabOverrides = {
 export const EmailEditor: React.FC = () => {
   const contentRef = React.useRef<HTMLIFrameElement | null>(null);
   const [activeTab, setActiveTab] = React.useState<React.Key>(0);
+  const seeTrue = useSeeTrue();
 
-  const { register, control } = useForm();
+  const { register, control, handleSubmit } = useForm();
 
   const contentRefHandler = React.useCallback((node: HTMLIFrameElement) => {
     contentRef.current = node;
@@ -125,6 +128,19 @@ export const EmailEditor: React.FC = () => {
     setActiveTab(activeKey);
   };
 
+  const submitForm = (values: any) => {
+    var result = {
+      template: editorRef?.current?.getValue(),
+      content: mjml2html(editorRef?.current?.getValue()).html,
+      audience: values.audience[0].audience,
+      language: values.language[0].value,
+      type: values.type[0].value,
+      subject: values.subject,
+    };
+
+    console.log(result);
+  };
+
   return (
     <div style={{ display: "flex", height: "100%", overflow: "hidden" }}>
       <Editor
@@ -143,7 +159,7 @@ export const EmailEditor: React.FC = () => {
           overrides={tabsOverrides}
         >
           <Tab title="Settings" overrides={tabOverrides}>
-            <form>
+            <form onSubmit={handleSubmit(submitForm)}>
               <FormControl label="Audience">
                 <Controller
                   name="audience"
@@ -151,17 +167,16 @@ export const EmailEditor: React.FC = () => {
                   render={({ field }) => (
                     <Select
                       id="select-id"
-                      options={[{ key: "http://localhost:5000" }]}
-                      labelKey="key"
-                      valueKey="key"
+                      options={seeTrue.settings.audiences.map((e) => ({
+                        audience: e,
+                      }))}
+                      labelKey="audience"
+                      valueKey="audience"
                       onChange={(e) => field.onChange(e.value)}
                       value={field.value}
                     />
                   )}
                 />
-              </FormControl>
-              <FormControl label="Subject">
-                <Textarea placeholder="Controlled Input" clearOnEscape />
               </FormControl>
               <FormControl label="Type">
                 <Controller
@@ -170,11 +185,27 @@ export const EmailEditor: React.FC = () => {
                   render={({ field }) => (
                     <Select
                       id="select-id"
-                      options={[{ key: 0, type: "Confirmation" }]}
-                      labelKey="type"
-                      valueKey="key"
+                      options={Object.entries(seeTrue.settings.emailTypes).map(
+                        ([key, value]) => ({ key, value })
+                      )}
+                      labelKey="key"
+                      valueKey="value"
                       onChange={(e) => field.onChange(e.value)}
                       value={field.value}
+                    />
+                  )}
+                />
+              </FormControl>
+              <FormControl label="Subject">
+                <Controller
+                  name="subject"
+                  control={control}
+                  render={({ field }) => (
+                    <Textarea
+                      onChange={field.onChange}
+                      value={field.value}
+                      placeholder="Controlled Input"
+                      clearOnEscape
                     />
                   )}
                 />
@@ -186,15 +217,21 @@ export const EmailEditor: React.FC = () => {
                   render={({ field }) => (
                     <Select
                       id="select-id"
-                      options={[{ key: "EN", language: "English" }]}
-                      labelKey="language"
-                      valueKey="key"
+                      options={seeTrue.settings.languages.map((e) => ({
+                        key: e.toUpperCase(),
+                        value: e,
+                      }))}
+                      labelKey="key"
+                      valueKey="value"
                       onChange={(e) => field.onChange(e.value)}
                       value={field.value}
                     />
                   )}
                 />
               </FormControl>
+              <Button $style={{ width: "100%" }} type="submit">
+                Submit
+              </Button>
             </form>
           </Tab>
           <Tab title="Render" overrides={tabOverrides}>

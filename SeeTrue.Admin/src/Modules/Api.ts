@@ -47,6 +47,12 @@ export interface MailResponse {
   subject: string;
 }
 
+export interface IAdminSettings {
+  languages: string[];
+  audiences: string[];
+  emailTypes: { [key: string]: number };
+}
+
 export class Api {
   protected path: string = "admin/users";
   public readonly host: string;
@@ -166,6 +172,20 @@ export class Api {
         ...auth,
       } as any,
     });
+  }
+
+  public async settings(accessToken?: string): Promise<IAdminSettings> {
+    const auth = this.getAuthHeader(accessToken);
+
+    const response = await fetch(`${this.host}/admin/settings`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...auth,
+      } as any,
+    });
+
+    return response.json();
   }
 
   protected getAuthHeader(accessToken?: string, apikey?: string) {

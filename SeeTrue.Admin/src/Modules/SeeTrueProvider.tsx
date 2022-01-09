@@ -1,11 +1,13 @@
+import { toaster } from "baseui/toast";
 import React from "react";
-import { Api } from ".";
+import { Api, IAdminSettings } from ".";
 
 interface ISeeTrueContext {
   authorized: boolean;
   api?: Api;
   authorize: (apikey: string) => Promise<void>;
   logout: () => void;
+  settings: IAdminSettings;
 }
 
 const SeeTrueContext = React.createContext<ISeeTrueContext | null>(null);
@@ -29,17 +31,26 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   host = "http://localhost:5000",
 }) => {
   const [apiKey, setApiKey] = React.useState<string | null>(null);
+  const [settings, setSettings] = React.useState<IAdminSettings | null>(null);
+
   const api = React.useMemo(() => {
     return new Api(host);
   }, []);
+
+  const loadSetting = async () => {
+    const _settings = await api.settings();
+    setSettings(_settings);
+  };
 
   const authorize = React.useCallback(async (_apiKey: string) => {
     try {
       await api.authorize({ apiKey: _apiKey });
       api.apiKey = _apiKey;
       setApiKey(_apiKey);
+      loadSetting();
     } catch (error) {
-      console.log(error);
+      logout();
+      toaster.negative(<>Something went wrong</>, {});
     }
   }, []);
 
@@ -51,6 +62,7 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   const context = {
     authorized: !!apiKey,
     authorize,
+    settings: settings as IAdminSettings,
     logout,
     api,
   };

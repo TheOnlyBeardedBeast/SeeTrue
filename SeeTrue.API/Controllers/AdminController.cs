@@ -98,10 +98,12 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
+        [Authorize("Admin")]
         [HttpGet("settings")]
-        public IActionResult Settings()
+        public async Task<IActionResult> Settings()
         {
-            throw new NotImplementedException();
+            var result = await this.m.Send(new Infrastructure.Queries.AdminSettings.Query());
+            return Ok(result);
         }
 
     }

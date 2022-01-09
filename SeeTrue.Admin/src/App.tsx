@@ -8,6 +8,7 @@ import {
   SeeTrueProvider,
   ConfirmationProvider,
 } from "./Modules";
+import "./App.css";
 
 const engine = new Styletron();
 const Container = styled("div", {
