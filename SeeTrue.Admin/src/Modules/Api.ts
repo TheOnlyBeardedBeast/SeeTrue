@@ -68,10 +68,11 @@ export class Api {
     });
 
     if (response.status === 204 && config.apiKey) {
-      this.apiKey = config.apiKey;
+      // this.apiKey = config.apiKey;
+      return;
     }
 
-    return response.status === 204;
+    throw new Error("Unauthorized");
   }
 
   public async getUser(id: string, accessToken?: string) {

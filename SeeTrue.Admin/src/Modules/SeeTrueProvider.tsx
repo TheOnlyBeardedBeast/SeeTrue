@@ -28,22 +28,28 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   children,
   host = "http://localhost:5000",
 }) => {
-  const [authorized, setAuthorized] = React.useState<boolean>(false);
-  const api = React.useMemo(() => new Api(host), []);
+  const [apiKey, setApiKey] = React.useState<string | null>(null);
+  const api = React.useMemo(() => {
+    return new Api(host);
+  }, []);
 
-  const authorize = React.useCallback(async (apiKey: string) => {
-    const result = await api.authorize({ apiKey });
-
-    setAuthorized(result);
+  const authorize = React.useCallback(async (_apiKey: string) => {
+    try {
+      await api.authorize({ apiKey: _apiKey });
+      api.apiKey = _apiKey;
+      setApiKey(_apiKey);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   const logout = () => {
     api.apiKey = undefined;
-    setAuthorized(false);
+    setApiKey(null);
   };
 
   const context = {
-    authorized,
+    authorized: !!apiKey,
     authorize,
     logout,
     api,
