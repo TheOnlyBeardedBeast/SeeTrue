@@ -4,8 +4,11 @@ import Editor from "@monaco-editor/react";
 import mjml2html from "mjml-browser";
 import debounce from "lodash.debounce";
 import { Tabs, Tab } from "baseui/tabs-motion";
-import { styled } from "baseui";
 import { toaster } from "baseui/toast";
+import { FormControl } from "baseui/form-control";
+import { Select } from "baseui/select";
+import { Textarea } from "baseui/textarea";
+import { useForm, Controller } from "react-hook-form";
 
 const iFrameContent = `<html><head><script type="module"> window.addEventListener('message', (event)=>{const{type, value}=event.data; if (type==='html'){document.body.innerHTML=value;}})</script></head><body></body></html>`;
 
@@ -77,6 +80,8 @@ export const EmailEditor: React.FC = () => {
   const contentRef = React.useRef<HTMLIFrameElement | null>(null);
   const [activeTab, setActiveTab] = React.useState<React.Key>(0);
 
+  const { register, control } = useForm();
+
   const contentRefHandler = React.useCallback((node: HTMLIFrameElement) => {
     contentRef.current = node;
     handleChange();
@@ -137,6 +142,61 @@ export const EmailEditor: React.FC = () => {
           onChange={handleTabChange}
           overrides={tabsOverrides}
         >
+          <Tab title="Settings" overrides={tabOverrides}>
+            <form>
+              <FormControl label="Audience">
+                <Controller
+                  name="audience"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      id="select-id"
+                      options={[{ key: "http://localhost:5000" }]}
+                      labelKey="key"
+                      valueKey="key"
+                      onChange={(e) => field.onChange(e.value)}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </FormControl>
+              <FormControl label="Subject">
+                <Textarea placeholder="Controlled Input" clearOnEscape />
+              </FormControl>
+              <FormControl label="Type">
+                <Controller
+                  name="type"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      id="select-id"
+                      options={[{ key: 0, type: "Confirmation" }]}
+                      labelKey="type"
+                      valueKey="key"
+                      onChange={(e) => field.onChange(e.value)}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </FormControl>
+              <FormControl label="Language">
+                <Controller
+                  name="language"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      id="select-id"
+                      options={[{ key: "EN", language: "English" }]}
+                      labelKey="language"
+                      valueKey="key"
+                      onChange={(e) => field.onChange(e.value)}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </FormControl>
+            </form>
+          </Tab>
           <Tab title="Render" overrides={tabOverrides}>
             {/* Big thanks https://joyofcode.xyz/avoid-flashing-iframe */}
             <iframe

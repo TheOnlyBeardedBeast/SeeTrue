@@ -17,6 +17,7 @@
     "phosphor-react": "^1.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.22.5",
     "styletron-engine-atomic": "^1.4.8",
     "styletron-react": "^6.0.2",
     "wouter": "^2.8.0-alpha.2"
