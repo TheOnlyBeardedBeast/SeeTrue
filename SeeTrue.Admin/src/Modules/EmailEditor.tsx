@@ -84,7 +84,7 @@ export const EmailEditor: React.FC = () => {
   const [template, setTemplater] = React.useState<string>(devValue);
   const [activeTab, setActiveTab] = React.useState<React.Key>(0);
   const seeTrue = useSeeTrue();
-  const [location, setLocation] = useLocation();
+  const [_location, setLocation] = useLocation();
 
   React.useEffect(() => {
     console.log("value changed");
