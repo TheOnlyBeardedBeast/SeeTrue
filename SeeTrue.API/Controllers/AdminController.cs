@@ -98,7 +98,11 @@ namespace SeeTrue.API.Controllers
             throw new NotImplementedException();
         }
 
-
+        [HttpGet("settings")]
+        public IActionResult Settings()
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
