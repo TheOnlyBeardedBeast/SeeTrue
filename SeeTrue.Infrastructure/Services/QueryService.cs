@@ -22,6 +22,7 @@ namespace SeeTrue.Infrastructure.Services
         bool TryGetValueFromCache<T>(object key, out T value);
         Task<Pagination<User>> PaginateUsers(int page = 1, int perPage = 20);
         Task<Pagination<Mail>> PaginateMails(int page = 1, int perPage = 20);
+        Task<Mail> GetMail(Guid Id);
     }
 
     public class QueryService : IQueryService
@@ -127,6 +128,11 @@ namespace SeeTrue.Infrastructure.Services
             var count = await this.db.Mails.CountAsync();
 
             return new Pagination<Mail>(page, perPage, count, items);
+        }
+
+        public Task<Mail> GetMail(Guid Id)
+        {
+            return this.db.Mails.FirstOrDefaultAsync(e => e.Id == Id);
         }
     }
 }

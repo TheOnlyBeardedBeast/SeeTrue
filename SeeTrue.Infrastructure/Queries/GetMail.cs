@@ -8,11 +8,11 @@ using SeeTrue.Models;
 
 namespace SeeTrue.Infrastructure.Queries
 {
-    public static class GetMails
+    public static class GetMail
     {
-        public record Query(int Page = 1, int PerPage = 20) : IRequest<Pagination<Mail>>;
+        public record Query(Guid Id) : IRequest<Mail>;
 
-        public class Handler : IRequestHandler<Query, Pagination<Mail>>
+        public class Handler : IRequestHandler<Query, Mail>
         {
             private readonly IQueryService queries;
 
@@ -21,9 +21,9 @@ namespace SeeTrue.Infrastructure.Queries
                 this.queries = queries;
             }
 
-            public async Task<Pagination<Mail>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Mail> Handle(Query request, CancellationToken cancellationToken)
             {
-                var result = await queries.PaginateMails(request.Page, request.PerPage);
+                var result = await queries.GetMail(request.Id);
 
                 if (result is null)
                 {

@@ -9,6 +9,9 @@ import {
   ConfirmationProvider,
 } from "./Modules";
 import "./App.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const engine = new Styletron();
 const Container = styled("div", {
@@ -19,15 +22,17 @@ export default function Hello() {
   return (
     <StyletronProvider value={engine}>
       <BaseProvider theme={DarkTheme}>
-        <SeeTrueProvider>
-          <ToasterContainer />
-          <ConfirmationProvider>
-            <Container>
-              <Navigation />
-              <AppRouter />
-            </Container>
-          </ConfirmationProvider>
-        </SeeTrueProvider>
+        <QueryClientProvider client={queryClient}>
+          <SeeTrueProvider>
+            <ToasterContainer />
+            <ConfirmationProvider>
+              <Container>
+                <Navigation />
+                <AppRouter />
+              </Container>
+            </ConfirmationProvider>
+          </SeeTrueProvider>
+        </QueryClientProvider>
       </BaseProvider>
     </StyletronProvider>
   );

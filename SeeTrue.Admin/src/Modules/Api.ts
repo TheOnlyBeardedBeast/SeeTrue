@@ -38,6 +38,7 @@ export enum NotificationType {
 }
 
 export interface MailRequest {
+  id?: string;
   type: NotificationType;
   language: string;
   template: string;
@@ -157,6 +158,28 @@ export class Api {
     const result = await response.json();
 
     return result as PaginationResponse<MailResponse>;
+  }
+
+  public async getMail(id: string, accessToken?: string) {
+    const auth = this.getAuthHeader(accessToken);
+
+    const response = await fetch(`${this.host}/admin/mails/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...auth,
+      } as any,
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    console.log(response.body);
+
+    const result = await response.json();
+
+    return result as MailResponse;
   }
 
   createUser(accessToken?: string) {

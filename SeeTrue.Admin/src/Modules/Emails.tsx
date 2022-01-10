@@ -14,6 +14,7 @@ import { Button, SHAPE, SIZE } from "baseui/button";
 import { X, PencilSimple } from "phosphor-react";
 // import { toaster } from "baseui/toast";
 import { Notification, KIND } from "baseui/notification";
+import { useLocation } from "wouter";
 
 const CustomTableBuilder = styled(TableBuilder, {
   maxWidth: "1307px",
@@ -28,6 +29,7 @@ export const Emails: React.FC = () => {
   const seeTrue = useSeeTrue();
   const [data, setData] = React.useState<PaginationResponse<MailResponse>>();
   const [selections, setSelections] = React.useState<Set<string>>(new Set());
+  const [location, setLocation] = useLocation();
   // const { confirm, close } = useConfirmation();
 
   React.useEffect(() => {
@@ -83,6 +85,9 @@ export const Emails: React.FC = () => {
   //     });
   //   }
   // };
+
+  const navigateToEmailDetail = (id: string) => () =>
+    setLocation(`/emails/${id}`);
 
   if (!data) {
     return null;
@@ -150,7 +155,11 @@ export const Emails: React.FC = () => {
               >
                 <X />
               </ActionButton>
-              <ActionButton size={SIZE.mini} shape={SHAPE.circle}>
+              <ActionButton
+                onClick={navigateToEmailDetail(row.id)}
+                size={SIZE.mini}
+                shape={SHAPE.circle}
+              >
                 <PencilSimple />
               </ActionButton>
             </>

@@ -87,6 +87,14 @@ namespace SeeTrue.API.Controllers
         }
 
         [Authorize("Admin")]
+        [HttpGet("mails/{id}")]
+        public async Task<IActionResult> GetMail([FromRoute] Guid id)
+        {
+            Console.WriteLine("Get mail by id" + id);
+            return Ok(await this.m.Send(new Infrastructure.Queries.GetMail.Query(id)));
+        }
+
+        [Authorize("Admin")]
         [HttpPost("mails")]
         public async Task<IActionResult> CreateMail([FromBody] Infrastructure.Commands.AdminAddEmail.Command data)
         {

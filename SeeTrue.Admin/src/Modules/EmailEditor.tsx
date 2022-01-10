@@ -9,7 +9,7 @@ import { FormControl } from "baseui/form-control";
 import { Select } from "baseui/select";
 import { Textarea } from "baseui/textarea";
 import { useForm, Controller } from "react-hook-form";
-import { useSeeTrue } from ".";
+import { MailResponse, useSeeTrue } from ".";
 import { Button } from "baseui/button";
 import { useLocation } from "wouter";
 
@@ -79,18 +79,42 @@ const tabOverrides = {
   },
 };
 
-export const EmailEditor: React.FC = () => {
+interface EmailEditorProps {
+  defaultData?: MailResponse;
+}
+
+export const EmailEditor: React.FC<EmailEditorProps> = ({ defaultData }) => {
   const contentRef = React.useRef<HTMLIFrameElement | null>(null);
-  const [template, setTemplater] = React.useState<string>(devValue);
+  const template = defaultData?.template ?? devValue;
   const [activeTab, setActiveTab] = React.useState<React.Key>(0);
   const seeTrue = useSeeTrue();
   const [_location, setLocation] = useLocation();
 
-  React.useEffect(() => {
-    console.log("value changed");
-  }, [template]);
-
-  const { register, control, handleSubmit } = useForm();
+  const { register, control, handleSubmit } = useForm({
+    defaultValues: {
+      audience: defaultData?.audience
+        ? [{ audience: defaultData?.audience }]
+        : undefined,
+      type:
+        defaultData?.type || defaultData?.type === 0
+          ? [
+              {
+                key: "",
+                value: defaultData.type,
+              },
+            ]
+          : undefined,
+      subject: defaultData?.subject,
+      language: defaultData?.language
+        ? [
+            {
+              key: defaultData?.language.toUpperCase(),
+              value: defaultData?.language,
+            },
+          ]
+        : undefined,
+    },
+  });
 
   const contentRefHandler = React.useCallback((node: HTMLIFrameElement) => {
     contentRef.current = node;
@@ -124,7 +148,6 @@ export const EmailEditor: React.FC = () => {
       if (htmlRef?.current) {
         htmlRef.current.setValue(html.value);
       }
-      setTemplater(editorRef?.current?.getValue() ?? "");
     } catch (error) {
       toaster.negative(<>Invalid mjml value!</>, {});
     }

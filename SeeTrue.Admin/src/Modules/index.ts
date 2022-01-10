@@ -1,6 +1,7 @@
 export * from "./Api";
 export * from "./Authorize";
 export * from "./ConfirmationProvider";
+export * from "./EmailDetail";
 export * from "./EmailEditor";
 export * from "./Emails";
 export * from "./Navigation";
