@@ -90,7 +90,6 @@ namespace SeeTrue.API.Controllers
         [HttpGet("mails/{id}")]
         public async Task<IActionResult> GetMail([FromRoute] Guid id)
         {
-            Console.WriteLine("Get mail by id" + id);
             return Ok(await this.m.Send(new Infrastructure.Queries.GetMail.Query(id)));
         }
 
@@ -103,10 +102,13 @@ namespace SeeTrue.API.Controllers
             return Ok(result);
         }
 
+        [Authorize("Admin")]
         [HttpPut("mails")]
-        public IActionResult UpdateMail()
+        public async Task<IActionResult> UpdateMail([FromBody] Infrastructure.Commands.AdminUpdateEmail.Command data)
         {
-            throw new NotImplementedException();
+            var result = await this.m.Send(data);
+
+            return Ok(result);
         }
 
         [Authorize("Admin")]

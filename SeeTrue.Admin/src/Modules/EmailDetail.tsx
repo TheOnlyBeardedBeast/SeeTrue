@@ -1,6 +1,5 @@
 import React from "react";
-import { useQuery } from "react-query";
-import { useSeeTrue, MailResponse, EmailEditor } from ".";
+import { useSeeTrue, EmailEditor } from ".";
 
 export interface EmailDetailProps {
   id: string;
@@ -8,18 +7,38 @@ export interface EmailDetailProps {
 
 export const EmailDetail: React.FC<EmailDetailProps> = ({ id }) => {
   const seeTrue = useSeeTrue();
-  const { data, error } = useQuery(["emails", id], async () => {
-    const result = await seeTrue.api?.getMail(id);
-    return result;
+  const [data, setData] = React.useState<any>({
+    loading: true,
+    error: false,
+    data: null,
   });
 
-  if (data) {
-    return <EmailEditor defaultData={data} />;
+  const handleLoading = async () => {
+    const newData = { ...data };
+
+    try {
+      const result = await seeTrue.api?.getMail(id);
+      newData.data = result;
+    } catch (error) {
+      newData.error = true;
+    } finally {
+      newData.loading = false;
+    }
+
+    setData(newData);
+  };
+
+  React.useEffect(() => {
+    handleLoading();
+  }, []);
+
+  if (data.data) {
+    return <EmailEditor defaultData={data.data} />;
   }
 
-  if (error) {
+  if (data.error) {
     return <span>error</span>;
   }
 
-  return null;
+  return <span>empty</span>;
 };

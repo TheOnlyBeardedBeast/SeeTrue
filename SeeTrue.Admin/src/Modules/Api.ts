@@ -175,8 +175,6 @@ export class Api {
       throw new Error(response.status.toString());
     }
 
-    console.log(response.body);
-
     const result = await response.json();
 
     return result as MailResponse;
@@ -221,6 +219,24 @@ export class Api {
 
     const response = await fetch(`${this.host}/admin/mails`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...auth,
+      } as any,
+      body: JSON.stringify(data),
+    });
+
+    return response.json();
+  }
+
+  public async updateMail(
+    data: MailRequest,
+    accessToken?: string
+  ): Promise<MailResponse> {
+    const auth = this.getAuthHeader(accessToken);
+
+    const response = await fetch(`${this.host}/admin/mails`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         ...auth,

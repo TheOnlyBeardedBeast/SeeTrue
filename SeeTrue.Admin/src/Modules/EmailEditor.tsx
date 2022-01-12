@@ -12,6 +12,7 @@ import { useForm, Controller } from "react-hook-form";
 import { MailResponse, useSeeTrue } from ".";
 import { Button } from "baseui/button";
 import { useLocation } from "wouter";
+import { useQuery } from "react-query";
 
 const iFrameContent = `<html><head><script type="module"> window.addEventListener('message', (event)=>{const{type, value}=event.data; if (type==='html'){document.body.innerHTML=value;}})</script></head><body></body></html>`;
 
@@ -90,8 +91,10 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ defaultData }) => {
   const seeTrue = useSeeTrue();
   const [_location, setLocation] = useLocation();
 
-  const { register, control, handleSubmit } = useForm({
+  const { register, control, handleSubmit, getValues } = useForm({
+    shouldUnregister: true,
     defaultValues: {
+      id: defaultData?.id ?? undefined,
       audience: defaultData?.audience
         ? [{ audience: defaultData?.audience }]
         : undefined,
@@ -99,7 +102,10 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ defaultData }) => {
         defaultData?.type || defaultData?.type === 0
           ? [
               {
-                key: "",
+                key:
+                  Object.entries(seeTrue.settings.emailTypes).find(
+                    ([_key, value]) => value === defaultData.type
+                  )?.[0] ?? undefined,
                 value: defaultData.type,
               },
             ]
@@ -161,6 +167,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ defaultData }) => {
 
   const submitForm = (values: any) => {
     var result = {
+      id: values.id,
       template: editorRef?.current?.getValue(),
       content: mjml2html(editorRef?.current?.getValue()).html,
       audience: values.audience[0].audience,
@@ -169,11 +176,17 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ defaultData }) => {
       subject: values.subject,
     };
 
-    seeTrue.api?.createMail(result).then(() => setLocation("/emails"));
+    if (!result.id) {
+      delete result.id;
+      seeTrue.api?.createMail(result).then(() => setLocation("/emails"));
+    } else {
+      seeTrue.api?.updateMail(result).then(() => setLocation("/emails"));
+    }
   };
 
   return (
     <div style={{ display: "flex", height: "100%", overflow: "hidden" }}>
+      <input type="hidden" {...register("id")} />
       <Editor
         height="100%"
         width="50%"
