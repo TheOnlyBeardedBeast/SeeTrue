@@ -14,11 +14,7 @@ import { Button, SHAPE, SIZE } from "baseui/button";
 import { X, PencilSimple } from "phosphor-react";
 import { toaster } from "baseui/toast";
 import { Notification, KIND } from "baseui/notification";
-
-const CustomTableBuilder = styled(TableBuilder, {
-  maxWidth: "1307px",
-  margin: "20px auto",
-});
+import { Cell, Grid } from "baseui/layout-grid";
 
 const ActionButton = styled(Button, {
   margin: "0 5px",
@@ -104,72 +100,77 @@ export const Users: React.FC = () => {
   }
 
   return data ? (
-    <>
-      <CustomTableBuilder data={data?.items}>
-        <TableBuilderColumn
-          overrides={{
-            TableHeadCell: { style: { width: "1%" } },
-            TableBodyCell: { style: { width: "1%" } },
-          }}
-          header={
-            <Checkbox
-              checked={hasAll}
-              isIndeterminate={!hasAll && hasSome}
-              onChange={toggleAll}
-            />
-          }
+    <Grid>
+      <Cell span={12}>
+        <TableBuilder
+          overrides={{ Root: { style: { marginTop: "20px" } } }}
+          data={data?.items}
         >
-          {(row) => (
-            <Checkbox
-              name={row.id}
-              checked={selections.has(row.id)}
-              onChange={toggle}
-            />
-          )}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Email">
-          {(row) => <Link href={`mailTo:${row.email}`}>{row.email}</Link>}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Confirmed">
-          {(row) => (row.confirmed ? <span>True</span> : <span>False</span>)}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Audience">
-          {(row) => row.aud}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Role">
-          {(row) => row.role}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Language">
-          {(row) => row.language ?? "EN"}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Created">
-          {(row) => row.createdAt}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Las Sign In">
-          {(row) => row.lastSignInAt}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Actions">
-          {(row) => (
-            <>
-              <ActionButton
-                onClick={deleteUserClick(row.id)}
-                size={SIZE.mini}
-                shape={SHAPE.circle}
-              >
-                <X />
-              </ActionButton>
-              <ActionButton size={SIZE.mini} shape={SHAPE.circle}>
-                <PencilSimple />
-              </ActionButton>
-            </>
-          )}
-        </TableBuilderColumn>
-      </CustomTableBuilder>
-      <DataPagination
-        page={data.page}
-        numPages={Math.ceil(data.itemCount / data.perPage)}
-        onPage={onPage}
-      />
-    </>
+          <TableBuilderColumn
+            overrides={{
+              TableHeadCell: { style: { width: "1%" } },
+              TableBodyCell: { style: { width: "1%" } },
+            }}
+            header={
+              <Checkbox
+                checked={hasAll}
+                isIndeterminate={!hasAll && hasSome}
+                onChange={toggleAll}
+              />
+            }
+          >
+            {(row) => (
+              <Checkbox
+                name={row.id}
+                checked={selections.has(row.id)}
+                onChange={toggle}
+              />
+            )}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Email">
+            {(row) => <Link href={`mailTo:${row.email}`}>{row.email}</Link>}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Confirmed">
+            {(row) => (row.confirmed ? <span>True</span> : <span>False</span>)}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Audience">
+            {(row) => row.aud}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Role">
+            {(row) => row.role}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Language">
+            {(row) => row.language ?? "EN"}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Created">
+            {(row) => row.createdAt}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Las Sign In">
+            {(row) => row.lastSignInAt}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Actions">
+            {(row) => (
+              <>
+                <ActionButton
+                  onClick={deleteUserClick(row.id)}
+                  size={SIZE.mini}
+                  shape={SHAPE.circle}
+                >
+                  <X />
+                </ActionButton>
+                <ActionButton size={SIZE.mini} shape={SHAPE.circle}>
+                  <PencilSimple />
+                </ActionButton>
+              </>
+            )}
+          </TableBuilderColumn>
+        </TableBuilder>
+        <DataPagination
+          page={data.page}
+          numPages={Math.ceil(data.itemCount / data.perPage)}
+          onPage={onPage}
+        />
+      </Cell>
+    </Grid>
   ) : null;
 };

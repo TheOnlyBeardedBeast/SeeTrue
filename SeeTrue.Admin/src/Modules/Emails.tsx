@@ -15,11 +15,7 @@ import { X, PencilSimple } from "phosphor-react";
 // import { toaster } from "baseui/toast";
 import { Notification, KIND } from "baseui/notification";
 import { useLocation } from "wouter";
-
-const CustomTableBuilder = styled(TableBuilder, {
-  maxWidth: "1307px",
-  margin: "20px auto",
-});
+import { Cell, Grid } from "baseui/layout-grid";
 
 const ActionButton = styled(Button, {
   margin: "0 5px",
@@ -29,7 +25,7 @@ export const Emails: React.FC = () => {
   const seeTrue = useSeeTrue();
   const [data, setData] = React.useState<PaginationResponse<MailResponse>>();
   const [selections, setSelections] = React.useState<Set<string>>(new Set());
-  const [location, setLocation] = useLocation();
+  const [_location, setLocation] = useLocation();
   // const { confirm, close } = useConfirmation();
 
   React.useEffect(() => {
@@ -109,68 +105,73 @@ export const Emails: React.FC = () => {
   }
 
   return data ? (
-    <>
-      <CustomTableBuilder data={data?.items}>
-        <TableBuilderColumn
-          overrides={{
-            TableHeadCell: { style: { width: "1%" } },
-            TableBodyCell: { style: { width: "1%" } },
-          }}
-          header={
-            <Checkbox
-              checked={hasAll}
-              isIndeterminate={!hasAll && hasSome}
-              onChange={toggleAll}
-            />
-          }
+    <Grid>
+      <Cell span={12}>
+        <TableBuilder
+          overrides={{ Root: { style: { marginTop: "20px" } } }}
+          data={data?.items}
         >
-          {(row: MailResponse) => (
-            <Checkbox
-              name={row.id}
-              checked={selections.has(row.id)}
-              onChange={toggle}
-            />
-          )}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Type">
-          {(row: MailResponse) =>
-            Object.entries(seeTrue.settings.emailTypes).find(
-              ([key, value]) => value === row.type
-            )?.[0]
-          }
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Language">
-          {(row: MailResponse) => row.language.toUpperCase()}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Audience">
-          {(row: MailResponse) => row.audience}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Actions">
-          {(row) => (
-            <>
-              <ActionButton
-                // onClick={deleteUserClick(row.id)}
-                size={SIZE.mini}
-                shape={SHAPE.circle}
-              >
-                <X />
-              </ActionButton>
-              <ActionButton
-                onClick={navigateToEmailDetail(row.id)}
-                size={SIZE.mini}
-                shape={SHAPE.circle}
-              >
-                <PencilSimple />
-              </ActionButton>
-            </>
-          )}
-        </TableBuilderColumn>
-      </CustomTableBuilder>
-      <DataPagination
-        page={data.page}
-        numPages={Math.ceil(data.itemCount / data.perPage)}
-        onPage={onPage}
-      />
-    </>
+          <TableBuilderColumn
+            overrides={{
+              TableHeadCell: { style: { width: "1%" } },
+              TableBodyCell: { style: { width: "1%" } },
+            }}
+            header={
+              <Checkbox
+                checked={hasAll}
+                isIndeterminate={!hasAll && hasSome}
+                onChange={toggleAll}
+              />
+            }
+          >
+            {(row: MailResponse) => (
+              <Checkbox
+                name={row.id}
+                checked={selections.has(row.id)}
+                onChange={toggle}
+              />
+            )}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Type">
+            {(row: MailResponse) =>
+              Object.entries(seeTrue.settings.emailTypes).find(
+                ([key, value]) => value === row.type
+              )?.[0]
+            }
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Language">
+            {(row: MailResponse) => row.language.toUpperCase()}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Audience">
+            {(row: MailResponse) => row.audience}
+          </TableBuilderColumn>
+          <TableBuilderColumn header="Actions">
+            {(row) => (
+              <>
+                <ActionButton
+                  // onClick={deleteUserClick(row.id)}
+                  size={SIZE.mini}
+                  shape={SHAPE.circle}
+                >
+                  <X />
+                </ActionButton>
+                <ActionButton
+                  onClick={navigateToEmailDetail(row.id)}
+                  size={SIZE.mini}
+                  shape={SHAPE.circle}
+                >
+                  <PencilSimple />
+                </ActionButton>
+              </>
+            )}
+          </TableBuilderColumn>
+        </TableBuilder>
+        <DataPagination
+          page={data.page}
+          numPages={Math.ceil(data.itemCount / data.perPage)}
+          onPage={onPage}
+        />
+      </Cell>
+    </Grid>
   ) : null;
 };
