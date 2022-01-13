@@ -1,12 +1,13 @@
 import React from "react";
 import { Redirect, Route, Router, Switch } from "wouter";
 import {
-  Authorize,
   EmailEditor,
+  EmailDetail,
+  useSeeTrue,
+  UserEditor,
+  Authorize,
   Emails,
   Users,
-  useSeeTrue,
-  EmailDetail,
 } from ".";
 
 export const AppRouter: React.FC = () => {
@@ -19,15 +20,17 @@ export const AppRouter: React.FC = () => {
           <Route path="/users">
             <Users />
           </Route>
-          <Route path="/users/create">Users create</Route>
+          <Route path="/users/create">
+            <UserEditor />
+          </Route>
           <Route path="/emails">
             <Emails />
           </Route>
-          <Route path="/emails/:id">
-            {(params) => <EmailDetail id={params.id} />}
-          </Route>
           <Route path="/emails/create">
             <EmailEditor />
+          </Route>
+          <Route path="/emails/:id">
+            {(params) => <EmailDetail id={params.id} />}
           </Route>
           <Route>
             <Redirect to="/users" />
