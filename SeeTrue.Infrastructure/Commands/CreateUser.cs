@@ -27,7 +27,7 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<User> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await queries.FindUserByEmailAndAudience(request.Email, Env.Audiences[0]);
+                var user = await queries.FindUserByEmailAndAudience(request.Email, request.Audience);
 
                 if (user is not null)
                 {

@@ -6,39 +6,157 @@ import { Textarea } from "baseui/textarea";
 import { Checkbox, LABEL_PLACEMENT } from "baseui/checkbox";
 import { Button } from "baseui/button";
 import { Grid, Cell } from "baseui/layout-grid";
+import { Controller, useForm } from "react-hook-form";
+import { UserRequest, useSeeTrue } from ".";
+import { useLocation } from "wouter";
 
 export const UserEditor: React.FC = () => {
+  const { register, control, handleSubmit } = useForm({
+    defaultValues: {
+      email: undefined,
+      password: undefined,
+      role: undefined,
+      audience: undefined,
+      language: undefined,
+      userMetaData: undefined,
+      confirmed: false,
+    },
+  });
+  const seeTrue = useSeeTrue();
+  const [_, setLocation] = useLocation();
+
+  const onSubmit = (value: any) => {
+    const data = {
+      ...value,
+      audience: value.audience[0].key,
+      language: value.language[0].value,
+      role: value.role[0].key,
+    };
+
+    seeTrue.api?.createUser(data).then(() => setLocation("/users"));
+  };
+
   return (
     <Grid>
       <Cell span={[12, 6, 6]}>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl label="Email">
-            <Input placeholder="Controlled Input" clearOnEscape />
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  type="email"
+                  required
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="Email"
+                  clearOnEscape
+                />
+              )}
+            />
           </FormControl>
           <FormControl label="Password">
-            <Input placeholder="Controlled Input" clearOnEscape />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  required
+                  type="password"
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="Password"
+                  clearOnEscape
+                />
+              )}
+            />
+          </FormControl>
+          <FormControl label="Audience">
+            <Controller
+              name="audience"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  required
+                  id="audience-select"
+                  options={seeTrue.settings.audiences.map((e) => ({
+                    key: e,
+                  }))}
+                  labelKey="key"
+                  valueKey="key"
+                  onChange={(e) => field.onChange(e.value)}
+                  value={field.value}
+                />
+              )}
+            />
           </FormControl>
           <FormControl label="Role">
-            <Select
-              options={[
-                { id: "AliceBlue", color: "#F0F8FF" },
-                { id: "AntiqueWhite", color: "#FAEBD7" },
-                { id: "Aqua", color: "#00FFFF" },
-                { id: "Aquamarine", color: "#7FFFD4" },
-                { id: "Azure", color: "#F0FFFF" },
-                { id: "Beige", color: "#F5F5DC" },
-              ]}
-              labelKey="id"
-              valueKey="color"
+            <Controller
+              name="role"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  required
+                  id="role-select"
+                  options={seeTrue.settings.roles.map((e) => ({
+                    key: e,
+                  }))}
+                  labelKey="key"
+                  valueKey="key"
+                  onChange={(e) => field.onChange(e.value)}
+                  value={field.value}
+                />
+              )}
+            />
+          </FormControl>
+          <FormControl label="Language">
+            <Controller
+              name="language"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  required
+                  id="language-select"
+                  options={seeTrue.settings.languages.map((e) => ({
+                    key: e.toUpperCase(),
+                    value: e,
+                  }))}
+                  labelKey="key"
+                  valueKey="value"
+                  onChange={(e) => field.onChange(e.value)}
+                  value={field.value}
+                />
+              )}
             />
           </FormControl>
           <FormControl label="User meta data(JSON)">
-            <Textarea />
+            <Controller
+              name="userMetaData"
+              control={control}
+              render={({ field }) => (
+                <Textarea
+                  onChange={field.onChange}
+                  value={field.value}
+                  clearOnEscape
+                />
+              )}
+            />
           </FormControl>
           <FormControl>
-            <Checkbox labelPlacement={LABEL_PLACEMENT.right}>
-              Confirmed
-            </Checkbox>
+            <Controller
+              name="confirmed"
+              control={control}
+              render={({ field }) => (
+                <Checkbox
+                  onChange={field.onChange}
+                  checked={field.value}
+                  labelPlacement={LABEL_PLACEMENT.right}
+                >
+                  Confirmed
+                </Checkbox>
+              )}
+            />
           </FormControl>
           <Button $style={{ width: "100%" }} type="submit">
             Submit

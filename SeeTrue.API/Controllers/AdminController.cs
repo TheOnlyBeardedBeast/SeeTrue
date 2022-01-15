@@ -65,7 +65,7 @@ namespace SeeTrue.API.Controllers
                 Password = data.Password,
                 Role = data.Role,
                 UserMetaData = data.UserMetaData,
-                AppMetaData = data.AppMetaData,
+                Language = data.Language,
                 Confirm = data.Confirm
             });
 

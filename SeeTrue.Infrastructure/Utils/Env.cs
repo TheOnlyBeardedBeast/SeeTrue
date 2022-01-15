@@ -32,6 +32,8 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly string AdminRole;
         public static readonly string ConnectionString;
         public static readonly List<string> Languages;
+        public static readonly List<string> AvailableRoles;
+
         static Env()
         {
             SigningKey = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_SIGNING_KEY");
@@ -50,13 +52,22 @@ namespace SeeTrue.Infrastructure.Utils
             SignupDisabled = Helpers.GetEnvironmentVariable<bool>("SEETRUE_SIGNUP_DISABLED", false);
             InstanceId = Helpers.GetEnvironmentVariable<Guid>("SEETRUE_INSTANCE_ID", Guid.Empty);
             AutoConfirm = Helpers.GetEnvironmentVariable<bool>("SEETRUE_AUTOCONFIRM", false);
-            JwtDefaultGroupName = Helpers.GetEnvironmentVariable<string>("SEETRUE_JWT_DEFAULT_GROUP_NAME", "user");
+            JwtDefaultGroupName = Helpers.GetEnvironmentVariable<string>("SEETRUE_JWT_DEFAULT_GROUP_NAME", "user").ToLower();
             MagicLinkLifeTime = Helpers.GetEnvironmentVariable<int>("SEETRUE_MAGIC_LINK_LIFETIME", 5);
             MinimumPasswordLength = Helpers.GetEnvironmentVariable<int>("SEETRUE_MINIMUM_PASSWORD_LENGTH", 8);
-            AdminRole = Helpers.GetEnvironmentVariable<string>("SEETRUE_ADMIN_ROLE", null);
+            AdminRole = Helpers.GetEnvironmentVariable<string>("SEETRUE_ADMIN_ROLE", null)?.ToLower();
             ApiKey = new ApiKey(Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_API_KEY"), Issuer, new List<Claim> { new Claim(ClaimTypes.Role, AdminRole) });
             ConnectionString = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_DB_CONNECTION");
             Languages = Helpers.GetEnvironmentVariable<string>("SEETRUE_LANGUAGES", null)?.Split(",").Select(e => e.ToLower()).ToList() ?? new List<string> { "en" };
+            var roles = Helpers.GetEnvironmentVariable<string>("SEETRUE_ROLES", "").Split(",").ToList();
+
+            roles.Add(JwtDefaultGroupName);
+            if (AdminRole is not null)
+            {
+                roles.Add(AdminRole);
+            }
+
+            AvailableRoles = roles.Distinct().Where(e => !string.IsNullOrWhiteSpace(e)).Select(e => e.ToLower()).ToList();
         }
     }
 }

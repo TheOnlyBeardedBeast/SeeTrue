@@ -9,6 +9,9 @@ namespace SeeTrue.Infrastructure.Types
 {
     public record AdminSettings
     {
+        [JsonPropertyName("roles")]
+        public IEnumerable<string> Roles { get; init; } = Env.AvailableRoles;
+
         [JsonPropertyName("languages")]
         public IEnumerable<string> Languages { get; init; } = Env.Languages;
 

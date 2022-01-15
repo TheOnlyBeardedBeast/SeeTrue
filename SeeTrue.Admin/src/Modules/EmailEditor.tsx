@@ -12,7 +12,6 @@ import { useForm, Controller } from "react-hook-form";
 import { MailResponse, useSeeTrue } from ".";
 import { Button } from "baseui/button";
 import { useLocation } from "wouter";
-import { useQuery } from "react-query";
 
 const iFrameContent = `<html><head><script type="module"> window.addEventListener('message', (event)=>{const{type, value}=event.data; if (type==='html'){document.body.innerHTML=value;}})</script></head><body></body></html>`;
 

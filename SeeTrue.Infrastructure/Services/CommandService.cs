@@ -181,7 +181,7 @@ namespace SeeTrue.Infrastructure.Services
         /// </summary>
         /// <param name="userData"></param>
         /// <returns></returns>
-        Task<User> CreateUser(AdminUpdateUserRequest userData);
+        Task<User> CreateUser(AdminUpdateUserRequest userData, string provider = "email");
 
         Task<User> InviteUser(string email, string Aud, string provider);
 
@@ -446,8 +446,11 @@ namespace SeeTrue.Infrastructure.Services
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<User> CreateUser(AdminUpdateUserRequest userData)
+        public async Task<User> CreateUser(AdminUpdateUserRequest userData, string provider = "email")
         {
+            var appMetaData = new Dictionary<string, object>();
+            appMetaData["provider"] = provider;
+
             var user = new User
             {
                 Email = userData.Email,
@@ -455,7 +458,8 @@ namespace SeeTrue.Infrastructure.Services
                 Aud = Env.Audiences[0],
                 Role = userData.Role ?? Env.JwtDefaultGroupName,
                 UserMetaData = userData.UserMetaData,
-                AppMetaData = userData.AppMetaData,
+                AppMetaData = appMetaData,
+                Language = userData.Language,
                 ConfirmedAt = (userData.Confirm.HasValue && userData.Confirm.Value) ? DateTime.UtcNow : null,
             };
 

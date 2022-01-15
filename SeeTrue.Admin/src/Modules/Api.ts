@@ -37,6 +37,17 @@ export enum NotificationType {
   Recovery,
 }
 
+export interface UserRequest {
+  id?: string;
+  role: string;
+  audience: string;
+  confirm: boolean | null;
+  password: string;
+  email: string;
+  appMetaData?: { [key: string]: any };
+  userMetaData?: { [key: string]: any };
+}
+
 export interface MailRequest {
   id?: string;
   type: NotificationType;
@@ -51,6 +62,7 @@ export interface MailResponse extends MailRequest {
 }
 
 export interface IAdminSettings {
+  roles: string[];
   languages: string[];
   audiences: string[];
   emailTypes: { [key: string]: number };
@@ -180,9 +192,20 @@ export class Api {
     return result as MailResponse;
   }
 
-  createUser(accessToken?: string) {
-    if (!this.apiKey || !accessToken) {
-      throw new Error("Authorization not configured");
+  public async createUser(user: UserRequest, accessToken?: string) {
+    const auth = this.getAuthHeader(accessToken);
+
+    const result = await fetch(`${this.host}/${this.path}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...auth,
+      } as any,
+      body: JSON.stringify(user),
+    });
+
+    if (result.status !== 200) {
+      throw new Error("Failed to create user");
     }
   }
   public async deleteUser(id: string, accessToken?: string) {

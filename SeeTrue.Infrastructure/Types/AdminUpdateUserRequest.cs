@@ -14,8 +14,10 @@ namespace SeeTrue.Infrastructure.Types
         public string Password { get; set; }
         [JsonPropertyName("email")]
         public string Email { get; set; }
-        [JsonPropertyName("appMetaData")]
-        public Dictionary<string, object> AppMetaData { get; set; }
+        [JsonPropertyName("language")]
+        public string Language { get; set; }
+        [JsonPropertyName("audience")]
+        public string Audience { get; set; }
         [JsonPropertyName("userMetaData")]
         public Dictionary<string, object> UserMetaData { get; set; }
     }

@@ -48,11 +48,6 @@ namespace SeeTrue.Infrastructure.Commands
                     await commands.UpdateUserEmail(user, request.data.Email);
                 }
 
-                if (user.AppMetaData is not null)
-                {
-                    await commands.UpdateAppMetaData(user, request.data.AppMetaData);
-                }
-
                 if (user.UserMetaData is not null)
                 {
                     await commands.UpdateUserMetaData(user, request.data.UserMetaData);
