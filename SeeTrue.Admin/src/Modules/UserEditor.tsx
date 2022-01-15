@@ -9,6 +9,7 @@ import { Grid, Cell } from "baseui/layout-grid";
 import { Controller, useForm } from "react-hook-form";
 import { UserRequest, useSeeTrue } from ".";
 import { useLocation } from "wouter";
+import { toaster } from "baseui/toast";
 
 export const UserEditor: React.FC = () => {
   const { register, control, handleSubmit } = useForm({
@@ -34,7 +35,10 @@ export const UserEditor: React.FC = () => {
       role: value.role[0].key,
     };
 
-    seeTrue.api?.createUser(data).then(() => setLocation("/users"));
+    seeTrue.api
+      ?.createUser(data)
+      .then(() => setLocation("/users"))
+      .catch(() => toaster.negative(<>Failed to create user</>, {}));
   };
 
   return (
