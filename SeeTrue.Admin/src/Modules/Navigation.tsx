@@ -6,13 +6,13 @@ import { useSeeTrue } from ".";
 
 export const Navigation = () => {
   const seeTrue = useSeeTrue();
+  const didMountRef = React.useRef(false);
   const [location, setLocation] = useLocation();
   const [mainItems, setMainItems] = React.useState([
     {
       label: "Users",
-      active: true,
       children: [
-        { label: "All Users", active: true, info: "/users" },
+        { label: "All Users", info: "/users" },
         { label: "Create User", info: "/users/create" },
       ],
     },
@@ -25,6 +25,19 @@ export const Navigation = () => {
     },
   ]);
 
+  React.useEffect(() => {
+    setMainItems((prev: any) => {
+      const item = mainItems
+        .map((e) => e.children)
+        .flat()
+        .find((e) => e.info == location);
+      if (item) {
+        return setItemActive(prev, item) as any;
+      }
+      return prev;
+    });
+  }, [location]);
+
   if (!seeTrue.authorized) {
     return null;
   }
@@ -34,16 +47,9 @@ export const Navigation = () => {
       title="SeeTrue"
       mainItems={mainItems}
       onMainItemSelect={(item) => {
-        // if (item.info === "/users/create") {
-        //   return;
-        // }
-        //  else if (item.info === "/emails/create") {
-        //   return;
-        // }
-
         setLocation(item.children?.[0].info ?? item.info);
-        setMainItems(((prev: any) =>
-          setItemActive(prev, item.children?.[0] ?? item)) as any);
+        // setMainItems(((prev: any) =>
+        //   setItemActive(prev, item.children?.[0] ?? item)) as any);
       }}
       username="Administrator"
       usernameSubtitle="SeeTrue Administrator"
