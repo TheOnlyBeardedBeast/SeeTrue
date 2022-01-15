@@ -18,7 +18,7 @@ export const UserEditor: React.FC = () => {
       role: undefined,
       audience: undefined,
       language: undefined,
-      userMetaData: undefined,
+      userMetaData: JSON.stringify({ name: "name" }, null, 2),
       confirmed: false,
     },
   });
@@ -28,6 +28,7 @@ export const UserEditor: React.FC = () => {
   const onSubmit = (value: any) => {
     const data = {
       ...value,
+      userMetaData: JSON.parse(value.userMetaData),
       audience: value.audience[0].key,
       language: value.language[0].value,
       role: value.role[0].key,

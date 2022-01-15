@@ -46,11 +46,10 @@ namespace SeeTrue.Infrastructure.Services
         {
             var instanceId = Env.InstanceId;
 
-            var user = await db.Users.Where(e =>
-                        e.InstanceID == instanceId &&
+            var user = await db.Users
+                    .FirstOrDefaultAsync(e => e.InstanceID.Equals(instanceId) &&
                         e.Email == email &&
-                        e.Aud == audience)
-                    .FirstOrDefaultAsync();
+                        e.Aud == audience);
 
             return user;
         }

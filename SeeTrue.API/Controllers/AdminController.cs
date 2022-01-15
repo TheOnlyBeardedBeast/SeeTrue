@@ -66,7 +66,8 @@ namespace SeeTrue.API.Controllers
                 Role = data.Role,
                 UserMetaData = data.UserMetaData,
                 Language = data.Language,
-                Confirm = data.Confirm
+                Confirm = data.Confirm,
+                Audience = data.Audience
             });
 
             return Ok(user);

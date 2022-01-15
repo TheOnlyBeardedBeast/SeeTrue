@@ -453,9 +453,10 @@ namespace SeeTrue.Infrastructure.Services
 
             var user = new User
             {
+                InstanceID = Env.InstanceId,
                 Email = userData.Email,
                 EncryptedPassword = BCrypt.Net.BCrypt.HashPassword(userData.Password),
-                Aud = Env.Audiences[0],
+                Aud = userData.Audience,
                 Role = userData.Role ?? Env.JwtDefaultGroupName,
                 UserMetaData = userData.UserMetaData,
                 AppMetaData = appMetaData,
@@ -465,6 +466,8 @@ namespace SeeTrue.Infrastructure.Services
 
             this.db.Add(user);
             await this.db.SaveChangesAsync();
+
+            await SendConfirmation(user);
 
             return user;
         }
