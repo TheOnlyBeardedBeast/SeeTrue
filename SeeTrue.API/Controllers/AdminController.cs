@@ -100,6 +100,13 @@ namespace SeeTrue.API.Controllers
         }
 
         [Authorize("Admin")]
+        [HttpDelete("mails/{id}")]
+        public async Task<IActionResult> DeleteMail([FromRoute] Guid id)
+        {
+            return Ok(await this.m.Send(new Infrastructure.Commands.AdminDeleteMail.Command(id)));
+        }
+
+        [Authorize("Admin")]
         [HttpPost("mails")]
         public async Task<IActionResult> CreateMail([FromBody] Infrastructure.Commands.AdminAddEmail.Command data)
         {

@@ -194,6 +194,8 @@ namespace SeeTrue.Infrastructure.Services
         Task UpdateLanguage(User user, string lang);
 
         Task UpdateAudience(User user, string aud);
+
+        Task RemoveEmail(Mail mail);
     }
 
     public class CommandService : ICommandService
@@ -542,6 +544,13 @@ namespace SeeTrue.Infrastructure.Services
             await this.db.SaveChangesAsync();
 
             return mail;
+        }
+
+        public Task RemoveEmail(Mail mail)
+        {
+            this.db.Mails.Remove(mail);
+
+            return db.SaveChangesAsync();
         }
     }
 }
