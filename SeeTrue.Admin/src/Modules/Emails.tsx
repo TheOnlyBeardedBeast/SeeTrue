@@ -140,7 +140,7 @@ export const Emails: React.FC = () => {
             }
           </TableBuilderColumn>
           <TableBuilderColumn header="Language">
-            {(row: MailResponse) => row.language.toUpperCase()}
+            {(row: MailResponse) => row.language?.toUpperCase()}
           </TableBuilderColumn>
           <TableBuilderColumn header="Audience">
             {(row: MailResponse) => row.audience}

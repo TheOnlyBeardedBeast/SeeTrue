@@ -188,6 +188,12 @@ namespace SeeTrue.Infrastructure.Services
         Task<Mail> CreateMail(Mail mail);
 
         Task<Mail> UpdateEmail(Mail mail);
+
+        Task UpdateRole(User user, string role);
+
+        Task UpdateLanguage(User user, string lang);
+
+        Task UpdateAudience(User user, string aud);
     }
 
     public class CommandService : ICommandService
@@ -441,6 +447,30 @@ namespace SeeTrue.Infrastructure.Services
         public async Task UpdateUserEmail(User user, string email)
         {
             user.Email = email;
+            this.db.Users.Update(user);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task UpdateRole(User user, string role)
+        {
+            user.Role = role;
+            this.db.Users.Update(user);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task UpdateLanguage(User user, string lang)
+        {
+            user.Language = lang;
+            this.db.Users.Update(user);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task UpdateAudience(User user, string aud)
+        {
+            user.Aud = aud;
             this.db.Users.Update(user);
 
             await this.db.SaveChangesAsync();

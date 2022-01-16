@@ -43,7 +43,7 @@ namespace SeeTrue.Infrastructure.Commands
                     await commands.ConfirmUser(user);
                 }
 
-                if (!string.IsNullOrWhiteSpace(request.data.Email))
+                if (!string.IsNullOrWhiteSpace(request.data.Email) && request.data.Email != user.Email)
                 {
                     await commands.UpdateUserEmail(user, request.data.Email);
                 }
@@ -53,19 +53,19 @@ namespace SeeTrue.Infrastructure.Commands
                     await commands.UpdateUserMetaData(user, request.data.UserMetaData);
                 }
 
-                if (!string.IsNullOrWhiteSpace(request.data.Role))
+                if (!string.IsNullOrWhiteSpace(request.data.Role) && user.Role != request.data.Role)
                 {
-                    throw new NotImplementedException();
+                    await commands.UpdateRole(user, request.data.Role);
                 }
 
-                if (!string.IsNullOrWhiteSpace(request.data.Language))
+                if (!string.IsNullOrWhiteSpace(request.data.Language) && user.Language != request.data.Language)
                 {
-                    throw new NotImplementedException();
+                    await commands.UpdateLanguage(user, request.data.Language);
                 }
 
-                if (!string.IsNullOrWhiteSpace(request.data.Audience))
+                if (!string.IsNullOrWhiteSpace(request.data.Audience) && user.Aud != request.data.Audience)
                 {
-                    throw new NotImplementedException();
+                    await commands.UpdateAudience(user, request.data.Audience);
                 }
 
                 await commands.NewAuditLogEntry(null, AuditAction.UserModifiedAction, null);

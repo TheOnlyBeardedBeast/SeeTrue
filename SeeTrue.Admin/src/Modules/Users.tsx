@@ -148,7 +148,7 @@ export const Users: React.FC = () => {
             {(row) => row.role}
           </TableBuilderColumn>
           <TableBuilderColumn header="Language">
-            {(row) => row.language ?? "EN"}
+            {(row) => (row.language as string).toUpperCase() ?? "EN"}
           </TableBuilderColumn>
           <TableBuilderColumn header="Created">
             {(row) => row.createdAt}

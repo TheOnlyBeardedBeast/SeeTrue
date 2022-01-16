@@ -33,7 +33,7 @@ export const UserEditor: React.FC<UserEditorProps> = ({ defaultData }) => {
           ]
         : undefined,
       userMetaData: JSON.stringify({ name: "name" }, null, 2),
-      confirmed: !!defaultData?.confirmedAt ?? false,
+      confirm: !!defaultData?.confirmedAt ?? false,
     },
   });
 
@@ -82,7 +82,10 @@ export const UserEditor: React.FC<UserEditorProps> = ({ defaultData }) => {
               )}
             />
           </FormControl>
-          <FormControl label="Password">
+          <FormControl
+            label="Password"
+            caption="If you dont set the password, it wont change the users current password"
+          >
             <Controller
               name="password"
               control={control}
@@ -171,10 +174,11 @@ export const UserEditor: React.FC<UserEditorProps> = ({ defaultData }) => {
           </FormControl>
           <FormControl>
             <Controller
-              name="confirmed"
+              name="confirm"
               control={control}
               render={({ field }) => (
                 <Checkbox
+                  disabled={!!defaultData?.confirmedAt}
                   onChange={field.onChange}
                   checked={field.value}
                   labelPlacement={LABEL_PLACEMENT.right}
