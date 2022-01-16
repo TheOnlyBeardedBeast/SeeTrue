@@ -88,7 +88,7 @@ export const UserEditor: React.FC<UserEditorProps> = ({ defaultData }) => {
               control={control}
               render={({ field }) => (
                 <Input
-                  required
+                  required={!defaultData}
                   type="password"
                   value={field.value}
                   onChange={field.onChange}

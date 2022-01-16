@@ -29,6 +29,11 @@ namespace SeeTrue.API.Controllers
         [HttpPut("users/{userId}")]
         public async Task<IActionResult> UpdateUser([FromRoute] Guid userId, [FromBody] AdminUpdateUserRequest data)
         {
+            if (!data.Validate())
+            {
+                throw new SeeTrueException(System.Net.HttpStatusCode.BadRequest, "Invalid data");
+            }
+
             var updatedUser = await this.m.Send(new Infrastructure.Commands.AdminUpdateUser.Command(userId, data));
 
             return Ok(updatedUser);
