@@ -282,6 +282,20 @@ export class Api {
     return response.json();
   }
 
+  public async deleteMail(id: string, accessToken?: string) {
+    const auth = this.getAuthHeader(accessToken);
+
+    const response = await fetch(`${this.host}/admin/mails/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        ...auth,
+      } as any,
+    });
+
+    return response.json();
+  }
+
   protected getAuthHeader(accessToken?: string, apikey?: string) {
     if (!this.apiKey && !accessToken && !apikey) {
       throw new Error("Authorization not configured");

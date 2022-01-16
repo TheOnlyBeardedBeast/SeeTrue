@@ -9,6 +9,7 @@ import {
   useSeeTrue,
   // useConfirmation,
   MailResponse,
+  useConfirmation,
 } from ".";
 import { Button, SHAPE, SIZE } from "baseui/button";
 import { X, PencilSimple } from "phosphor-react";
@@ -16,6 +17,7 @@ import { X, PencilSimple } from "phosphor-react";
 import { Notification, KIND } from "baseui/notification";
 import { useLocation } from "wouter";
 import { Cell, Grid } from "baseui/layout-grid";
+import { toaster } from "baseui/toast";
 
 const ActionButton = styled(Button, {
   margin: "0 5px",
@@ -26,7 +28,7 @@ export const Emails: React.FC = () => {
   const [data, setData] = React.useState<PaginationResponse<MailResponse>>();
   const [selections, setSelections] = React.useState<Set<string>>(new Set());
   const [_location, setLocation] = useLocation();
-  // const { confirm, close } = useConfirmation();
+  const { confirm, close } = useConfirmation();
 
   React.useEffect(() => {
     seeTrue.api?.getMails().then((data) => setData(data));
@@ -58,29 +60,33 @@ export const Emails: React.FC = () => {
     }
   }
 
-  // const deleteUser = async (id: string) => {
-  //   try {
-  //     await seeTrue.api?.deleteUser(id);
-  //     await seeTrue.api?.getUsers(data?.page).then((data) => setData(data));
+  const deleteUser = async (id: string) => {
+    try {
+      await seeTrue.api?.deleteMail(id);
+      await seeTrue.api?.getMails(data?.page).then((data) => setData(data));
 
-  //     toaster.positive(<>User deleted.</>, {});
-  //   } catch (error) {
-  //     toaster.negative(<>User delete failed!</>, {});
-  //   } finally {
-  //     close();
-  //   }
-  // };
+      toaster.positive(<>Email deleted.</>, {});
+    } catch (error) {
+      toaster.negative(<>Email delete failed!</>, {});
+    } finally {
+      close();
+    }
+  };
 
-  // const deleteUserClick = (id: string) => async () => {
-  //   const item = data?.items.find((e) => e.id === id);
-  //   if (item) {
-  //     await confirm({
-  //       message: `Do you wish to delete ${item?.email}`,
-  //       header: "Remove user",
-  //       action: () => deleteUser(item.id),
-  //     });
-  //   }
-  // };
+  const deleteMailClick = (id: string) => async () => {
+    const item = data?.items.find((e) => e.id === id);
+    if (item) {
+      await confirm({
+        message: `Do you wish to delete ${
+          Object.entries(seeTrue.settings.emailTypes).find(
+            ([_key, value]) => value === item.type
+          )?.[0]
+        } ${item.language.toUpperCase()}`,
+        header: "Remove user",
+        action: () => deleteUser(item.id),
+      });
+    }
+  };
 
   const navigateToEmailDetail = (id: string) => () =>
     setLocation(`/emails/${id}`);
@@ -149,7 +155,7 @@ export const Emails: React.FC = () => {
             {(row) => (
               <>
                 <ActionButton
-                  // onClick={deleteUserClick(row.id)}
+                  onClick={deleteMailClick(row.id)}
                   size={SIZE.mini}
                   shape={SHAPE.circle}
                 >
