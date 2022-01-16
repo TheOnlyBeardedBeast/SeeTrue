@@ -53,6 +53,21 @@ namespace SeeTrue.Infrastructure.Commands
                     await commands.UpdateUserMetaData(user, request.data.UserMetaData);
                 }
 
+                if (!string.IsNullOrWhiteSpace(request.data.Role))
+                {
+                    throw new NotImplementedException();
+                }
+
+                if (!string.IsNullOrWhiteSpace(request.data.Language))
+                {
+                    throw new NotImplementedException();
+                }
+
+                if (!string.IsNullOrWhiteSpace(request.data.Audience))
+                {
+                    throw new NotImplementedException();
+                }
+
                 await commands.NewAuditLogEntry(null, AuditAction.UserModifiedAction, null);
 
                 return user;

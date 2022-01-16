@@ -15,6 +15,7 @@ import { X, PencilSimple } from "phosphor-react";
 import { toaster } from "baseui/toast";
 import { Notification, KIND } from "baseui/notification";
 import { Cell, Grid } from "baseui/layout-grid";
+import { useLocation } from "wouter";
 
 const ActionButton = styled(Button, {
   margin: "0 5px",
@@ -25,6 +26,7 @@ export const Users: React.FC = () => {
   const [data, setData] = React.useState<PaginationResponse<UserResponse>>();
   const [selections, setSelections] = React.useState<Set<string>>(new Set());
   const { confirm, close } = useConfirmation();
+  const [_location, setLocation] = useLocation();
 
   React.useEffect(() => {
     seeTrue.api?.getUsers().then((data) => setData(data));
@@ -80,6 +82,10 @@ export const Users: React.FC = () => {
     }
   };
 
+  const editUserClick = (id: string) => () => {
+    setLocation(`/users/${id}`);
+  };
+
   if (!data) {
     return null;
   }
@@ -131,7 +137,9 @@ export const Users: React.FC = () => {
             {(row) => <Link href={`mailTo:${row.email}`}>{row.email}</Link>}
           </TableBuilderColumn>
           <TableBuilderColumn header="Confirmed">
-            {(row) => (row.confirmed ? <span>True</span> : <span>False</span>)}
+            {(row) =>
+              !!row.confirmedAt ? <span>True</span> : <span>False</span>
+            }
           </TableBuilderColumn>
           <TableBuilderColumn header="Audience">
             {(row) => row.aud}
@@ -158,7 +166,11 @@ export const Users: React.FC = () => {
                 >
                   <X />
                 </ActionButton>
-                <ActionButton size={SIZE.mini} shape={SHAPE.circle}>
+                <ActionButton
+                  onClick={editUserClick(row.id)}
+                  size={SIZE.mini}
+                  shape={SHAPE.circle}
+                >
                   <PencilSimple />
                 </ActionButton>
               </>

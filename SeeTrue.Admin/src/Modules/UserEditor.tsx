@@ -7,23 +7,36 @@ import { Checkbox, LABEL_PLACEMENT } from "baseui/checkbox";
 import { Button } from "baseui/button";
 import { Grid, Cell } from "baseui/layout-grid";
 import { Controller, useForm } from "react-hook-form";
-import { UserRequest, useSeeTrue } from ".";
+import { UserResponse, useSeeTrue } from ".";
 import { useLocation } from "wouter";
 import { toaster } from "baseui/toast";
 
-export const UserEditor: React.FC = () => {
+interface UserEditorProps {
+  defaultData?: UserResponse;
+}
+
+export const UserEditor: React.FC<UserEditorProps> = ({ defaultData }) => {
+  const seeTrue = useSeeTrue();
   const { register, control, handleSubmit } = useForm({
     defaultValues: {
-      email: undefined,
+      id: defaultData?.id ?? undefined,
+      email: defaultData?.email ?? undefined,
       password: undefined,
-      role: undefined,
-      audience: undefined,
-      language: undefined,
+      role: defaultData?.role ? [{ key: defaultData.role }] : undefined,
+      audience: defaultData?.aud ? [{ key: defaultData.aud }] : undefined,
+      language: defaultData?.language
+        ? [
+            {
+              key: defaultData?.language.toUpperCase(),
+              value: defaultData?.language,
+            },
+          ]
+        : undefined,
       userMetaData: JSON.stringify({ name: "name" }, null, 2),
-      confirmed: false,
+      confirmed: !!defaultData?.confirmedAt ?? false,
     },
   });
-  const seeTrue = useSeeTrue();
+
   const [_, setLocation] = useLocation();
 
   const onSubmit = (value: any) => {
@@ -35,16 +48,24 @@ export const UserEditor: React.FC = () => {
       role: value.role[0].key,
     };
 
-    seeTrue.api
-      ?.createUser(data)
-      .then(() => setLocation("/users"))
-      .catch(() => toaster.negative(<>Failed to create user</>, {}));
+    if (defaultData) {
+      seeTrue.api
+        ?.updateUser(data)
+        .then(() => setLocation("/users"))
+        .catch(() => toaster.negative(<>Failed to update user</>, {}));
+    } else {
+      seeTrue.api
+        ?.createUser(data)
+        .then(() => setLocation("/users"))
+        .catch(() => toaster.negative(<>Failed to create user</>, {}));
+    }
   };
 
   return (
     <Grid>
       <Cell span={[12, 6, 6]}>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <input type="hidden" {...register("id")} />
           <FormControl label="Email">
             <Controller
               name="email"

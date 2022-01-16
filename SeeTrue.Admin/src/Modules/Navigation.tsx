@@ -1,14 +1,12 @@
 import * as React from "react";
 import { AppNavBar, NavItemT, setItemActive } from "baseui/app-nav-bar";
-import { Delete } from "baseui/icon";
 import { useLocation } from "wouter";
 import { useSeeTrue } from ".";
 
 export const Navigation = () => {
   const seeTrue = useSeeTrue();
-  const didMountRef = React.useRef(false);
   const [location, setLocation] = useLocation();
-  const [mainItems, setMainItems] = React.useState([
+  const [mainItems, setMainItems] = React.useState<NavItemT[]>([
     {
       label: "Users",
       children: [
@@ -30,7 +28,7 @@ export const Navigation = () => {
       const item = mainItems
         .map((e) => e.children)
         .flat()
-        .find((e) => e.info == location);
+        .find((e) => e?.info == location);
       if (item) {
         return setItemActive(prev, item) as any;
       }

@@ -8,6 +8,7 @@ import {
   Authorize,
   Emails,
   Users,
+  UserDetail,
 } from ".";
 
 export const AppRouter: React.FC = () => {
@@ -22,6 +23,9 @@ export const AppRouter: React.FC = () => {
           </Route>
           <Route path="/users/create">
             <UserEditor />
+          </Route>
+          <Route path="/users/:id">
+            {(params) => <UserDetail id={params.id} />}
           </Route>
           <Route path="/emails">
             <Emails />

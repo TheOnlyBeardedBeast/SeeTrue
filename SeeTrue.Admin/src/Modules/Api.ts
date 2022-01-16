@@ -39,13 +39,14 @@ export enum NotificationType {
 
 export interface UserRequest {
   id?: string;
-  role: string;
-  audience: string;
-  confirm: boolean | null;
-  password: string;
-  email: string;
+  role?: string;
+  audience?: string;
+  confirm?: boolean | null;
+  password?: string;
+  email?: string;
   appMetaData?: { [key: string]: any };
   userMetaData?: { [key: string]: any };
+  language?: string;
 }
 
 export interface MailRequest {
@@ -99,19 +100,12 @@ export class Api {
   public async getUser(id: string, accessToken?: string) {
     const auth = this.getAuthHeader(accessToken);
 
-    if (!id) {
-      throw new Error("Missing required parameter");
-    }
-
     const response = await fetch(`${this.host}/${this.path}/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         ...auth,
       } as any,
-      body: JSON.stringify({
-        userId: id,
-      } as UserRequest),
     });
 
     const result = await response.json();
@@ -208,6 +202,24 @@ export class Api {
       throw new Error("Failed to create user");
     }
   }
+
+  public async updateUser(user: UserRequest, accessToken?: string) {
+    const auth = this.getAuthHeader(accessToken);
+
+    const result = await fetch(`${this.host}/${this.path}/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...auth,
+      } as any,
+      body: JSON.stringify(user),
+    });
+
+    if (result.status !== 200) {
+      throw new Error("Failed to create user");
+    }
+  }
+
   public async deleteUser(id: string, accessToken?: string) {
     const auth = this.getAuthHeader(accessToken);
 
