@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using SeeTrue.Infrastructure.Services;
+using SeeTrue.Infrastructure.Utils;
 using SeeTrue.Models;
 
 namespace SeeTrue.Infrastructure.Commands
@@ -24,6 +25,7 @@ namespace SeeTrue.Infrastructure.Commands
             {
                 var result = await commands.CreateMail(new Mail
                 {
+                    InstanceId = Env.InstanceId,
                     Audience = request.Audience,
                     Type = request.Type,
                     Language = request.Language,
