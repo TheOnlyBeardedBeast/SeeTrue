@@ -91,7 +91,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ defaultData }) => {
   const [_location, setLocation] = useLocation();
 
   const { register, control, handleSubmit, getValues } = useForm({
-    shouldUnregister: true,
+    shouldUnregister: false,
     defaultValues: {
       id: defaultData?.id ?? undefined,
       audience: defaultData?.audience
