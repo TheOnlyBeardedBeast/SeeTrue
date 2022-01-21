@@ -9,7 +9,7 @@ namespace SeeTrue.Infrastructure.Types
     {
         public HttpStatusCode StatusCode { get; init; }
 
-        public SeeTrueException(HttpStatusCode statusCode, string message) : base(message)
+        public SeeTrueException(HttpStatusCode statusCode, string message = null) : base(message)
         {
             this.StatusCode = statusCode;
         }

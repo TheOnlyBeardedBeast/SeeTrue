@@ -16,6 +16,7 @@ namespace SeeTrue.Models
     {
         [Key]
         public Guid Id { get; set; }
+        public Guid InstanceId { get; set; }
         [Required]
         public NotificationType Type { get; set; }
         [Required]

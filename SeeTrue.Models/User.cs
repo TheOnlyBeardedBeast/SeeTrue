@@ -10,7 +10,7 @@ namespace SeeTrue.Models
 {
     public class User
     {
-        public Guid? InstanceID { get; set; }
+        public Guid InstanceID { get; set; }
         [Key]
         public Guid Id { get; set; }
         public string Aud { get; set; }

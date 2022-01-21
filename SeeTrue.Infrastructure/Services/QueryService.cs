@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -23,6 +24,7 @@ namespace SeeTrue.Infrastructure.Services
         Task<Pagination<User>> PaginateUsers(int page = 1, int perPage = 20);
         Task<Pagination<Mail>> PaginateMails(int page = 1, int perPage = 20);
         Task<Mail> GetMail(Guid Id);
+        Task<Mail> GetMailTemplate(NotificationType type, string aud, string lang);
     }
 
     public class QueryService : IQueryService
@@ -132,6 +134,18 @@ namespace SeeTrue.Infrastructure.Services
         public Task<Mail> GetMail(Guid Id)
         {
             return this.db.Mails.FirstOrDefaultAsync(e => e.Id == Id);
+        }
+
+        public async Task<Mail> GetMailTemplate(NotificationType type, string aud, string lang)
+        {
+            var mail = await this.db.Mails.FirstOrDefaultAsync(e => e.InstanceId == Env.InstanceId && e.Type == type && e.Audience == aud && e.Language == lang);
+
+            if(mail is null)
+            {
+                throw new SeeTrueException(HttpStatusCode.InternalServerError);
+            }
+
+            return mail;
         }
     }
 }
