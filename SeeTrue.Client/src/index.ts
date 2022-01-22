@@ -1,3 +1,6 @@
+import { fetch } from 'cross-fetch';
+import join from 'url-join';
+
 import {
   RequestMagicLinkRequest,
   ProcessMagicLinkRequest,
@@ -17,11 +20,18 @@ import {
   TokenChangeAction,
 } from './index.d';
 
+export enum Paths {
+  HEALTH = 'health',
+  SETTINGS = 'settings',
+  SIGNUP = 'signup',
+}
+
 // TODO: use cross-fetch
 
 export class SeeTrueClient {
   public readonly host: string;
   public readonly onTokenChange: TokenChangeAction | undefined;
+  public readonly audince: string;
 
   private _tokens: TokenPair | undefined;
   public get tokens(): TokenPair | undefined {
@@ -35,8 +45,13 @@ export class SeeTrueClient {
   /**
    * Setups the client
    */
-  constructor(host: string, onTokenChange: TokenChangeAction) {
+  constructor(
+    host: string,
+    audience: string,
+    onTokenChange?: TokenChangeAction
+  ) {
     this.host = host;
+    this.audince = audience;
     this.onTokenChange = onTokenChange;
   }
 
@@ -44,21 +59,55 @@ export class SeeTrueClient {
    * Healthcheck
    */
   public async health(): Promise<HealthResponse> {
-    return {} as HealthResponse;
+    const response = await fetch(join(this.host, Paths.HEALTH), {
+      method: 'GET',
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch');
+    }
+
+    const result: HealthResponse = await response.json();
+
+    return result;
   }
 
   /**
    * Settings
    */
-  public async Settings(): Promise<SettingsResponse> {
-    return {} as SettingsResponse;
+  public async settings(): Promise<SettingsResponse> {
+    const response = await fetch(join(this.host, Paths.SETTINGS), {
+      method: 'GET',
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch');
+    }
+
+    const result: SettingsResponse = await response.json();
+    console.log(result);
+
+    return result;
   }
 
   /**
    * Signup user
    */
   public async signup(data: SignupRequest): Promise<UserResponse> {
-    return {} as UserResponse;
+    const response = await fetch(join(this.host, Paths.SIGNUP), {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'X-JWT-AUD': this.audince,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch');
+    }
+
+    const result: UserResponse = await response.json();
+    return result;
   }
 
   /**

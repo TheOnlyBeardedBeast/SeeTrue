@@ -17,7 +17,8 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "guard": "ts-auto-guard --export-all 'src/index.d.ts'"
   },
   "peerDependencies": {},
   "husky": {
@@ -46,10 +47,16 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.5",
+    "@types/url-join": "^4.0.1",
     "husky": "^7.0.4",
     "size-limit": "^7.0.5",
+    "ts-auto-guard": "^2.1.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "cross-fetch": "^3.1.5",
+    "url-join": "^4.0.1"
   }
 }

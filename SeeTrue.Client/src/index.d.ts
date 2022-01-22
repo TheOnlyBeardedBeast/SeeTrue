@@ -16,8 +16,8 @@ export interface HealthResponse {
 }
 
 export interface SettingsResponse {
-  signup_disabled: true;
-  autoconfirm: true;
+  signup_disabled: boolean;
+  autoconfirm: boolean;
 }
 
 export interface SignupRequest {
