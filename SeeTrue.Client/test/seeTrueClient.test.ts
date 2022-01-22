@@ -34,6 +34,7 @@ describe('auth flow', () => {
     email: `test${Date.now()}@user.dev`,
     password: '12345678',
     userMetaData: { Name: 'Test User' },
+    language: 'en',
   };
 
   it('should register user', async () => {
