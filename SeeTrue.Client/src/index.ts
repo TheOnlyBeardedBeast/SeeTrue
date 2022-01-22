@@ -19,12 +19,14 @@ import {
   UserUpdateRequest,
   TokenPair,
   TokenChangeAction,
+  VerifySignupRequest,
 } from './index.d';
 
 export enum Paths {
   HEALTH = 'health',
   SETTINGS = 'settings',
   SIGNUP = 'signup',
+  VERIFY = 'verify',
 }
 
 // TODO: use cross-fetch
@@ -125,10 +127,35 @@ export class SeeTrueClient {
   public async confirmEmail(data: ConfirmEmailRequest): Promise<void> {}
 
   /**
-   * Handles token verfication for signup and recovery
+   * Raw token verfication for signup and recovery
    */
   public async verify(data: VerifyRequest): Promise<AuthResponse> {
-    return {} as AuthResponse;
+    const response = await fetch(join(this.host, Paths.VERIFY), {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-JWT-AUD': this.audince,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch');
+    }
+
+    const json = await response.text();
+
+    const result = JSON.parse(json, dateParser);
+
+    return result as AuthResponse;
+  }
+
+  /**
+   * Handles signap verification
+   * User the raw verify method
+   */
+  public async verifySignup(token: string): Promise<AuthResponse> {
+    return this.verify({ type: 'signup', token } as VerifySignupRequest);
   }
 
   /**

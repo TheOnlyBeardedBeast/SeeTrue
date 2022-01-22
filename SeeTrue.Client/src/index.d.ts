@@ -57,8 +57,13 @@ export interface ConfirmEmailRequest {
 
 export interface VerifyRequest {
   type: VerificationType;
+  token?: string;
+  password?: string;
+}
+
+export interface VerifySignupRequest extends Pick<VerifyRequest, 'token'> {
+  type: 'signup';
   token: string;
-  password: string;
 }
 
 export interface AuthResponse {
