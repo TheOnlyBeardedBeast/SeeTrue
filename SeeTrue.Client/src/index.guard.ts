@@ -79,7 +79,8 @@ export function isSignupRequest(
     ((obj !== null && typeof obj === 'object') || typeof obj === 'function') &&
     typeof obj.email === 'string' &&
     typeof obj.password === 'string' &&
-    (isMetaData(obj.userMetaData) as boolean)
+    (isMetaData(obj.userMetaData) as boolean) &&
+    typeof obj.language === 'string'
   );
 }
 
@@ -95,15 +96,17 @@ export function isUserResponse(
     typeof obj.role === 'string' &&
     typeof obj.email === 'string' &&
     typeof obj.language === 'string' &&
-    obj.confirmedAt instanceof Date &&
-    obj.invitedAt instanceof Date &&
-    obj.recoverySentAt instanceof Date &&
-    typeof obj.emailChange === 'string' &&
-    obj.emailChangeSentAt instanceof Date &&
-    obj.lastSignInAt instanceof Date &&
+    (obj.confirmedAt === null || obj.confirmedAt instanceof Date) &&
+    (obj.invitedAt === null || obj.invitedAt instanceof Date) &&
+    (obj.recoverySentAt === null || obj.recoverySentAt instanceof Date) &&
+    (obj.emailChange === null || typeof obj.emailChange === 'string') &&
+    (obj.emailChangeSentAt === null || obj.emailChangeSentAt instanceof Date) &&
+    (obj.lastSignInAt === null || obj.lastSignInAt instanceof Date) &&
     (isMetaData(obj.appMetaData) as boolean) &&
     (isMetaData(obj.userMetaData) as boolean) &&
-    typeof obj.isSuperAdmin === 'boolean' &&
+    (obj.isSuperAdmin === null ||
+      obj.isSuperAdmin === false ||
+      obj.isSuperAdmin === true) &&
     obj.createdAt instanceof Date &&
     obj.updatedAt instanceof Date
   );

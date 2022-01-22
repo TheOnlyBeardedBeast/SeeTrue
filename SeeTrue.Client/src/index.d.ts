@@ -24,6 +24,7 @@ export interface SignupRequest {
   email: string;
   password: string;
   userMetaData: MetaData;
+  language: string;
 }
 
 export interface UserResponse {
@@ -33,15 +34,15 @@ export interface UserResponse {
   role: string;
   email: string;
   language: string;
-  confirmedAt: Date;
-  invitedAt: Date;
-  recoverySentAt: Date;
-  emailChange: string;
-  emailChangeSentAt: Date;
-  lastSignInAt: Date;
+  confirmedAt: Date | null;
+  invitedAt: Date | null;
+  recoverySentAt: Date | null;
+  emailChange: string | null;
+  emailChangeSentAt: Date | null;
+  lastSignInAt: Date | null;
   appMetaData: MetaData;
   userMetaData: MetaData;
-  isSuperAdmin: boolean;
+  isSuperAdmin: boolean | null;
   createdAt: Date;
   updatedAt: Date;
 }
