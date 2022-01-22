@@ -9,6 +9,8 @@ namespace SeeTrue.Infrastructure.Types
         public string Email { get; set; }
         [JsonPropertyName("password")]
         public string Password { get; set; }
+        [JsonPropertyName("language")]
+        public string Language { get; set; }
         [JsonPropertyName("userMetaData")]
         public Dictionary<string, object> UserMetaData { get; set; }
     }
