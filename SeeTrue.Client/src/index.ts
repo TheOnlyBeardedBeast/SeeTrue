@@ -29,6 +29,7 @@ export enum Paths {
   SIGNUP = 'signup',
   VERIFY = 'verify',
   TOKEN = 'token',
+  USER = 'user',
 }
 
 // TODO: use cross-fetch
@@ -147,7 +148,12 @@ export class SeeTrueClient {
 
     const json = await response.text();
 
-    const result = JSON.parse(json, dateParser);
+    const result = JSON.parse(json, dateParser) as AuthResponse;
+
+    this.tokens = {
+      access_token: result.access_token,
+      refresh_token: result.refresh_token,
+    } as TokenPair;
 
     return result as AuthResponse;
   }
@@ -195,15 +201,19 @@ export class SeeTrueClient {
     });
 
     if (response.status !== 200) {
-      console.log(await response.text());
       throw new Error('Failed to fetch');
     }
 
     const json = await response.text();
 
-    const result = JSON.parse(json, dateParser);
+    const result = JSON.parse(json, dateParser) as AuthResponse;
 
-    return result as AuthResponse;
+    this.tokens = {
+      access_token: result.access_token,
+      refresh_token: result.refresh_token,
+    } as TokenPair;
+
+    return result;
   }
 
   /**
@@ -221,9 +231,13 @@ export class SeeTrueClient {
    * Exchange refresh token for access and refresh tokens from a SeeTrue server
    * Encasulates the raw token request
    */
-  public async refresh(refresh_token: string): Promise<AuthResponse> {
+  public async refresh(): Promise<AuthResponse> {
+    if (!this.tokens?.refresh_token) {
+      throw new Error('No refreshtoken');
+    }
+
     return this.token({
-      refresh_token,
+      refresh_token: this.tokens?.refresh_token!,
       grant_type: 'refresh_token',
     } as RefreshRequest);
   }
@@ -232,7 +246,27 @@ export class SeeTrueClient {
    * Request the currently logged in user
    */
   public async user(): Promise<UserResponse> {
-    return {} as UserResponse;
+    if (!this.tokens?.access_token) {
+      throw new Error('No accesstoken');
+    }
+
+    const response = await fetch(join(this.host, Paths.USER), {
+      method: 'GET',
+      headers: {
+        'X-JWT-AUD': this.audince,
+        authorization: `Bearer ${this.tokens.access_token}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch');
+    }
+
+    const json = await response.text();
+
+    const result = JSON.parse(json, dateParser) as UserResponse;
+
+    return result;
   }
 
   /**
