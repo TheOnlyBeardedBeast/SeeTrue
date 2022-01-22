@@ -1,6 +1,7 @@
 import { SignupRequest } from '../src/index.d';
 import { SeeTrueClient } from '../src/index';
 import {
+  isAuthResponse,
   isHealthResponse,
   isSettingsResponse,
   isUserResponse,
@@ -65,5 +66,16 @@ describe('auth flow', () => {
     const result = await client.verifySignup(token!);
 
     expect(result).not.toBe(null);
+    expect(isAuthResponse(result)).toBe(true);
+  });
+
+  it('should login user', async () => {
+    const response = await client.login({
+      email: user.email,
+      password: user.password,
+    });
+
+    expect(response).not.toBe(null);
+    expect(isAuthResponse(response)).toBe(true);
   });
 });

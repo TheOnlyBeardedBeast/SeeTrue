@@ -20,6 +20,7 @@ import {
   TokenPair,
   TokenChangeAction,
   VerifySignupRequest,
+  UserCredentials,
 } from './index.d';
 
 export enum Paths {
@@ -27,6 +28,7 @@ export enum Paths {
   SETTINGS = 'settings',
   SIGNUP = 'signup',
   VERIFY = 'verify',
+  TOKEN = 'token',
 }
 
 // TODO: use cross-fetch
@@ -183,14 +185,36 @@ export class SeeTrueClient {
   public async token(
     data: LoginRequest | RefreshRequest
   ): Promise<AuthResponse> {
-    return {} as AuthResponse;
+    const response = await fetch(join(this.host, Paths.TOKEN), {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-JWT-AUD': this.audince,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch');
+    }
+
+    const json = await response.text();
+
+    const result = JSON.parse(json, dateParser);
+
+    return result as AuthResponse;
   }
 
   /**
    * Exchange user credentials for access and refresh tokens from a SeeTrue server
    * Encasulates the raw token request
    */
-  public async login(data: LoginRequest): Promise<AuthResponse> {
+  public login(credentilas: UserCredentials): Promise<AuthResponse> {
+    const data: LoginRequest = {
+      ...credentilas,
+      grant_type: 'password',
+    };
+
     return this.token(data);
   }
 

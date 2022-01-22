@@ -152,7 +152,7 @@ export function isAuthResponse(
     ((obj !== null && typeof obj === 'object') || typeof obj === 'function') &&
     typeof obj.access_token === 'string' &&
     typeof obj.token_type === 'string' &&
-    typeof obj.expires_in === 'bigint' &&
+    typeof obj.expires_in === 'number' &&
     typeof obj.refresh_token === 'string' &&
     (isUserResponse(obj.user) as boolean)
   );

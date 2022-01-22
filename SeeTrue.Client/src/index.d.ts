@@ -69,7 +69,7 @@ export interface VerifySignupRequest extends Pick<VerifyRequest, 'token'> {
 export interface AuthResponse {
   access_token: string;
   token_type: string;
-  expires_in: bigint;
+  expires_in: number;
   refresh_token: string;
   user: UserResponse;
 }
@@ -107,4 +107,9 @@ export interface UserUpdateRequest {
   email: string;
   password: string;
   userMetaData: MetaData;
+}
+
+export interface UserCredentials {
+  email: string;
+  password: string;
 }
