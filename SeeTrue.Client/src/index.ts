@@ -1,5 +1,6 @@
 import { fetch } from 'cross-fetch';
 import join from 'url-join';
+import { dateParser } from './utils';
 
 import {
   RequestMagicLinkRequest,
@@ -85,7 +86,6 @@ export class SeeTrueClient {
     }
 
     const result: SettingsResponse = await response.json();
-    console.log(result);
 
     return result;
   }
@@ -98,6 +98,7 @@ export class SeeTrueClient {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
+        'Content-Type': 'application/json',
         'X-JWT-AUD': this.audince,
       },
     });
@@ -106,8 +107,11 @@ export class SeeTrueClient {
       throw new Error('Failed to fetch');
     }
 
-    const result: UserResponse = await response.json();
-    return result;
+    const json = await response.text();
+
+    const result = JSON.parse(json, dateParser);
+
+    return result as UserResponse;
   }
 
   /**
