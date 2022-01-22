@@ -195,6 +195,7 @@ export class SeeTrueClient {
     });
 
     if (response.status !== 200) {
+      console.log(await response.text());
       throw new Error('Failed to fetch');
     }
 
@@ -210,20 +211,21 @@ export class SeeTrueClient {
    * Encasulates the raw token request
    */
   public login(credentilas: UserCredentials): Promise<AuthResponse> {
-    const data: LoginRequest = {
+    return this.token({
       ...credentilas,
       grant_type: 'password',
-    };
-
-    return this.token(data);
+    } as LoginRequest);
   }
 
   /**
    * Exchange refresh token for access and refresh tokens from a SeeTrue server
    * Encasulates the raw token request
    */
-  public async refresh(data: RefreshRequest): Promise<AuthResponse> {
-    return this.token(data);
+  public async refresh(refresh_token: string): Promise<AuthResponse> {
+    return this.token({
+      refresh_token,
+      grant_type: 'refresh_token',
+    } as RefreshRequest);
   }
 
   /**

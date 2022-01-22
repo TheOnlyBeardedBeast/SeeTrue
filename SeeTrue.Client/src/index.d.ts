@@ -100,7 +100,7 @@ export interface LoginRequest
 
 export interface RefreshRequest
   extends Pick<TokenRequest, 'grant_type' | 'refresh_token'> {
-  grant_type: 'refresh';
+  grant_type: 'refresh_token';
 }
 
 export interface UserUpdateRequest {

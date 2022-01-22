@@ -45,6 +45,8 @@ describe('auth flow', () => {
     language: 'en',
   };
 
+  let refreshToken: string | null = null;
+
   it('should register user', async () => {
     const result = await client.signup(user);
 
@@ -76,6 +78,17 @@ describe('auth flow', () => {
     });
 
     expect(response).not.toBe(null);
+    expect(isAuthResponse(response)).toBe(true);
+
+    refreshToken = response.refresh_token;
+  });
+
+  it('should refresh user token', async () => {
+    expect(refreshToken).not.toBeNull();
+
+    const response = await client.refresh(refreshToken!);
+
+    expect(response).not.toBeNull();
     expect(isAuthResponse(response)).toBe(true);
   });
 });
