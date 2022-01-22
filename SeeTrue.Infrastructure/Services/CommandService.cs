@@ -25,7 +25,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="userMetaData"></param>
         /// <param name="confirmed"></param>
         /// <returns></returns>
-        Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, bool confirmed);
+        Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, string language, bool confirmed);
 
         /// <summary>
         /// Revokes the current refresh token and generates new tokens
@@ -211,7 +211,7 @@ namespace SeeTrue.Infrastructure.Services
             this.cache = cache;
         }
 
-        public async Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, bool confirmed)
+        public async Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, string language, bool confirmed)
         {
             var appMetaData = new Dictionary<string, object>();
             appMetaData["provider"] = provider;
@@ -226,6 +226,7 @@ namespace SeeTrue.Infrastructure.Services
                 AppMetaData = appMetaData,
                 Role = Env.JwtDefaultGroupName,
                 ConfirmedAt = confirmed ? DateTime.UtcNow : null,
+                Language = language.ToLower()
             };
 
             // TODO: Trigger event

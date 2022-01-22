@@ -40,7 +40,6 @@ namespace SeeTrue.Utils.Services
 
         public async Task NotifyConfirmation(User user)
         {
-
             MailAddress from = new("service@mailhog.example", "Confirm user registration");
             MailAddress to = new(user.Email);
 
@@ -48,8 +47,8 @@ namespace SeeTrue.Utils.Services
 
             MailMessage message = new MailMessage(from, to)
             {
-                Subject = renderer.Render(mail.Subject,user),
-                Body = renderer.Render(mail.Content,user),
+                Subject = renderer.Render(mail.Subject, user),
+                Body = renderer.Render(mail.Content, user),
                 IsBodyHtml = true
             };
 

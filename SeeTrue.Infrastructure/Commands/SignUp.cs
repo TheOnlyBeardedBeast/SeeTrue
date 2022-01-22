@@ -38,13 +38,13 @@ namespace SeeTrue.Infrastructure.Commands
 
                 if (Env.AutoConfirm || request.Confirm)
                 {
-                    user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, true);
+                    user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, request.Data.Language, true);
                     await command.NewAuditLogEntry(user, AuditAction.UserSignedUpAction, null);
 
                 }
                 else
                 {
-                    user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, false);
+                    user = await command.SignUpNewUser(request.Data.Email, request.Data.Password, request.Aud, request.Provider, request.Data.UserMetaData, request.Data.Language, false);
                     await command.SendConfirmation(user);
                 }
 
