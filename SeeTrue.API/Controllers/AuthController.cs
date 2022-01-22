@@ -212,11 +212,11 @@ namespace SeeTrue.API.Controllers
         [Authorize]
         [HttpPost("logout")]
         [SwaggerOperation(Summary = "User logout", Description = "Revokes all the refresh tokens connected to the given login, Revokes all the access tokens connected to the given login")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
             var loginId = this.HttpContext.GetLoginId();
 
-            this.m.Send(new Infrastructure.Commands.Logout.Command(loginId));
+            await this.m.Send(new Infrastructure.Commands.Logout.Command(loginId));
 
             return NoContent();
         }

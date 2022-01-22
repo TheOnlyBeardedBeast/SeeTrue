@@ -409,13 +409,15 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task InvalidateRefreshTokenByLoginId(Guid loginId)
         {
-            var refreshTokensToUpdate = await this.db.RefreshTokens.Where(e => e.LoginId == loginId && e.Revoked != false).ToListAsync();
+            var refreshTokensToUpdate = await this.db.RefreshTokens.Where(e => e.LoginId.Equals(loginId) && e.Revoked.Equals(false)).ToListAsync();
 
             refreshTokensToUpdate.ForEach(e =>
             {
                 e.Revoked = true;
                 e.UpdatedAt = DateTime.UtcNow;
             });
+
+            this.db.RefreshTokens.UpdateRange(refreshTokensToUpdate);
 
             await this.db.SaveChangesAsync();
         }
