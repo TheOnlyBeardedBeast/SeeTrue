@@ -1,4 +1,4 @@
-import { SignupRequest } from '../src/index.d';
+import { SignupRequest, TokenPair } from '../src/index.d';
 import { SeeTrueClient } from '../src/index';
 import {
   isAuthResponse,
@@ -91,5 +91,21 @@ describe('auth flow', () => {
 
     expect(response).not.toBeNull();
     expect(isUserResponse(response)).toBe(true);
+  });
+
+  it('should logout user', async () => {
+    const tokensCopy = { ...client.tokens } as TokenPair;
+
+    await client.logout();
+
+    expect(client.tokens).toBeUndefined();
+
+    await expect(client.refresh()).rejects.toThrowError();
+    await expect(client.user()).rejects.toThrowError();
+
+    client.tokens = tokensCopy;
+
+    await expect(client.refresh()).rejects.toThrowError();
+    await expect(client.user()).rejects.toThrowError();
   });
 });

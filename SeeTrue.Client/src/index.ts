@@ -30,6 +30,7 @@ export enum Paths {
   VERIFY = 'verify',
   TOKEN = 'token',
   USER = 'user',
+  LOGOUT = 'logout',
 }
 
 // TODO: use cross-fetch
@@ -279,5 +280,24 @@ export class SeeTrueClient {
   /**
    * Revokes all the refresh tokens connected to the given login, Revokes all the access tokens connected to the given login
    */
-  public async logout(): Promise<void> {}
+  public async logout(): Promise<void> {
+    if (!this.tokens?.access_token) {
+      throw new Error('No accesstoken');
+    }
+
+    const response = await fetch(join(this.host, Paths.LOGOUT), {
+      method: 'POST',
+      headers: {
+        'X-JWT-AUD': this.audince,
+        authorization: `Bearer ${this.tokens.access_token}`,
+      },
+    });
+
+    if (response.status !== 204) {
+      console.log(response.status);
+      throw new Error('Failed to fetch');
+    }
+
+    this.tokens = undefined;
+  }
 }
