@@ -21,6 +21,7 @@ import {
   TokenChangeAction,
   VerifySignupRequest,
   UserCredentials,
+  VerifyRecoveryRequest,
 } from './index.d';
 
 export enum Paths {
@@ -32,6 +33,7 @@ export enum Paths {
   USER = 'user',
   LOGOUT = 'logout',
   CONFIRMEMAIL = 'confirm-email',
+  RECOVER = 'recover',
 }
 
 // TODO: use cross-fetch
@@ -174,11 +176,19 @@ export class SeeTrueClient {
   }
 
   /**
-   * Handles signap verification
-   * User the raw verify method
+   * Handles signup verification
+   * Uses the raw verify method
    */
   public async verifySignup(token: string): Promise<AuthResponse> {
     return this.verify({ type: 'signup', token } as VerifySignupRequest);
+  }
+
+  /**
+   * Handles recovery verification
+   * Uses the raw verify method
+   */
+  public async verifyRecovery(token: string): Promise<AuthResponse> {
+    return this.verify({ type: 'recovery', token } as VerifyRecoveryRequest);
   }
 
   /**
@@ -198,7 +208,20 @@ export class SeeTrueClient {
   /**
    * Request password recovery
    */
-  public async recover(data: RecoverRequest): Promise<void> {}
+  public async recover(data: RecoverRequest): Promise<void> {
+    const response = await fetch(join(this.host, Paths.RECOVER), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-JWT-AUD': this.audince,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.status !== 204) {
+      throw new Error('Failed to fetch');
+    }
+  }
 
   /**
    * Exchange user credentials or a refresh token for access and refresh tokens from a SeeTrue server

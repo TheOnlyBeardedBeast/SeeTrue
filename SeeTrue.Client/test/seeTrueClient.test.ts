@@ -172,4 +172,24 @@ describe('auth flow', () => {
 
     client.logout();
   });
+
+  it('should recover user account', async () => {
+    await expect(client.recover({ email: user.email })).resolves.toBe(
+      undefined
+    );
+
+    const messages = await mails.messages();
+
+    expect(messages?.count).toBe(3);
+
+    const token = messages?.items?.[0]?.html?.match(
+      /(?<=(\"https:\/\/frontendurl\.com\/recover\/))([^"]+)/g
+    )?.[0]!;
+
+    expect(token).not.toBeNull();
+
+    const response = await client.verifyRecovery(token);
+
+    expect(isAuthResponse(response)).toBe(true);
+  });
 });

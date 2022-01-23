@@ -66,6 +66,11 @@ export interface VerifySignupRequest extends Pick<VerifyRequest, 'token'> {
   token: string;
 }
 
+export interface VerifyRecoveryRequest extends Pick<VerifyRequest, 'token'> {
+  type: 'recovery';
+  token: string;
+}
+
 export interface AuthResponse {
   access_token: string;
   token_type: string;
