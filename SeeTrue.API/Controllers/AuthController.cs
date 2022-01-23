@@ -85,7 +85,9 @@ namespace SeeTrue.API.Controllers
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
+
             await this.m.Send(new Infrastructure.Commands.Invite.Command(data.Email, HttpContext.GetAudience()));
+
 
             return NoContent();
         }
@@ -112,7 +114,7 @@ namespace SeeTrue.API.Controllers
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
 
-            return Ok(await this.m.Send(new Infrastructure.Commands.Verify.Command(data.Type, data.Token, data.Password, HttpContext.GetUserAgent())));
+            return Ok(await this.m.Send(new Infrastructure.Commands.Verify.Command(data.Type, data.Token, data.Password, data.Name, HttpContext.GetUserAgent())));
         }
 
         [HttpPost("magiclink")]

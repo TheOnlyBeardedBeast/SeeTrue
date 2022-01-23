@@ -55,20 +55,24 @@ export interface ConfirmEmailRequest {
   token: string;
 }
 
-export interface VerifyRequest {
-  type: VerificationType;
-  token?: string;
-  password?: string;
-}
-
-export interface VerifySignupRequest extends Pick<VerifyRequest, 'token'> {
+export interface VerifySignupRequest {
   type: 'signup';
   token: string;
 }
 
-export interface VerifyRecoveryRequest extends Pick<VerifyRequest, 'token'> {
+export interface VerifyRecoveryRequest {
   type: 'recovery';
   token: string;
+}
+
+export interface VerifyInviteRequestData {
+  token: string;
+  name: string;
+  password: string;
+}
+
+export interface VerifyInviteRequest extends VerifyInviteRequestData {
+  type: 'invite';
 }
 
 export interface AuthResponse {

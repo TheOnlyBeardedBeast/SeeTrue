@@ -11,7 +11,7 @@ namespace SeeTrue.Infrastructure.Commands
 {
     public static class Verify
     {
-        public record Command(string Type, string Token, string Password, string UserAgent) : IRequest<UserTokenResponse>;
+        public record Command(string Type, string Token, string Password, string Name, string UserAgent) : IRequest<UserTokenResponse>;
 
         public class Handler : IRequestHandler<Command, UserTokenResponse>
         {
@@ -29,6 +29,7 @@ namespace SeeTrue.Infrastructure.Commands
                 User user;
                 switch (request.Type)
                 {
+                    case "invite":
                     case "signup":
                         {
                             user = await this.SignupVerify(request);
@@ -84,6 +85,7 @@ namespace SeeTrue.Infrastructure.Commands
                         }
 
                         await command.UpdateUserPassword(user, request.Password);
+                        await command.UpdateName(user, request.Name);
                     }
                 }
 

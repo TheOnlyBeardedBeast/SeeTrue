@@ -196,6 +196,8 @@ namespace SeeTrue.Infrastructure.Services
         Task UpdateAudience(User user, string aud);
 
         Task RemoveEmail(Mail mail);
+
+        Task UpdateName(User user, string name);
     }
 
     public class CommandService : ICommandService
@@ -481,6 +483,18 @@ namespace SeeTrue.Infrastructure.Services
             await this.db.SaveChangesAsync();
         }
 
+        public async Task UpdateName(User user, string name)
+        {
+            if(user.UserMetaData is null)
+            {
+                user.UserMetaData = new Dictionary<string, object>();
+            }
+
+            user.UserMetaData["Name"] = name;
+
+            await this.db.SaveChangesAsync();
+        }
+
         public async Task<User> CreateUser(AdminUpdateUserRequest userData, string provider = "email")
         {
             var appMetaData = new Dictionary<string, object>();
@@ -517,10 +531,12 @@ namespace SeeTrue.Infrastructure.Services
                 InstanceID = Env.InstanceId,
                 Aud = Aud,
                 Email = email,
+                Language = Env.Languages[0],
                 AppMetaData = appMetaData,
                 Role = Env.JwtDefaultGroupName,
                 ConfirmationToken = Helpers.GenerateUniqueToken(),
                 ConfirmationSentAt = DateTime.UtcNow,
+                InvitedAt = DateTime.UtcNow,
             };
 
             await mailer.NotifyInviteUser(user);

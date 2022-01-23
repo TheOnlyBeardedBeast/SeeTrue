@@ -10,5 +10,7 @@ namespace SeeTrue.Infrastructure.Types
         public string Token { get; init; }
         [JsonPropertyName("password")]
         public string Password { get; init; }
+        [JsonPropertyName("name")]
+        public string Name { get; init; }
     }
 }

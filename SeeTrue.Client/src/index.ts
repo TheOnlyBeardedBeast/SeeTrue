@@ -11,7 +11,6 @@ import {
   RecoverRequest,
   InviteRequest,
   SignupRequest,
-  VerifyRequest,
   UserResponse,
   AuthResponse,
   LoginRequest,
@@ -22,6 +21,8 @@ import {
   VerifySignupRequest,
   UserCredentials,
   VerifyRecoveryRequest,
+  VerifyInviteRequestData,
+  VerifyInviteRequest,
 } from './index.d';
 
 export enum Paths {
@@ -35,6 +36,7 @@ export enum Paths {
   CONFIRMEMAIL = 'confirm-email',
   RECOVER = 'recover',
   MAGICLINK = 'magiclink',
+  INVITE = 'invite',
 }
 
 // TODO: use cross-fetch
@@ -127,7 +129,25 @@ export class SeeTrueClient {
   /**
    * Invite
    */
-  public async invite(data: InviteRequest): Promise<void> {}
+  public async invite(data: InviteRequest): Promise<void> {
+    if (!this.tokens?.access_token) {
+      throw new Error('No accesstoken');
+    }
+
+    const response = await fetch(join(this.host, Paths.INVITE), {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-JWT-AUD': this.audince,
+        authorization: `Bearer ${this.tokens.access_token}`,
+      },
+    });
+
+    if (response.status !== 204) {
+      throw new Error('Failed to fetch');
+    }
+  }
 
   /**
    * Confirm email
@@ -150,7 +170,9 @@ export class SeeTrueClient {
   /**
    * Raw token verfication for signup and recovery
    */
-  public async verify(data: VerifyRequest): Promise<AuthResponse> {
+  public async verify(
+    data: VerifyInviteRequest | VerifyRecoveryRequest | VerifySignupRequest
+  ): Promise<AuthResponse> {
     const response = await fetch(join(this.host, Paths.VERIFY), {
       method: 'POST',
       body: JSON.stringify(data),
@@ -161,6 +183,7 @@ export class SeeTrueClient {
     });
 
     if (response.status !== 200) {
+      console.log(response.status);
       throw new Error('Failed to fetch');
     }
 
@@ -190,6 +213,21 @@ export class SeeTrueClient {
    */
   public async verifyRecovery(token: string): Promise<AuthResponse> {
     return this.verify({ type: 'recovery', token } as VerifyRecoveryRequest);
+  }
+
+  /**
+   * Handles invite verification
+   * Uses the raw verify method
+   */
+  public async verifyInvite(
+    data: VerifyInviteRequestData
+  ): Promise<AuthResponse> {
+    return this.verify({
+      type: 'invite',
+      token: data.token,
+      name: data.name,
+      password: data.password,
+    } as VerifyInviteRequest);
   }
 
   /**

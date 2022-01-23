@@ -214,4 +214,34 @@ describe('auth flow', () => {
 
     expect(isAuthResponse(response)).toBe(true);
   });
+
+  const invitedUserEmail = `${Date.now()}@invited.dev`;
+
+  it('should invite a new user', async () => {
+    await expect(client.invite({ email: invitedUserEmail })).resolves.toBe(
+      undefined
+    );
+
+    const messages = await mails.messages();
+
+    expect(messages?.count).toBe(5);
+
+    const token = messages?.items?.[0]?.html?.match(
+      /(?<=(\"https:\/\/frontendurl\.com\/confirm-invite\/))([^"]+)/g
+    )?.[0]!;
+
+    expect(token).not.toBe(null);
+
+    await client.logout();
+
+    const response = await client.verifyInvite({
+      token,
+      name: 'Invited user',
+      password: '12345678',
+    });
+
+    expect(isAuthResponse(response)).toBe(true);
+    expect(response.user.email).toBe(invitedUserEmail);
+    expect(response.user.userMetaData['Name']).toBe('Invited user');
+  });
 });

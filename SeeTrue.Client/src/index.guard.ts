@@ -12,7 +12,6 @@ import {
   UserResponse,
   InviteRequest,
   ConfirmEmailRequest,
-  VerifyRequest,
   AuthResponse,
   RequestMagicLinkRequest,
   ProcessMagicLinkRequest,
@@ -129,18 +128,6 @@ export function isConfirmEmailRequest(
   return (
     ((obj !== null && typeof obj === 'object') || typeof obj === 'function') &&
     typeof obj.token === 'string'
-  );
-}
-
-export function isVerifyRequest(
-  obj: any,
-  _argumentName?: string
-): obj is VerifyRequest {
-  return (
-    ((obj !== null && typeof obj === 'object') || typeof obj === 'function') &&
-    (isVerificationType(obj.type) as boolean) &&
-    typeof obj.token === 'string' &&
-    typeof obj.password === 'string'
   );
 }
 

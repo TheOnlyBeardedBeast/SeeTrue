@@ -8,9 +8,10 @@ namespace SeeTrue.Infrastructure.Validators
     {
         public VerifyRequestValidator()
         {
-            RuleFor(x => x.Type).Must(t => t == "signup" || t == "recovery");
+            RuleFor(x => x.Type).Must(t => t == "signup" || t == "recovery" || t == "invite");
             RuleFor(x => x.Token).NotEmpty();
             RuleFor(x => x.Password).MinimumLength(Env.MinimumPasswordLength).When(p => !string.IsNullOrWhiteSpace(p.Password));
+            RuleFor(x => x.Name).NotEmpty().When(p => p.Type == "invite");
         }
     }
 }
