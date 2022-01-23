@@ -66,7 +66,7 @@ POST
 Headers:
 ```typescript
 'Content-Type': 'application/json',
-'X-JWT-AUD': audince, // must be configured in SeeTrue env
+'X-JWT-AUD': audince, // string, must be configured in SeeTrue env
 ```
 Request body:
 ```typescript
@@ -112,6 +112,67 @@ Example response:
 }
 ```
 
+## Verify
+Verifies user signup, recovery or invite based on a token which the user gets in an email. The frontend urls are specified in the email templates.
+
+![diagram](./readme-4.svg)
+
+![diagram](./readme-5.svg)
+
+![diagram](./readme-6.svg)
+
+Path:
+```
+/verfy
+```
+Method:
+```
+POST
+```
+Request body:
+```typescript
+{
+  type: string, // required, can be "signup" | "recovery" | "invite"
+  token: string, // required
+  password: string // required only if type is invite
+}
+```
+Example response:
+```json
+{
+  "access_token": "string",
+  "token_type": "string",
+  "expires_in": 0,
+  "refresh_token": "string",
+  "user": {
+    "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "aud": "string",
+    "role": "string",
+    "email": "string",
+    "language": "string",
+    "confirmedAt": "2022-01-23T17:14:09.661Z",
+    "invitedAt": "2022-01-23T17:14:09.661Z",
+    "recoverySentAt": "2022-01-23T17:14:09.661Z",
+    "emailChange": "string",
+    "emailChangeSentAt": "2022-01-23T17:14:09.661Z",
+    "lastSignInAt": "2022-01-23T17:14:09.661Z",
+    "appMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "userMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "isSuperAdmin": true,
+    "createdAt": "2022-01-23T17:14:09.661Z",
+    "updatedAt": "2022-01-23T17:14:09.661Z"
+  }
+}
+```
 
 ## TokenRequest
 Path:
@@ -122,4 +183,4 @@ Path:
 
 Diagram:
 
-![diagram](./readme-4.svg)
+![diagram](./readme-7.svg)

@@ -64,6 +64,7 @@ Creates a user based on the request data, if SeeTrue autoconfirm is enabled, the
 ```mermaid
 sequenceDiagram
     Frontend->>+SeeTrue: POST /signup
+    SeeTrue->>User Email: Confirmation email
     SeeTrue-->>-Frontend: user response
 ```
 
@@ -124,6 +125,82 @@ Example response:
 }
 ```
 
+## Verify
+Verifies user signup, recovery or invite based on a token which the user gets in an email. The frontend urls are specified in the email templates.
+
+```mermaid
+sequenceDiagram
+    User Email->>Frontend: /confirm-signup/token
+    Frontend->>+SeeTrue: POST /verify
+    SeeTrue-->>-Frontend: auth response
+```
+
+```mermaid
+sequenceDiagram
+    User Email->>Frontend: /confirm-recovery/token
+    Frontend->>+SeeTrue: POST /verify
+    SeeTrue-->>-Frontend: auth response
+```
+
+```mermaid
+sequenceDiagram
+    User Email->>Frontend: /confirm-invite/token
+    Frontend->>+SeeTrue: POST /verify
+    SeeTrue-->>-Frontend: auth response
+```
+
+Path:
+```
+/verfy
+```
+Method:
+```
+POST
+```
+Request body:
+```typescript
+{
+  type: string, // required, can be "signup" | "recovery" | "invite"
+  token: string, // required
+  password: string // required only if type is invite
+}
+```
+Example response:
+```json
+{
+  "access_token": "string",
+  "token_type": "string",
+  "expires_in": 0,
+  "refresh_token": "string",
+  "user": {
+    "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "aud": "string",
+    "role": "string",
+    "email": "string",
+    "language": "string",
+    "confirmedAt": "2022-01-23T17:14:09.661Z",
+    "invitedAt": "2022-01-23T17:14:09.661Z",
+    "recoverySentAt": "2022-01-23T17:14:09.661Z",
+    "emailChange": "string",
+    "emailChangeSentAt": "2022-01-23T17:14:09.661Z",
+    "lastSignInAt": "2022-01-23T17:14:09.661Z",
+    "appMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "userMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "isSuperAdmin": true,
+    "createdAt": "2022-01-23T17:14:09.661Z",
+    "updatedAt": "2022-01-23T17:14:09.661Z"
+  }
+}
+```
 
 ## TokenRequest
 Path:
