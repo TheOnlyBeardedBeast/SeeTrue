@@ -34,6 +34,7 @@ export enum Paths {
   LOGOUT = 'logout',
   CONFIRMEMAIL = 'confirm-email',
   RECOVER = 'recover',
+  MAGICLINK = 'magiclink',
 }
 
 // TODO: use cross-fetch
@@ -194,7 +195,20 @@ export class SeeTrueClient {
   /**
    * Request a magiclink confirmation from a SeeTrue server
    */
-  public async requestMagiclink(data: RequestMagicLinkRequest): Promise<void> {}
+  public async requestMagiclink(data: RequestMagicLinkRequest): Promise<void> {
+    const response = await fetch(join(this.host, Paths.MAGICLINK), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-JWT-AUD': this.audince,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.status !== 204) {
+      throw new Error('Failed to fetch');
+    }
+  }
 
   /**
    * Process magiclink provided by a SeeTrue server
@@ -202,7 +216,28 @@ export class SeeTrueClient {
   public async processMagiclink(
     data: ProcessMagicLinkRequest
   ): Promise<AuthResponse> {
-    return {} as AuthResponse;
+    const response = await fetch(join(this.host, Paths.MAGICLINK, data.token), {
+      method: 'GET',
+      headers: {
+        'X-JWT-AUD': this.audince,
+      },
+    });
+
+    if (response.status !== 200) {
+      console.log(response.status, response.statusText);
+      throw new Error('Failed to fetch');
+    }
+
+    const json = await response.text();
+
+    const result = JSON.parse(json, dateParser) as AuthResponse;
+
+    this.tokens = {
+      access_token: result.access_token,
+      refresh_token: result.refresh_token,
+    } as TokenPair;
+
+    return result;
   }
 
   /**

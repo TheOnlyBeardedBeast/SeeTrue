@@ -132,11 +132,11 @@ namespace SeeTrue.API.Controllers
             return NoContent();
         }
 
-        [HttpGet("magiclink")]
+        [HttpGet("magiclink/{token}")]
         [ProducesResponseType(typeof(UserTokenResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Process magic link token", Description = "Processes a magic link token")]
-        public async Task<IActionResult> ProcesskMagicLink([FromQuery] string token)
+        public async Task<IActionResult> ProcesskMagicLink([FromRoute] string token)
         {
             var result = await this.m.Send(new Infrastructure.Commands.ProcessMagicLink.Command(token, HttpContext.GetUserAgent()));
 

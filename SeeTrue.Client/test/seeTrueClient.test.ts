@@ -191,5 +191,27 @@ describe('auth flow', () => {
     const response = await client.verifyRecovery(token);
 
     expect(isAuthResponse(response)).toBe(true);
+
+    client.logout();
+  });
+
+  it('should login with magiclink', async () => {
+    await expect(client.requestMagiclink({ email: user.email })).resolves.toBe(
+      undefined
+    );
+
+    const messages = await mails.messages();
+
+    expect(messages?.count).toBe(4);
+
+    const token = messages?.items?.[0]?.html?.match(
+      /(?<=(\"https:\/\/frontendurl\.com\/magiclink\/))([^"]+)/g
+    )?.[0]!;
+
+    expect(token).not.toBeNull();
+
+    const response = await client.processMagiclink({ token });
+
+    expect(isAuthResponse(response)).toBe(true);
   });
 });
