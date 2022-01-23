@@ -78,7 +78,7 @@ POST
 Headers:
 ```typescript
 'Content-Type': 'application/json',
-'X-JWT-AUD': audince, // must be configured in SeeTrue env
+'X-JWT-AUD': audince, // string, must be configured in SeeTrue env
 ```
 Request body:
 ```typescript
@@ -86,7 +86,7 @@ Request body:
   email: string, // required, must be an email
   password: string, // requered, min length configured in SeeTrue env
   language: string, // required, supported languages configured in SeeTrue env
-  userMetaData: { // key value object
+  userMetaData: { // key value object, here you can store custom user data
     Name: string, // Name is required, used in emails
     ...
     [key:string]: value,
