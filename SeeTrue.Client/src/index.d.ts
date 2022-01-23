@@ -104,9 +104,9 @@ export interface RefreshRequest
 }
 
 export interface UserUpdateRequest {
-  email: string;
-  password: string;
-  userMetaData: MetaData;
+  email?: string;
+  password?: string;
+  userMetaData?: MetaData;
 }
 
 export interface UserCredentials {

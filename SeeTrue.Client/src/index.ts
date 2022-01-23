@@ -274,7 +274,29 @@ export class SeeTrueClient {
    * Update user
    */
   public async updateUser(data: UserUpdateRequest): Promise<UserResponse> {
-    return {} as UserResponse;
+    if (!this.tokens?.access_token) {
+      throw new Error('No accesstoken');
+    }
+
+    const response = await fetch(join(this.host, Paths.USER), {
+      method: 'PUT',
+      headers: {
+        'X-JWT-AUD': this.audince,
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${this.tokens.access_token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch');
+    }
+
+    const json = await response.text();
+
+    const result = JSON.parse(json, dateParser) as UserResponse;
+
+    return result;
   }
 
   /**

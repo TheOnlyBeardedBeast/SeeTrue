@@ -93,6 +93,16 @@ describe('auth flow', () => {
     expect(isUserResponse(response)).toBe(true);
   });
 
+  it('should update user name', async () => {
+    const updateKey = 'testExtension';
+    const updateValue = 'testData';
+    const response = await client.updateUser({
+      userMetaData: { [updateKey]: updateValue },
+    });
+
+    expect(response.userMetaData[updateKey]).toBe(updateValue);
+  });
+
   it('should logout user', async () => {
     const tokensCopy = { ...client.tokens } as TokenPair;
 
