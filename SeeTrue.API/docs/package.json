@@ -1,0 +1,14 @@
+{
+  "name": "seetrue.docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "mwd@outlook.sk",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "mmdc -i readme.template.md -o readme.md"
+  },
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^8.13.8"
+  }
+}
