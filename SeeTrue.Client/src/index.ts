@@ -31,6 +31,7 @@ export enum Paths {
   TOKEN = 'token',
   USER = 'user',
   LOGOUT = 'logout',
+  CONFIRMEMAIL = 'confirm-email',
 }
 
 // TODO: use cross-fetch
@@ -128,7 +129,20 @@ export class SeeTrueClient {
   /**
    * Confirm email
    */
-  public async confirmEmail(data: ConfirmEmailRequest): Promise<void> {}
+  public async confirmEmail(data: ConfirmEmailRequest): Promise<void> {
+    const response = await fetch(join(this.host, Paths.CONFIRMEMAIL), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-JWT-AUD': this.audince,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.status !== 204) {
+      throw new Error('Failed to fetch');
+    }
+  }
 
   /**
    * Raw token verfication for signup and recovery

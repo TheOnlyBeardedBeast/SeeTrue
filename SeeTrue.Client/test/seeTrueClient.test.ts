@@ -101,6 +101,19 @@ describe('auth flow', () => {
     });
 
     expect(response.userMetaData[updateKey]).toBe(updateValue);
+    expect(isUserResponse(response)).toBe(true);
+  });
+
+  it('should update password', async () => {
+    const newPassword = '12345678910';
+
+    const response = await client.updateUser({
+      password: '12345678910',
+    });
+
+    expect(isUserResponse(response)).toBe(true);
+
+    user.password = newPassword;
   });
 
   it('should logout user', async () => {
@@ -117,5 +130,46 @@ describe('auth flow', () => {
 
     await expect(client.refresh()).rejects.toThrowError();
     await expect(client.user()).rejects.toThrowError();
+  });
+
+  it('should login with new password', async () => {
+    const response = await client.login({
+      email: user.email,
+      password: user.password,
+    });
+
+    expect(response).not.toBe(null);
+    expect(isAuthResponse(response)).toBe(true);
+  });
+
+  it('should update email', async () => {
+    const newEmail = user.email + 'update';
+
+    const response = await client.updateUser({
+      email: newEmail,
+    });
+
+    expect(isUserResponse(response)).toBe(true);
+    expect(response.emailChange).toBe(newEmail);
+
+    user.email = newEmail;
+
+    const messages = await mails.messages();
+
+    expect(messages?.count).toBe(2);
+
+    const token = messages?.items?.[0]?.html?.match(
+      /(?<=(\"https:\/\/frontendurl\.com\/confirm-email\/))([^"]+)/g
+    )?.[0]!;
+
+    await expect(client.confirmEmail({ token })).resolves.toBe(undefined);
+
+    const userResponse = await client.user();
+
+    expect(userResponse).not.toBe(null);
+    expect(isUserResponse(userResponse)).toBe(true);
+    expect(userResponse.emailChange).toBe(null);
+
+    client.logout();
   });
 });
