@@ -80,6 +80,7 @@ namespace SeeTrue.API.Controllers
         [HttpPost("invite")]
         public async Task<IActionResult> Invite([FromBody] InviteRequest data)
         {
+            // TODO: HttpStatusCode.Locked use this based on ENV or 403 Forbidden
             if (!data.Validate())
             {
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
