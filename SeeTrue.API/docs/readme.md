@@ -64,9 +64,11 @@ Method:
 POST
 ```
 Headers:
-```typescript
-'Content-Type': 'application/json',
-'X-JWT-AUD': audince, // string, must be configured in SeeTrue env
+```json
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+}
 ```
 Request body:
 ```typescript
@@ -115,9 +117,141 @@ Example response:
 ## Verify
 Verifies user signup, recovery or invite based on a token which the user gets in an email. The frontend urls are specified in the email templates.
 
+### Verify signup
+
+Verifies a user signup.
+
 ![diagram](./readme-4.svg)
 
+Path:
+```
+/verfy
+```
+Method:
+```
+POST
+```
+Headers:
+```json
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+}
+```
+
+Request body:
+```typescript
+{
+  type: "signup",
+  token: string,
+}
+```
+Example response:
+```json
+{
+  "access_token": "string",
+  "token_type": "string",
+  "expires_in": 0,
+  "refresh_token": "string",
+  "user": {
+    "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "aud": "string",
+    "role": "string",
+    "email": "string",
+    "language": "string",
+    "confirmedAt": "2022-01-23T17:14:09.661Z",
+    "invitedAt": "2022-01-23T17:14:09.661Z",
+    "recoverySentAt": "2022-01-23T17:14:09.661Z",
+    "emailChange": "string",
+    "emailChangeSentAt": "2022-01-23T17:14:09.661Z",
+    "lastSignInAt": "2022-01-23T17:14:09.661Z",
+    "appMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "userMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "isSuperAdmin": true,
+    "createdAt": "2022-01-23T17:14:09.661Z",
+    "updatedAt": "2022-01-23T17:14:09.661Z"
+  }
+}
+```
+### Verify recovery
+
+Verifies a user recovery.
+
 ![diagram](./readme-5.svg)
+
+Path:
+```
+/verfy
+```
+Method:
+```
+POST
+```
+
+Headers:
+```json
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+}
+```
+
+Request body:
+```typescript
+{
+  type: "recovery",
+  token: string,
+}
+```
+Example response:
+```json
+{
+  "access_token": "string",
+  "token_type": "string",
+  "expires_in": 0,
+  "refresh_token": "string",
+  "user": {
+    "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "aud": "string",
+    "role": "string",
+    "email": "string",
+    "language": "string",
+    "confirmedAt": "2022-01-23T17:14:09.661Z",
+    "invitedAt": "2022-01-23T17:14:09.661Z",
+    "recoverySentAt": "2022-01-23T17:14:09.661Z",
+    "emailChange": "string",
+    "emailChangeSentAt": "2022-01-23T17:14:09.661Z",
+    "lastSignInAt": "2022-01-23T17:14:09.661Z",
+    "appMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "userMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "isSuperAdmin": true,
+    "createdAt": "2022-01-23T17:14:09.661Z",
+    "updatedAt": "2022-01-23T17:14:09.661Z"
+  }
+}
+```
+
+### Verify invite
+
+Verifies a user invite.
 
 ![diagram](./readme-6.svg)
 
@@ -129,12 +263,21 @@ Method:
 ```
 POST
 ```
+Headers:
+```json
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+}
+```
+
 Request body:
 ```typescript
 {
-  type: string, // required, can be "signup" | "recovery" | "invite"
-  token: string, // required
-  password: string // required only if type is invite
+  type: "invite",
+  token: string,
+  password: string,
+  name: string
 }
 ```
 Example response:
@@ -175,12 +318,253 @@ Example response:
 ```
 
 ## TokenRequest
+
+Request a token from SeeTrue, use this token to communicate with your backend. You can request a token
+- By sign in (using an email password combo)
+- By refresh (using a refresh token)
+
+You need to validate these tokens on your side, most of the times you can download a package which handles that for you, use the same values for you validation logis as for the SeeTrue environment config.
+
+![diagram](./readme-7.svg)
+### Password token request
 Path:
 
 ```
 /token
 ```
+Method:
+```
+POST
+```
+Headers:
+```json
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+}
+```
 
-Diagram:
+Request body:
+```typescript
+{
+  "grant_type": "password",
+  "email": "string",
+  "password": "string",
+  "refresh_token": "string"
+}
+```
 
-![diagram](./readme-7.svg)
+Example response:
+```json
+{
+  "access_token": "string",
+  "token_type": "string",
+  "expires_in": 0,
+  "refresh_token": "string",
+  "user": {
+    "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "aud": "string",
+    "role": "string",
+    "email": "string",
+    "language": "string",
+    "confirmedAt": "2022-01-23T17:14:09.661Z",
+    "invitedAt": "2022-01-23T17:14:09.661Z",
+    "recoverySentAt": "2022-01-23T17:14:09.661Z",
+    "emailChange": "string",
+    "emailChangeSentAt": "2022-01-23T17:14:09.661Z",
+    "lastSignInAt": "2022-01-23T17:14:09.661Z",
+    "appMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "userMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "isSuperAdmin": true,
+    "createdAt": "2022-01-23T17:14:09.661Z",
+    "updatedAt": "2022-01-23T17:14:09.661Z"
+  }
+}
+```
+
+### Refresh token request
+
+Path:
+
+```
+/token
+```
+Method:
+```
+POST
+```
+
+Headers:
+```json
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+}
+```
+
+Request body:
+```typescript
+{
+  "grant_type": "refresh_token",
+  "refresh_token": "string"
+}
+```
+
+Example response:
+```json
+{
+  "access_token": "string",
+  "token_type": "string",
+  "expires_in": 0,
+  "refresh_token": "string",
+  "user": {
+    "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "aud": "string",
+    "role": "string",
+    "email": "string",
+    "language": "string",
+    "confirmedAt": "2022-01-23T17:14:09.661Z",
+    "invitedAt": "2022-01-23T17:14:09.661Z",
+    "recoverySentAt": "2022-01-23T17:14:09.661Z",
+    "emailChange": "string",
+    "emailChangeSentAt": "2022-01-23T17:14:09.661Z",
+    "lastSignInAt": "2022-01-23T17:14:09.661Z",
+    "appMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "userMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "isSuperAdmin": true,
+    "createdAt": "2022-01-23T17:14:09.661Z",
+    "updatedAt": "2022-01-23T17:14:09.661Z"
+  }
+}
+```
+
+## User
+Gets the current users data
+
+![diagram](./readme-8.svg)
+
+Path:
+
+```
+/user
+```
+Method:
+```
+GET
+```
+
+Headers:
+```json
+{
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'authorization': 'Bearer {access_token}' // use your accesstoken 
+}
+```
+
+Example response:
+```json
+{
+  "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "aud": "string",
+  "role": "string",
+  "email": "string",
+  "language": "string",
+  "confirmedAt": "2022-01-23T17:14:09.661Z",
+  "invitedAt": "2022-01-23T17:14:09.661Z",
+  "recoverySentAt": "2022-01-23T17:14:09.661Z",
+  "emailChange": "string",
+  "emailChangeSentAt": "2022-01-23T17:14:09.661Z",
+  "lastSignInAt": "2022-01-23T17:14:09.661Z",
+  "appMetaData": {
+    "additionalProp1": "string",
+    "additionalProp2": "string",
+    "additionalProp3": "string"
+  },
+  "userMetaData": {
+    "additionalProp1": "string",
+    "additionalProp2": "string",
+    "additionalProp3": "string"
+  },
+  "isSuperAdmin": true,
+  "createdAt": "2022-01-23T17:14:09.661Z",
+  "updatedAt": "2022-01-23T17:14:09.661Z"
+}
+```
+
+## Logout
+Revokes all the refresh tokens connected to the given login, Revokes all the access tokens connected to the given login. 
+
+![diagram](./readme-9.svg)
+
+Path:
+
+```
+/logout
+```
+Method:
+```
+POST
+```
+
+Headers:
+```json
+{
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'authorization': 'Bearer {access_token}' // use your accesstoken 
+}
+```
+Response:
+
+statuscode 204, status No content
+
+## Recover
+Request a recovery token, which is used to start a password recovery process. 
+
+![diagram](./readme-10.svg)
+
+Path:
+
+```
+/recover
+```
+Method:
+```
+POST
+```
+
+Headers:
+```json
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': audince, // audience specif // use your accesstoken 
+}
+```
+Request body:
+```typescript
+{
+  email: string, // required, must be an email
+}
+```
+
+Response:
+
+statuscode 204, status No content
