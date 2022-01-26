@@ -571,6 +571,7 @@ PUT
 Headers:
 ```typescript
 {
+  'Content-Type': 'application/json',
   'X-JWT-AUD': audince, // audience specified in SeeTrue config
   'authorization': 'Bearer {access_token}' // use your accesstoken 
 }
@@ -644,6 +645,7 @@ POST
 Headers:
 ```typescript
 {
+  'Content-Type': 'application/json',
   'X-JWT-AUD': audince, // audience specified in SeeTrue config
 }
 ```
@@ -749,11 +751,11 @@ Headers:
 ```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': {audince}, // audience specif
+  'X-JWT-AUD': {audince}, // audience specific
 }
 ```
 Request body:
-```
+```typescript
 {
   token: {token} // token from the email
 }
