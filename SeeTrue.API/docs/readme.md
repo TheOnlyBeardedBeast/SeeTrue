@@ -752,3 +752,37 @@ Response:
   }
 }
 ```
+
+## Invite
+
+Invites a user to the application
+
+![diagram](./readme-14.svg)
+
+Path:
+```
+/invite
+```
+Method:
+```
+POST
+```
+Headers:
+```typescript
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'authorization': 'Bearer {access_token}' // use your accesstoken 
+}
+```
+
+Request body:
+```typescrip
+{
+  email: {email} // email of the user to invite
+}
+```
+
+Response:
+Status code 204, Status No Content
+
