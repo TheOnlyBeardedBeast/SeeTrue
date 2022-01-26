@@ -66,7 +66,9 @@ export function isSettingsResponse(
   return (
     ((obj !== null && typeof obj === 'object') || typeof obj === 'function') &&
     typeof obj.signup_disabled === 'boolean' &&
-    typeof obj.autoconfirm === 'boolean'
+    typeof obj.autoconfirm === 'boolean' &&
+    typeof obj.invite_enabled === 'boolean' &&
+    Array.isArray(obj.languages)
   );
 }
 

@@ -33,6 +33,7 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly string ConnectionString;
         public static readonly List<string> Languages;
         public static readonly List<string> AvailableRoles;
+        public static readonly bool InviteEnabled;
 
         static Env()
         {
@@ -68,6 +69,7 @@ namespace SeeTrue.Infrastructure.Utils
             }
 
             AvailableRoles = roles.Distinct().Where(e => !string.IsNullOrWhiteSpace(e)).Select(e => e.ToLower()).ToList();
+            InviteEnabled = Helpers.GetEnvironmentVariable<bool>("SEETRUE_INVITE_ENABLED", false);
         }
     }
 }

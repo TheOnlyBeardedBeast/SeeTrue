@@ -18,6 +18,8 @@ export interface HealthResponse {
 export interface SettingsResponse {
   signup_disabled: boolean;
   autoconfirm: boolean;
+  invite_enabled: boolean;
+  languages: string[];
 }
 
 export interface SignupRequest {
