@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using SeeTrue.Infrastructure.Services;
 using SeeTrue.Infrastructure.Types;
+using SeeTrue.Infrastructure.Utils;
 
 namespace SeeTrue.Infrastructure.Commands
 {
@@ -25,6 +26,11 @@ namespace SeeTrue.Infrastructure.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
+                if (!Env.InviteEnabled)
+                {
+                    throw new SeeTrueException(HttpStatusCode.Forbidden);
+                }
+
                 var exists = await queries.CheckEmailExists(request.Email, request.Aud);
 
                 if (exists)
