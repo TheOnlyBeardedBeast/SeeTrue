@@ -550,6 +550,62 @@ Example response:
 }
 ```
 
+## Update User
+Updates the user object in the database. Metadata will ovveride existing keys, add non existing keys and if you want to remove a metadata value, set it to null. In case of email update, an email update confirmation is required. Every field is optional.
+
+```mermaid
+sequenceDiagram
+    Frontend->>+SeeTrue: PUST /user
+    SeeTrue->>User Email: Confirm email change<br/>(in case of email update,<br/>sent to the current email)
+    SeeTrue-->>-Frontend: User response (200)
+```
+
+Path:
+```
+/user
+```
+Method:
+```
+PUT
+```
+Headers:
+```typescript
+{
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'authorization': 'Bearer {access_token}' // use your accesstoken 
+}
+```
+Example response:
+```json
+{
+  "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "aud": "string",
+  "role": "string",
+  "email": "string",
+  "language": "string",
+  "confirmedAt": "2022-01-23T17:14:09.661Z",
+  "invitedAt": "2022-01-23T17:14:09.661Z",
+  "recoverySentAt": "2022-01-23T17:14:09.661Z",
+  "emailChange": "string",
+  "emailChangeSentAt": "2022-01-23T17:14:09.661Z",
+  "lastSignInAt": "2022-01-23T17:14:09.661Z",
+  "appMetaData": {
+    "additionalProp1": "string",
+    "additionalProp2": "string",
+    "additionalProp3": "string"
+  },
+  "userMetaData": {
+    "additionalProp1": "string",
+    "additionalProp2": "string",
+    "additionalProp3": "string"
+  },
+  "isSuperAdmin": true,
+  "createdAt": "2022-01-23T17:14:09.661Z",
+  "updatedAt": "2022-01-23T17:14:09.661Z"
+}
+```
+
 ## Logout
 Revokes all the refresh tokens connected to the given login, Revokes all the access tokens connected to the given login. 
 
@@ -570,7 +626,7 @@ POST
 ```
 
 Headers:
-```json
+```typescript
 {
   'X-JWT-AUD': audince, // audience specified in SeeTrue config
   'authorization': 'Bearer {access_token}' // use your accesstoken 
