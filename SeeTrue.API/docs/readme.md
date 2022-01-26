@@ -666,3 +666,89 @@ Request body:
 Response:
 
 statuscode 204, status No content
+
+## Request magic link
+Request a one time url which auto logs in the user.
+
+![diagram](./readme-13.svg)
+
+Path:
+```
+/magiclink
+```
+Method:
+```
+POST
+```
+Headers:
+```typescript
+{
+  'Content-Type': 'application/json',
+  'X-JWT-AUD': {audince}, // audience specif
+}
+```
+Request body:
+```
+{
+  token: {token} // token from the email
+}
+```
+
+Response:
+Statuscode 204, status No content
+
+## Process magic link
+Verifies and processes a token from a magic link url.
+
+```
+sequenceDiagram
+    User Email->>Frontend: /magic-link/{token}
+    Frontend->>+SeeTrue: GET /magiclink/{token}
+    SeeTrue-->>-Frontend: Auth response (200)
+```
+
+Path:
+```
+/magiclink/{token}
+```
+Method:
+```
+GET
+```
+
+Response:
+```JSON
+{
+  "access_token": "string",
+  "token_type": "string",
+  "expires_in": 0,
+  "refresh_token": "string",
+  "user": {
+    "instanceID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "aud": "string",
+    "role": "string",
+    "email": "string",
+    "language": "string",
+    "confirmedAt": "2022-01-26T21:09:57.616Z",
+    "invitedAt": "2022-01-26T21:09:57.616Z",
+    "recoverySentAt": "2022-01-26T21:09:57.616Z",
+    "emailChange": "string",
+    "emailChangeSentAt": "2022-01-26T21:09:57.616Z",
+    "lastSignInAt": "2022-01-26T21:09:57.616Z",
+    "appMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "userMetaData": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    },
+    "isSuperAdmin": true,
+    "createdAt": "2022-01-26T21:09:57.616Z",
+    "updatedAt": "2022-01-26T21:09:57.616Z"
+  }
+}
+```
