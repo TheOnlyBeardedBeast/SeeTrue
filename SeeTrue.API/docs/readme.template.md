@@ -136,7 +136,7 @@ Verifies a user signup.
 
 ```mermaid
 sequenceDiagram
-    User Email->>Frontend: /confirm-signup/token
+    User Email-->>Frontend: /confirm-signup/token
     Frontend->>+SeeTrue: POST /verify
     SeeTrue-->>-Frontend: auth response (200)
 ```
@@ -206,7 +206,7 @@ Verifies a user recovery.
 
 ```mermaid
 sequenceDiagram
-    User Email->>Frontend: /confirm-recovery/token
+    User Email-->>Frontend: /confirm-recovery/token
     Frontend->>+SeeTrue: POST /verify
     SeeTrue-->>-Frontend: auth response (200)
 ```
@@ -278,7 +278,7 @@ Verifies a user invite.
 
 ```mermaid
 sequenceDiagram
-    User Email->>Frontend: /confirm-invite/token
+    User Email-->>Frontend: /confirm-invite/token
     Frontend->>+SeeTrue: POST /verify
     SeeTrue-->>-Frontend: auth response (200)
 ```
@@ -575,6 +575,21 @@ Headers:
   'authorization': 'Bearer {access_token}' // use your accesstoken 
 }
 ```
+Request body:
+```typescript
+{
+  email: string, // optional
+  password: string, // optional
+  language: string, // optional
+  userMetaData: { // optional
+    Name: string, // sets/overrides Name property
+    SecondaryEmail: null, // Removes SecondaryEmail from metadata if exists
+    ...
+    [key:string]: value,
+  }
+}
+```
+
 Example response:
 ```json
 {
@@ -605,6 +620,43 @@ Example response:
   "updatedAt": "2022-01-23T17:14:09.661Z"
 }
 ```
+
+## Confirm email
+Confirms the email change, which happened in the user update process
+
+```mermaid
+sequenceDiagram
+    User Email-->>Frontend: /confirm-email/{token}
+    Frontend->>+SeeTrue: POST /confirm-email
+    SeeTrue-->>-Frontend: (204-No Content)
+```
+
+Path:
+```
+/confirm-email
+```
+
+Method:
+```
+POST
+```
+
+Headers:
+```typescript
+{
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+}
+```
+
+Request body:
+```typescript
+{
+  token: {token} // token from the email
+}
+```
+
+Response:
+Status code 204, Status No content
 
 ## Logout
 Revokes all the refresh tokens connected to the given login, Revokes all the access tokens connected to the given login. 

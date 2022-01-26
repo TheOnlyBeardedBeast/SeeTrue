@@ -530,6 +530,21 @@ Headers:
   'authorization': 'Bearer {access_token}' // use your accesstoken 
 }
 ```
+Request body:
+```typescript
+{
+  email: string, // optional
+  password: string, // optional
+  language: string, // optional
+  userMetaData: { // optional
+    Name: string, // sets/overrides Name property
+    SecondaryEmail: null, // Removes SecondaryEmail from metadata if exists
+    ...
+    [key:string]: value,
+  }
+}
+```
+
 Example response:
 ```json
 {
@@ -561,10 +576,42 @@ Example response:
 }
 ```
 
+## Confirm email
+Confirms the email change, which happened in the user update process
+
+![diagram](./readme-10.svg)
+
+Path:
+```
+/confirm-email
+```
+
+Method:
+```
+POST
+```
+
+Headers:
+```typescript
+{
+  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+}
+```
+
+Request body:
+```typescript
+{
+  token: {token} // token from the email
+}
+```
+
+Response:
+Status code 204, Status No content
+
 ## Logout
 Revokes all the refresh tokens connected to the given login, Revokes all the access tokens connected to the given login. 
 
-![diagram](./readme-10.svg)
+![diagram](./readme-11.svg)
 
 Path:
 
@@ -590,7 +637,7 @@ statuscode 204, status No content
 ## Recover
 Request a recovery token, which is used to start a password recovery process. 
 
-![diagram](./readme-11.svg)
+![diagram](./readme-12.svg)
 
 Path:
 
