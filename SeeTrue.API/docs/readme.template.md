@@ -6,7 +6,7 @@ Returns basic app information, confirms that the app is running.
 ```mermaid
 sequenceDiagram
     Any service->>+SeeTrue: GET /health
-    SeeTrue-->>-Any service: heath response
+    SeeTrue-->>-Any service: heath response (200)
 ```
 
 Path
@@ -35,7 +35,7 @@ Gets SeeTrue settings
 ```mermaid
 sequenceDiagram
     Any service->>+SeeTrue: GET /settings
-    SeeTrue-->>-Any service: settings response
+    SeeTrue-->>-Any service: settings response (200)
 ```
 
 Path
@@ -65,7 +65,7 @@ Creates a user based on the request data, if SeeTrue autoconfirm is enabled, the
 sequenceDiagram
     Frontend->>+SeeTrue: POST /signup
     SeeTrue->>User Email: Confirmation email
-    SeeTrue-->>-Frontend: user response
+    SeeTrue-->>-Frontend: user response (200)
 ```
 
 Path:
@@ -77,10 +77,10 @@ Method:
 POST
 ```
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 Request body:
@@ -138,7 +138,7 @@ Verifies a user signup.
 sequenceDiagram
     User Email->>Frontend: /confirm-signup/token
     Frontend->>+SeeTrue: POST /verify
-    SeeTrue-->>-Frontend: auth response
+    SeeTrue-->>-Frontend: auth response (200)
 ```
 
 Path:
@@ -150,10 +150,10 @@ Method:
 POST
 ```
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -208,7 +208,7 @@ Verifies a user recovery.
 sequenceDiagram
     User Email->>Frontend: /confirm-recovery/token
     Frontend->>+SeeTrue: POST /verify
-    SeeTrue-->>-Frontend: auth response
+    SeeTrue-->>-Frontend: auth response (200)
 ```
 
 Path:
@@ -221,10 +221,10 @@ POST
 ```
 
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -280,7 +280,7 @@ Verifies a user invite.
 sequenceDiagram
     User Email->>Frontend: /confirm-invite/token
     Frontend->>+SeeTrue: POST /verify
-    SeeTrue-->>-Frontend: auth response
+    SeeTrue-->>-Frontend: auth response (200)
 ```
 
 Path:
@@ -292,10 +292,10 @@ Method:
 POST
 ```
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -357,7 +357,7 @@ You need to validate these tokens on your side, most of the times you can downlo
 sequenceDiagram
     rect rgb(10, 120, 100)
     Frontend->>+SeeTrue: POST /token
-    SeeTrue-->>-Frontend: token response
+    SeeTrue-->>-Frontend: token response (200)
     end
     Frontend->>+Your Backend: Request with accesstoken
     Your Backend-->>-Frontend: Response from your backend
@@ -373,10 +373,10 @@ Method:
 POST
 ```
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -440,10 +440,10 @@ POST
 ```
 
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -498,7 +498,7 @@ Gets the current users data
 ```mermaid
 sequenceDiagram
     Frontend->>+SeeTrue: GET /user
-    SeeTrue-->>-Frontend: user response
+    SeeTrue-->>-Frontend: user response (200)
 ```
 
 Path:
@@ -512,7 +512,7 @@ GET
 ```
 
 Headers:
-```json
+```typescript
 {
   'X-JWT-AUD': audince, // audience specified in SeeTrue config
   'authorization': 'Bearer {access_token}' // use your accesstoken 
@@ -602,10 +602,10 @@ POST
 ```
 
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specif // use your accesstoken 
+  'X-JWT-AUD': {audince}, // audience specif
 }
 ```
 Request body:

@@ -64,10 +64,10 @@ Method:
 POST
 ```
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 Request body:
@@ -132,10 +132,10 @@ Method:
 POST
 ```
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -198,10 +198,10 @@ POST
 ```
 
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -264,10 +264,10 @@ Method:
 POST
 ```
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -337,10 +337,10 @@ Method:
 POST
 ```
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -404,10 +404,10 @@ POST
 ```
 
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specified in SeeTrue config
+  'X-JWT-AUD': {audince}, // audience specified in SeeTrue config
 }
 ```
 
@@ -472,7 +472,7 @@ GET
 ```
 
 Headers:
-```json
+```typescript
 {
   'X-JWT-AUD': audince, // audience specified in SeeTrue config
   'authorization': 'Bearer {access_token}' // use your accesstoken 
@@ -552,10 +552,10 @@ POST
 ```
 
 Headers:
-```json
+```typescript
 {
   'Content-Type': 'application/json',
-  'X-JWT-AUD': audince, // audience specif // use your accesstoken 
+  'X-JWT-AUD': {audince}, // audience specif
 }
 ```
 Request body:
