@@ -41,7 +41,7 @@ namespace SeeTrue.API
 
             services.AddMemoryCache();
             services.AddDbContext<ISeeTrueDbContext, AppDbContext>(options =>
-                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                 options.UseNpgsql(Env.ConnectionString));
 
             services.AddControllers(
                 opt =>

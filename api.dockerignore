@@ -1,0 +1,13 @@
+bin/
+obj/
+node_modules/
+dist/
+SeeTrue.Tests/
+SeeTrue.Client/
+SeeTrue.Admin/
+.coverage/
+.vs/
+*/bin/
+*/obj/
+*/node_modules/
+*/dist/
