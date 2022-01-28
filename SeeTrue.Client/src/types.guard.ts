@@ -20,7 +20,7 @@ import {
   LoginRequest,
   RefreshRequest,
   UserUpdateRequest,
-} from './index.d';
+} from './types';
 
 export function isMetaData(obj: any, _argumentName?: string): obj is MetaData {
   return (

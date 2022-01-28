@@ -1,11 +1,10 @@
-import { SignupRequest, TokenPair } from '../src/index.d';
-import { SeeTrueClient } from '../src/index';
+import { SeeTrueClient, SignupRequest, TokenPair } from '../src/index';
 import {
   isAuthResponse,
   isHealthResponse,
   isSettingsResponse,
   isUserResponse,
-} from '../src/index.guard';
+} from '../src/types.guard';
 import mailhog from 'mailhog';
 
 const client = new SeeTrueClient(

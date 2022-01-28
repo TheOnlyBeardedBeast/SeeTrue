@@ -3,8 +3,8 @@ export type MetaData = Record<string, any>;
 export type VerificationType = 'signup' | 'recovery';
 
 export interface TokenPair {
-  access_token: string;
-  refresh_token: string;
+  access_token?: string;
+  refresh_token?: string;
 }
 
 export type TokenChangeAction = (tokenPair: TokenPair | undefined) => void;
