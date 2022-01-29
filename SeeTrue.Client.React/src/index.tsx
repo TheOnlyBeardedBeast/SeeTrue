@@ -4,13 +4,14 @@ import {
   TokenPair,
   TokenChangeAction,
   UserResponse,
+  UserChangeAction,
 } from 'seetrue.client';
 
 export interface ISeeTrueContext {
   isInitializing: boolean;
-  isAuthenticated: boolean | undefined;
+  isAuthenticated?: boolean;
   client: SeeTrueClient;
-  user: UserResponse | null;
+  user?: UserResponse;
 }
 
 const SeeTrueContext = React.createContext<ISeeTrueContext | undefined>(
@@ -32,11 +33,6 @@ export interface SeeTrueProviderProps {
   host: string;
 }
 
-export interface SeeTrueState {
-  user: UserResponse | null;
-  isAuthenticated?: boolean;
-}
-
 const TOKENKEY = 'stjid';
 
 export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
@@ -44,18 +40,15 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   audience,
   host,
 }) => {
-  const [state, setState] = React.useState<SeeTrueState>({
-    user: null,
-    isAuthenticated: undefined,
-  });
-  const [initializing, setInitializing] = React.useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = React.useState<
+    boolean | undefined
+  >(undefined);
+  const [isInitializing, setInitializing] = React.useState<boolean>(true);
+  const [user, setUser] = React.useState<UserResponse | undefined>(undefined);
 
   const onTokenChange: TokenChangeAction = React.useCallback(
     (tokens?: TokenPair) => {
-      setState({
-        user: !!tokens?.access_token ? state.user : null,
-        isAuthenticated: !!tokens?.access_token,
-      });
+      setIsAuthenticated(!!tokens?.access_token);
       if (tokens?.access_token && tokens?.refresh_token) {
         localStorage.setItem(TOKENKEY, tokens.refresh_token);
       } else {
@@ -65,8 +58,15 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
     []
   );
 
+  const onUserChange: UserChangeAction = React.useCallback(
+    (user?: UserResponse) => {
+      setUser(user);
+    },
+    []
+  );
+
   const client = React.useMemo(() => {
-    return new SeeTrueClient(host, audience, onTokenChange);
+    return new SeeTrueClient(host, audience, onTokenChange, onUserChange);
   }, [host]);
 
   const init = async (refresh_token: string | null) => {
@@ -74,17 +74,13 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
       client.tokens = { refresh_token };
 
       try {
-        const resp = await client.refresh();
-        setState({
-          user: resp.user,
-          isAuthenticated: true,
-        });
+        await client.refresh();
       } catch (error) {
-        setState({ ...state, isAuthenticated: false });
+        setIsAuthenticated(false);
         localStorage.removeItem(TOKENKEY);
       }
     } else {
-      setState({ ...state, isAuthenticated: false });
+      setIsAuthenticated(false);
     }
     setInitializing(false);
   };
@@ -98,11 +94,11 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   const context = React.useMemo(
     () => ({
       client,
-      isAuthenticated: state.isAuthenticated,
-      isInitializing: initializing,
-      user: state.user,
+      isAuthenticated,
+      isInitializing,
+      user,
     }),
-    [state.isAuthenticated, initializing, client]
+    [isAuthenticated, isInitializing, client, user]
   );
 
   return (
