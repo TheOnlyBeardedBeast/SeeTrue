@@ -516,7 +516,9 @@ namespace SeeTrue.Infrastructure.Services
             this.db.Add(user);
             await this.db.SaveChangesAsync();
 
-            await SendConfirmation(user);
+            if(!userData.Confirm.HasValue || !userData.Confirm.Value){
+                await SendConfirmation(user);
+            }
 
             return user;
         }
