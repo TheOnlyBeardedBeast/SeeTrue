@@ -132,7 +132,7 @@ namespace SeeTrue.Tests
             var metaResponse = await handler.Handle(metaCommand, new System.Threading.CancellationToken());
 
             Assert.NotNull(metaResponse);
-            Assert.Equal("testUserUpdated", metaResponse.UserMetaData["name"]);
+            Assert.Equal("testUserUpdated", metaResponse.UserMetaData[Env.NameKey]);
 
             var oldPassword = metaResponse.EncryptedPassword;
 

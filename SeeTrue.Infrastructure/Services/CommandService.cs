@@ -289,9 +289,9 @@ namespace SeeTrue.Infrastructure.Services
             };
 
 
-            if (actor?.UserMetaData != null && actor.UserMetaData.TryGetValue("full_name", out object fullName))
+            if (actor?.UserMetaData != null && actor.UserMetaData.TryGetValue(Env.NameKey, out object name))
             {
-                entry.Payload.Add("actore_name", fullName.ToString());
+                entry.Payload.Add("actore_name", name.ToString());
             }
 
             this.db.AuditLogEntries.Add(entry);
@@ -490,7 +490,7 @@ namespace SeeTrue.Infrastructure.Services
                 user.UserMetaData = new Dictionary<string, object>();
             }
 
-            user.UserMetaData["Name"] = name;
+            user.UserMetaData[Env.NameKey] = name;
 
             await this.db.SaveChangesAsync();
         }
