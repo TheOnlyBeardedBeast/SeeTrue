@@ -1,10 +1,16 @@
 import * as React from 'react';
-import { SeeTrueClient, TokenPair, TokenChangeAction } from 'seetrue.client';
+import {
+  SeeTrueClient,
+  TokenPair,
+  TokenChangeAction,
+  UserResponse,
+} from 'seetrue.client';
 
 export interface ISeeTrueContext {
   isInitializing: boolean;
   isAuthenticated: boolean | undefined;
   client: SeeTrueClient;
+  user: UserResponse | null;
 }
 
 const SeeTrueContext = React.createContext<ISeeTrueContext | undefined>(
@@ -26,6 +32,11 @@ export interface SeeTrueProviderProps {
   host: string;
 }
 
+export interface SeeTrueState {
+  user: UserResponse | null;
+  isAuthenticated?: boolean;
+}
+
 const TOKENKEY = 'stjid';
 
 export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
@@ -33,19 +44,22 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   audience,
   host,
 }) => {
-  const [state, setState] = React.useState<any>({
+  const [state, setState] = React.useState<SeeTrueState>({
+    user: null,
     isAuthenticated: undefined,
-    isInitializing: true,
   });
+  const [initializing, setInitializing] = React.useState<boolean>(true);
 
   const onTokenChange: TokenChangeAction = React.useCallback(
     (tokens?: TokenPair) => {
       setState({
+        user: !!tokens?.access_token ? state.user : null,
         isAuthenticated: !!tokens?.access_token,
-        isInitializing: false,
       });
-      if (tokens?.refresh_token) {
+      if (tokens?.access_token && tokens?.refresh_token) {
         localStorage.setItem(TOKENKEY, tokens.refresh_token);
+      } else {
+        localStorage.removeItem(TOKENKEY);
       }
     },
     []
@@ -55,24 +69,40 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
     return new SeeTrueClient(host, audience, onTokenChange);
   }, [host]);
 
+  const init = async (refresh_token: string | null) => {
+    if (refresh_token) {
+      client.tokens = { refresh_token };
+
+      try {
+        const resp = await client.refresh();
+        setState({
+          user: resp.user,
+          isAuthenticated: true,
+        });
+      } catch (error) {
+        setState({ ...state, isAuthenticated: false });
+        localStorage.removeItem(TOKENKEY);
+      }
+    } else {
+      setState({ ...state, isAuthenticated: false });
+    }
+    setInitializing(false);
+  };
+
   React.useEffect(() => {
     const refresh_token = localStorage.getItem(TOKENKEY);
 
-    if (refresh_token) {
-      client.tokens = { refresh_token };
-      client.refresh();
-    } else {
-      setState({ ...state, isAuthenticated: false, isInitializing: false });
-    }
+    init(refresh_token);
   }, []);
 
   const context = React.useMemo(
     () => ({
       client,
       isAuthenticated: state.isAuthenticated,
-      isInitializing: state.isInitializing,
+      isInitializing: initializing,
+      user: state.user,
     }),
-    [state.isAuthenticated, state.isInitializing, client]
+    [state.isAuthenticated, initializing, client]
   );
 
   return (

@@ -14,7 +14,7 @@
         "SEETRUE_ISSUER": "http://localhost:5000",
         "SEETRUE_AUIDIENCES": "http://localhost:5000",
         "SEETRUE_REFRESH_TOKEN_LIFETIME": "336",
-        "SEETRUE_SMTP_HOST": "localhost",
+        "SEETRUE_SMTP_HOST": "192.168.64.2",
         "SEETRUE_SMTP_PORT": "1025",
         "SEETRUE_SMTP_USER": "service@mailhog.example",
         "SEETRUE_SMTP_PASS": "12345678",
@@ -25,7 +25,7 @@
         "SEETRUE_SIGNUP_DISABLED": "false",
         "SEETRUE_API_KEY": "SuperSecureApiKey",
         "SEETRUE_ADMIN_ROLE": "admin",
-        "SEETRUE_DB_CONNECTION": "Host=localhost;Database=seetrue;Username=postgres;Password=postgres",
+        "SEETRUE_DB_CONNECTION": "Host=192.168.64.2;Database=seetrue;Username=postgres;Password=postgres",
         "SEETRUE_LANGUAGES": "en,hu,sk"
       }
     }
