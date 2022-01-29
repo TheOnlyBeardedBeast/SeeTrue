@@ -72,11 +72,13 @@ export class SeeTrueClient {
   constructor(
     host: string,
     audience: string,
-    onTokenChange?: TokenChangeAction
+    onTokenChange?: TokenChangeAction,
+    onUserChange?: UserChangeAction
   ) {
     this.host = host;
     this.audince = audience;
     this.onTokenChange = onTokenChange;
+    this.onUserChange = onUserChange;
   }
 
   /**
