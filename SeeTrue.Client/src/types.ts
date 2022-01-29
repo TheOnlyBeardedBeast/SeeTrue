@@ -8,6 +8,7 @@ export interface TokenPair {
 }
 
 export type TokenChangeAction = (tokenPair: TokenPair | undefined) => void;
+export type UserChangeAction = (userResponse: UserResponse | undefined) => void;
 
 export interface HealthResponse {
   name: string;

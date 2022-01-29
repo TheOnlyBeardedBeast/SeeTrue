@@ -24,6 +24,7 @@ import {
   VerifyInviteRequestData,
   VerifyInviteRequest,
 } from './types';
+import { UserChangeAction } from '.';
 
 export enum Paths {
   HEALTH = 'health',
@@ -44,6 +45,7 @@ export enum Paths {
 export class SeeTrueClient {
   public readonly host: string;
   public readonly onTokenChange: TokenChangeAction | undefined;
+  public readonly onUserChange: UserChangeAction | undefined;
   public readonly audince: string;
 
   private _tokens: TokenPair | undefined;
@@ -53,6 +55,15 @@ export class SeeTrueClient {
   public set tokens(v: TokenPair | undefined) {
     this._tokens = v;
     this.onTokenChange?.(v);
+  }
+
+  private _authenticatedUser: UserResponse | undefined;
+  public get authenticatedUser(): UserResponse | undefined {
+    return this._authenticatedUser;
+  }
+  public set authenticatedUser(v: UserResponse | undefined) {
+    this._authenticatedUser = v;
+    this.onUserChange?.(v);
   }
 
   /**
@@ -195,6 +206,7 @@ export class SeeTrueClient {
       access_token: result.access_token,
       refresh_token: result.refresh_token,
     } as TokenPair;
+    this.authenticatedUser = result.user;
 
     return result as AuthResponse;
   }
@@ -274,6 +286,7 @@ export class SeeTrueClient {
       access_token: result.access_token,
       refresh_token: result.refresh_token,
     } as TokenPair;
+    this.authenticatedUser = result.user;
 
     return result;
   }
@@ -323,6 +336,7 @@ export class SeeTrueClient {
       access_token: result.access_token,
       refresh_token: result.refresh_token,
     } as TokenPair;
+    this.authenticatedUser = result.user;
 
     return result;
   }
@@ -376,6 +390,7 @@ export class SeeTrueClient {
     const json = await response.text();
 
     const result = JSON.parse(json, dateParser) as UserResponse;
+    this.authenticatedUser = result;
 
     return result;
   }
@@ -405,6 +420,7 @@ export class SeeTrueClient {
     const json = await response.text();
 
     const result = JSON.parse(json, dateParser) as UserResponse;
+    this.authenticatedUser = result;
 
     return result;
   }
@@ -431,5 +447,6 @@ export class SeeTrueClient {
     }
 
     this.tokens = undefined;
+    this.authenticatedUser = undefined;
   }
 }
