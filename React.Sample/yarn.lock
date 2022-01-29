@@ -677,12 +677,12 @@ scheduler@^0.20.2:
     object-assign "^4.1.1"
 
 seetrue.client.react@../SeeTrue.Client.React:
-  version "0.1.1"
+  version "0.1.2"
   dependencies:
     seetrue.client "../SeeTrue.Client"
 
 seetrue.client@../SeeTrue.Client:
-  version "0.1.0"
+  version "0.2.1"
   dependencies:
     cross-fetch "^3.1.5"
     mailhog "^4.16.0"
