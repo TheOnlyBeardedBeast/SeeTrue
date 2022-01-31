@@ -71,10 +71,10 @@ export interface IAdminSettings {
 
 export class Api {
   protected path: string = "admin/users";
-  public readonly host: string;
+  public host?: string;
   public apiKey?: string;
 
-  constructor(host: string, apiKey?: string) {
+  constructor(host?: string, apiKey?: string) {
     this.host = host;
     this.apiKey = apiKey;
   }

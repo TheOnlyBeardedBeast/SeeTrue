@@ -14,6 +14,7 @@ const Container = styled("div", {
   alignItems: "center",
   justifyContent: "center",
   minHeight: "100%",
+  padding: "24px 0",
 });
 
 const Form = styled("form", {
@@ -23,14 +24,18 @@ const Form = styled("form", {
 
 export const Authorize: React.FC = () => {
   const seeTrue = useSeeTrue();
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const hostRef = React.useRef<HTMLInputElement>(null);
+  const apikeyRef = React.useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    inputRef.current?.value &&
-      seeTrue.authorize(inputRef.current?.value).catch(() => {
-        toaster.negative(<>Authorization error!</>, {});
-      });
+    if (apikeyRef.current?.value && hostRef.current?.value) {
+      seeTrue
+        .authorize(hostRef.current.value, apikeyRef.current!.value)
+        .catch(() => {
+          toaster.negative(<>Authorization error!</>, {});
+        });
+    }
   };
 
   return (
@@ -38,10 +43,18 @@ export const Authorize: React.FC = () => {
       <img src={Logo} style={{ width: "256px" }} />
       <Display2>SeeTrue</Display2>
       <Form onSubmit={handleSubmit}>
+        <FormControl label="SeeTrue host">
+          <Input
+            type="text"
+            inputRef={hostRef}
+            placeholder="Host"
+            clearOnEscape
+          />
+        </FormControl>
         <FormControl label="Api key">
           <Input
             type="password"
-            inputRef={inputRef}
+            inputRef={apikeyRef}
             placeholder="ApiKey"
             clearOnEscape
           />

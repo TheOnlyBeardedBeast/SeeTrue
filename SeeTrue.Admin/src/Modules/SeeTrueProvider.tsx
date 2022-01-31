@@ -4,8 +4,8 @@ import { Api, IAdminSettings } from ".";
 
 interface ISeeTrueContext {
   authorized: boolean;
-  api?: Api;
-  authorize: (apikey: string) => Promise<void>;
+  api: Api;
+  authorize: (host: string, apikey: string) => Promise<void>;
   logout: () => void;
   settings: IAdminSettings;
 }
@@ -22,19 +22,12 @@ export const useSeeTrue = () => {
   return context;
 };
 
-interface SeeTrueProviderProps {
-  host?: string;
-}
-
-export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
-  children,
-  host = "http://localhost:5000",
-}) => {
+export const SeeTrueProvider: React.FC = ({ children }) => {
   const [apiKey, setApiKey] = React.useState<string | null>(null);
   const [settings, setSettings] = React.useState<IAdminSettings | null>(null);
 
   const api = React.useMemo(() => {
-    return new Api(host);
+    return new Api();
   }, []);
 
   const loadSetting = async () => {
@@ -42,19 +35,24 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
     setSettings(_settings);
   };
 
-  const authorize = React.useCallback(async (_apiKey: string) => {
-    try {
-      await api.authorize({ apiKey: _apiKey });
-      api.apiKey = _apiKey;
-      setApiKey(_apiKey);
-      loadSetting();
-    } catch (error) {
-      logout();
-      toaster.negative(<>Something went wrong</>, {});
-    }
-  }, []);
+  const authorize = React.useCallback(
+    async (_host: string, _apiKey: string) => {
+      try {
+        api.host = _host;
+        await api.authorize({ apiKey: _apiKey });
+        api.apiKey = _apiKey;
+        setApiKey(_apiKey);
+        loadSetting();
+      } catch (error) {
+        logout();
+        toaster.negative(<>Something went wrong</>, {});
+      }
+    },
+    []
+  );
 
   const logout = () => {
+    api.host = undefined;
     api.apiKey = undefined;
     setApiKey(null);
   };
