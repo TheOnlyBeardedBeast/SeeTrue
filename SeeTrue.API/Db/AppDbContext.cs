@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using SeeTrue.Models;
 
-namespace SeeTrue.API.Db
+namespace SeeTrue.API.DB
 {
     public class AppDbContext : SeeTrueDbContext
     {

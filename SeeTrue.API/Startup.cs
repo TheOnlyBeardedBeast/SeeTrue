@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using SeeTrue.API.Db;
+using SeeTrue.API.DB;
 using SeeTrue.API.Filters;
 using SeeTrue.API.Services;
 using SeeTrue.Infrastructure;
@@ -123,6 +123,7 @@ namespace SeeTrue.API
                 app.UseSwaggerUI();
             }
 
+            app.UseMigrations();
             app.UseRouting();
             app.UseCors("cors");
 

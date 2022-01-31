@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using SeeTrue.API.Db;
+using SeeTrue.API.DB;
 using SeeTrue.Infrastructure.Types;
 
 namespace SeeTrue.API.Filters

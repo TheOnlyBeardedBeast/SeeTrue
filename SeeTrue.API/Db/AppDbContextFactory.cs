@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace SeeTrue.API.Db
+namespace SeeTrue.API.DB
 {
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {

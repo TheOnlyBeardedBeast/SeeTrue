@@ -3,20 +3,18 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SeeTrue.API.Db;
+using SeeTrue.API.DB;
 
 #nullable disable
 
-namespace SeeTrue.API.Db.Migrations
+namespace SeeTrue.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211207193715_RefreshTokenRelationship")]
-    partial class RefreshTokenRelationship
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +43,70 @@ namespace SeeTrue.API.Db.Migrations
                     b.ToTable("AuditLogEntries");
                 });
 
+            modelBuilder.Entity("SeeTrue.Models.Login", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserAgent")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Logins");
+                });
+
+            modelBuilder.Entity("SeeTrue.Models.Mail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Audience")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("InstanceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Template")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstanceId", "Language", "Type", "Audience")
+                        .IsUnique();
+
+                    b.ToTable("Mails");
+                });
+
             modelBuilder.Entity("SeeTrue.Models.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -55,6 +117,9 @@ namespace SeeTrue.API.Db.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("InstanceID")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("LoginId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Revoked")
@@ -71,6 +136,8 @@ namespace SeeTrue.API.Db.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LoginId");
 
                     b.HasIndex("UserId");
 
@@ -116,7 +183,7 @@ namespace SeeTrue.API.Db.Migrations
                     b.Property<string>("EncryptedPassword")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("InstanceID")
+                    b.Property<Guid>("InstanceID")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("InvitedAt")
@@ -124,6 +191,9 @@ namespace SeeTrue.API.Db.Migrations
 
                     b.Property<bool?>("IsSuperAdmin")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("LastSignInAt")
                         .HasColumnType("timestamp with time zone");
@@ -145,18 +215,45 @@ namespace SeeTrue.API.Db.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email", "InstanceID", "Aud")
+                        .IsUnique();
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SeeTrue.Models.Login", b =>
+                {
+                    b.HasOne("SeeTrue.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SeeTrue.Models.RefreshToken", b =>
                 {
+                    b.HasOne("SeeTrue.Models.Login", "Login")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("LoginId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SeeTrue.Models.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Login");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SeeTrue.Models.Login", b =>
+                {
+                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("SeeTrue.Models.User", b =>
