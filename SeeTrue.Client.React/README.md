@@ -1,160 +1,193 @@
-# TSDX React User Guide
+<div id="top"></div>
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
-> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
 
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/TheOnlyBeardedBeast/SeeTrue">
+    <img width="256px" src="../SeeTrue.Admin/src/Assets/SeeTrueIcon.png" />
+  </a>
 
-## Commands
+  <h3 align="center">SeeTrue.Client.React</h3>
 
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
+  <p align="center">
+    A library which provides a seamles connection to your SeeTrue.API instance.
+    <br />
+    <a href="https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client.React"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/TheOnlyBeardedBeast/SeeTrue/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/TheOnlyBeardedBeast/SeeTrue/issues">Request Feature</a>
+  </p>
+</div>
 
-The recommended workflow is to run TSDX in one terminal:
 
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+[SeeTrue.Client.React](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client.React) is a library which enables a seamless connection between your React application and a [SeeTrue.API](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.API) instance. On the background [SeeTrue.Client.React](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client.React) uses [SeeTrue.Client](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client) inside a React context, and it provides access to the authetication state and an API client through a hook.
+
+SeeTrue.Client.React provides the following functionality:
+* Access to the authentication state
+* Acces to the autheticated user
+* Automatic token refresh on the background
+* Acces to the API client [SeeTrue.Client](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client)
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+### Built With
+
+Built with hard work, tears, sweat, dedication and love.
+
+
+* [React.js](https://reactjs.org/)
+* [TypeScript](https://www.typescriptlang.org/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+### Prerequisites
+
+You need `npm` or `yarn` installed, you should also have a SeeTrue instance runinng. 
+
+### Installation
+
+using npm:
 ```bash
-npm start # or yarn start
+npm install seetrue.client.react
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
-
-Then run the example inside another:
-
+using yarn:
 ```bash
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
+yarn add seetrue.client.react
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-To do a one-off build, use `npm run build` or `yarn build`.
 
-To run tests, use `npm test` or `yarn test`.
 
-## Configuration
+<!-- USAGE EXAMPLES -->
+## Usage
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+To access the context we have to init a provider, which will setup our client connection, it also checks the localstorage for a refresh token, and if it founds a refresh token it tries to refresh your session. 
 
-### Jest
+### Setup
 
-Jest tests are set up to run with `npm test` or `yarn test`.
+In the root of you application initialize the `SeeTrueProvider`.
 
-### Bundle analysis
-
-Calculates the real cost of your library using [size-limit](https://github.com/ai/size-limit) with `npm run size` and visulize it with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/example
-  index.html
-  index.tsx       # test your component here in a demo app
-  package.json
-  tsconfig.json
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+1. Import the `SeeTrueProvider`
+```typescript
+import { SeeTrueProvider } from "seetrue.client.react";
+```
+2. Initialize the `SeeTrueProvider`
+```jsx
+  <SeeTrueProvider
+    host="http://localhost:5000"
+    audience="http://localhost:5000"
+    tokenLifeTime={60000}
+  >
+    <App />
+  </SeeTrueProvider>
 ```
 
-#### React Testing Library
+| Prop          | Type    | Default value | Required | Description                                                                                  |
+|---------------|---------|---------------|----------|----------------------------------------------------------------------------------------------|
+| host          | string  |               | true     | The host of your SeeTrue.API instance                                                        |
+| audience      | string  |               | true     | A supported audience from your SeeTrue.API instance config                                   |
+| tokenLifeTime | number? | 3600000       | false    | Access token lifetime in miliseconds (also represents the background token refresh interval) |
 
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
+### Context usage
 
-### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
+Import the hook
+```typescript
+import { useSeeTrue } from "seetrue.client.react";
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Deploying the Example Playground
-
-The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
-
-```bash
-cd example # if not already in the example folder
-npm run build # builds to dist
-netlify deploy # deploy the dist folder
+Use the hook:
+```typescript
+const { isInitializing, isAuthenticated, user, client } = useSeeTrue();
 ```
 
-Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
 
-```bash
-netlify init
-# build command: yarn build && cd example && yarn && yarn build
-# directory to deploy: example/dist
-# pick yes for netlify.toml
-```
+| Prop            | Type     | Description                                                                                                                                                                                                                                                                                              |
+|-----------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| isInitializing  | boolean  | Initializing state, when you open the app, the app checks the refresh token then refreshes the user.  While this initial check happens we cannot determinate if the user is logged in or not. We can show a loader \| splash screen before we have a value which desribes the real authentication state. |
+| isAuthenticated | boolean? | It tells us if the user is logged in or not. Before the app is initialized the value is undefined, after it can be true or false based on the initialization process.                                                                                                                                    |
+| user            | object?  | A user object providing account information about thr currently logged in user. Undefined if the user is not authenticated                                                                                                                                                     |
+| client          | object   | A SeeTrue.Client instance, which enables us to interact with the SeeTrue.API                                                                                                                                                                                                                             |
 
-## Named Exports
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
 
-## Including Styles
 
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
+<!-- CONTRIBUTING -->
+## Contributing
 
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-## Publishing to NPM
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-We recommend using [np](https://github.com/sindresorhus/np).
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Usage with Lerna
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
 
-The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
 
-Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
+<!-- LICENSE -->
+## License
 
-```diff
-   "alias": {
--    "react": "../node_modules/react",
--    "react-dom": "../node_modules/react-dom"
-+    "react": "../../../node_modules/react",
-+    "react-dom": "../../../node_modules/react-dom"
-   },
-```
+Distributed under the MIT License. See `LICENSE` for more information.
 
-An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Project Link: [https://github.com/TheOnlyBeardedBeast/SeeTrue](https://github.com/TheOnlyBeardedBeast/SeeTrue)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
