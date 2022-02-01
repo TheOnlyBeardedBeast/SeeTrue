@@ -1,5 +1,5 @@
 {
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -33,7 +33,7 @@
     "trailingComma": "es5"
   },
   "name": "seetrue.client",
-  "author": "polak@cngroup.dk",
+  "author": "TheDev.sk",
   "module": "dist/seetrue.client.esm.js",
   "size-limit": [
     {

@@ -31,15 +31,17 @@ export const useSeeTrue = () => {
 export interface SeeTrueProviderProps {
   audience: string;
   host: string;
-  tokenLifeTime: number;
+  tokenLifeTime?: number;
 }
 
 const TOKENKEY = 'stjid';
+let intervalId: number | undefined = undefined;
 
 export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   children,
   audience,
   host,
+  tokenLifeTime = 3600000,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = React.useState<
     boolean | undefined
@@ -91,6 +93,17 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
 
     init(refresh_token);
   }, []);
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      intervalId = window.setInterval(
+        () => client.refresh(),
+        tokenLifeTime - 250
+      );
+    } else if (!isInitializing && intervalId) {
+      window.clearInterval(intervalId);
+    }
+  }, [isAuthenticated]);
 
   const context = React.useMemo(
     () => ({
