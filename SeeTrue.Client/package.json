@@ -34,6 +34,11 @@
   },
   "name": "seetrue.client",
   "author": "TheDev.sk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client"
+  },
+  "description": "A javascript client to easily connect to and use the SeeTrue authentication service.",
   "module": "dist/seetrue.client.esm.js",
   "size-limit": [
     {

@@ -35,6 +35,11 @@
   },
   "name": "seetrue.client.react",
   "author": "TheDev.sk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client.React"
+  },
+  "description": "A react client to easily connect to and use the SeeTrue authentication service.",
   "module": "dist/seetrue.client.react.esm.js",
   "size-limit": [
     {
