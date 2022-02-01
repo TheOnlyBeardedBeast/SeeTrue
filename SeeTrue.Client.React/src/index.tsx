@@ -31,6 +31,7 @@ export const useSeeTrue = () => {
 export interface SeeTrueProviderProps {
   audience: string;
   host: string;
+  tokenLifeTime: number;
 }
 
 const TOKENKEY = 'stjid';

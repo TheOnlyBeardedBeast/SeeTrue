@@ -40,8 +40,6 @@ export enum Paths {
   INVITE = 'invite',
 }
 
-// TODO: use cross-fetch
-
 export class SeeTrueClient {
   public readonly host: string;
   public readonly onTokenChange: TokenChangeAction | undefined;
