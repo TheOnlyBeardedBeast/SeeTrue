@@ -32,6 +32,7 @@ export interface SeeTrueProviderProps {
   audience: string;
   host: string;
   tokenLifeTime?: number;
+  keyPrefix?: string;
 }
 
 const TOKENKEY = 'stjid';
@@ -42,6 +43,7 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   audience,
   host,
   tokenLifeTime = 3600000,
+  keyPrefix = '',
 }) => {
   const [isAuthenticated, setIsAuthenticated] = React.useState<
     boolean | undefined
@@ -53,9 +55,9 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
     (tokens?: TokenPair) => {
       setIsAuthenticated(!!tokens?.access_token);
       if (tokens?.access_token && tokens?.refresh_token) {
-        localStorage.setItem(TOKENKEY, tokens.refresh_token);
+        localStorage.setItem(keyPrefix + TOKENKEY, tokens.refresh_token);
       } else {
-        localStorage.removeItem(TOKENKEY);
+        localStorage.removeItem(keyPrefix + TOKENKEY);
       }
     },
     []
@@ -69,12 +71,16 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   );
 
   const onBackgroundTokenUpdate = React.useCallback((event: StorageEvent) => {
-    if (event.key === TOKENKEY) {
-      if (event.newValue) {
-        client.silentTokenUpdate({ refresh_token: event.newValue });
-      } else {
-        client.tokens = undefined;
-      }
+    if (event.newValue) {
+      client.silentTokenUpdate({ refresh_token: event.newValue });
+    } else {
+      client.tokens = undefined;
+    }
+  }, []);
+
+  const onStorageUpdate = React.useCallback((event: StorageEvent) => {
+    if (event.key === keyPrefix + TOKENKEY) {
+      onBackgroundTokenUpdate(event);
     }
   }, []);
 
@@ -90,7 +96,7 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
         await client.refresh();
       } catch (error) {
         setIsAuthenticated(false);
-        localStorage.removeItem(TOKENKEY);
+        localStorage.removeItem(keyPrefix + TOKENKEY);
       }
     } else {
       setIsAuthenticated(false);
@@ -99,7 +105,7 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   };
 
   React.useEffect(() => {
-    const refresh_token = localStorage.getItem(TOKENKEY);
+    const refresh_token = localStorage.getItem(keyPrefix + TOKENKEY);
 
     init(refresh_token);
   }, []);
@@ -116,10 +122,10 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
   }, [isAuthenticated]);
 
   React.useEffect(() => {
-    window.addEventListener('storage', onBackgroundTokenUpdate);
+    window.addEventListener('storage', onStorageUpdate);
 
     return () => {
-      window.removeEventListener('storage', onBackgroundTokenUpdate);
+      window.removeEventListener('storage', onStorageUpdate);
     };
   }, []);
 
