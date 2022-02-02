@@ -68,13 +68,23 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
     []
   );
 
+  const onBackgroundTokenUpdate = React.useCallback((event: StorageEvent) => {
+    if (event.key === TOKENKEY) {
+      if (event.newValue) {
+        client.silentTokenUpdate({ refresh_token: event.newValue });
+      } else {
+        client.tokens = undefined;
+      }
+    }
+  }, []);
+
   const client = React.useMemo(() => {
     return new SeeTrueClient(host, audience, onTokenChange, onUserChange);
   }, [host]);
 
   const init = async (refresh_token: string | null) => {
     if (refresh_token) {
-      client.tokens = { refresh_token };
+      client.silentTokenUpdate({ refresh_token });
 
       try {
         await client.refresh();
@@ -104,6 +114,14 @@ export const SeeTrueProvider: React.FC<SeeTrueProviderProps> = ({
       window.clearInterval(intervalId);
     }
   }, [isAuthenticated]);
+
+  React.useEffect(() => {
+    window.addEventListener('storage', onBackgroundTokenUpdate);
+
+    return () => {
+      window.removeEventListener('storage', onBackgroundTokenUpdate);
+    };
+  }, []);
 
   const context = React.useMemo(
     () => ({

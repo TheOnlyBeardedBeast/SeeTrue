@@ -449,4 +449,8 @@ export class SeeTrueClient {
     this.tokens = undefined;
     this.authenticatedUser = undefined;
   }
+
+  public silentTokenUpdate(tokens: Partial<TokenPair>): void {
+    this._tokens = { ...this._tokens, ...tokens };
+  }
 }
