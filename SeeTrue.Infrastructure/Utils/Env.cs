@@ -35,6 +35,7 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly List<string> AvailableRoles;
         public static readonly bool InviteEnabled;
         public static readonly string NameKey;
+        public static readonly string[] AllowedHosts;
 
         static Env()
         {
@@ -72,6 +73,7 @@ namespace SeeTrue.Infrastructure.Utils
             AvailableRoles = roles.Distinct().Where(e => !string.IsNullOrWhiteSpace(e)).Select(e => e.ToLower()).ToList();
             InviteEnabled = Helpers.GetEnvironmentVariable<bool>("SEETRUE_INVITE_ENABLED", false);
             NameKey = Helpers.GetEnvironmentVariable<string>("SEETRUE_NAME_KEY", "Name");
+            AllowedHosts = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_ALLOWED_HOSTS").Split(",").Select(e => e.ToLower()).ToArray();
         }
     }
 }

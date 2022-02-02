@@ -26,7 +26,8 @@
         "SEETRUE_API_KEY": "SuperSecureApiKey",
         "SEETRUE_ADMIN_ROLE": "admin",
         "SEETRUE_DB_CONNECTION": "Host=192.168.64.2;Database=seetrue;Username=postgres;Password=postgres",
-        "SEETRUE_LANGUAGES": "en,hu,sk"
+        "SEETRUE_LANGUAGES": "en,hu,sk",
+        "SEETRUE_ALLOWED_HOSTS": "http://localhost:3000,http://localhost:3001"
       }
     }
   }

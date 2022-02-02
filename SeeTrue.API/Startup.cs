@@ -59,7 +59,7 @@ namespace SeeTrue.API
                 options.AddPolicy("cors",
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost:3001", "http://localhost:3000");
+                                      builder.WithOrigins(Env.AllowedHosts);
                                       builder.AllowAnyHeader();
                                       builder.AllowAnyMethod();
                                       builder.AllowCredentials();
