@@ -8,7 +8,7 @@ services:
       - "9999:80"
     environment:
       SEETRUE_DB_CONNECTION: Host=192.168.64.2;Database=seetrue;Username=postgres;Password=postgres
-      SEETRUE_ALLOWED_HOSTS: http://localhost:3000,http://localhost:3001
+      SEETRUE_ALLOWED_HOSTS: http://localhost:3000,http://localhost:3001,seeTrueAdmin
       SEETRUE_SIGNING_KEY: Uvz9WCdELTkqaZLVYgLHdzURl6YBe38t
       SEETRUE_SMTP_USER: service@mailhog.example
       SEETRUE_AUIDIENCES: http://localhost:5000
@@ -28,7 +28,18 @@ services:
       SEETRUE_ADMIN_ROLE: admin
       SEETRUE_SMTP_PORT: 1025
     networks:
-            - app
+      - app
+    depends_on:
+      - db
+  seeTrueAdmin:
+    image: seetrue.admin
+    restart: unless-stopped
+    ports:
+      - "9998:80"
+    networks:
+      - app
+    depends_on:
+      - db
   db:
     container_name: SeeTrueDB
     image: postgres:latest
