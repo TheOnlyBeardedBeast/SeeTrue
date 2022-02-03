@@ -8,7 +8,7 @@ import {
 import mailhog from 'mailhog';
 
 const client = new SeeTrueClient(
-  'http://localhost:5000',
+  'http://192.168.64.2:9999',
   'http://localhost:5000'
 );
 

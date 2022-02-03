@@ -2,13 +2,13 @@
 services:
   seeTrue:
     container_name: SeeTrueImage
-    image: seetrue.api
+    image: theonlybeardedbeast/seetrue.api:latest
     restart: unless-stopped
     ports:
       - "9999:80"
     environment:
       SEETRUE_DB_CONNECTION: Host=192.168.64.2;Database=seetrue;Username=postgres;Password=postgres
-      SEETRUE_ALLOWED_HOSTS: http://localhost:3000,http://localhost:3001,seeTrueAdmin
+      SEETRUE_ALLOWED_HOSTS: http://localhost:3000,http://localhost:3001,http://192.168.64.2:9998
       SEETRUE_SIGNING_KEY: Uvz9WCdELTkqaZLVYgLHdzURl6YBe38t
       SEETRUE_SMTP_USER: service@mailhog.example
       SEETRUE_AUIDIENCES: http://localhost:5000
@@ -32,7 +32,7 @@ services:
     depends_on:
       - db
   seeTrueAdmin:
-    image: seetrue.admin
+    image: theonlybeardedbeast/seetrue.admin:latest
     restart: unless-stopped
     ports:
       - "9998:80"
