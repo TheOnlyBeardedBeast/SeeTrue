@@ -1,6 +1,34 @@
 ﻿version: "3"
 services:
-
+  seeTrue:
+    container_name: SeeTrueImage
+    image: seetrue.api
+    restart: unless-stopped
+    ports:
+      - "9999:80"
+    environment:
+      SEETRUE_DB_CONNECTION: Host=192.168.64.2;Database=seetrue;Username=postgres;Password=postgres
+      SEETRUE_ALLOWED_HOSTS: http://localhost:3000,http://localhost:3001
+      SEETRUE_SIGNING_KEY: Uvz9WCdELTkqaZLVYgLHdzURl6YBe38t
+      SEETRUE_SMTP_USER: service@mailhog.example
+      SEETRUE_AUIDIENCES: http://localhost:5000
+      SEETRUE_VERIFICATION_TOKEN_LIFETIME: 24
+      SEETRUE_ISSUER: http://localhost:5000
+      SEETRUE_REFRESH_TOKEN_LIFETIME: 336
+      SEETRUE_API_KEY: SuperSecureApiKey
+      SEETRUE_RECOVERY_MAX_FREQUENCY: 5
+      SEETRUE_SMTP_HOST: 192.168.64.2
+      SEETRUE_VALIDATE_AUDIENCE: true
+      SEETRUE_SIGNUP_DISABLED: false
+      SEETRUE_VALIDATE_ISSUER: true
+      SEETRUE_TOKEN_LIFETIME: 3600
+      SEETRUE_INVITE_ENABLED: true
+      SEETRUE_SMTP_PASS: 12345678
+      SEETRUE_LANGUAGES: en,hu,sk
+      SEETRUE_ADMIN_ROLE: admin
+      SEETRUE_SMTP_PORT: 1025
+    networks:
+            - app
   db:
     container_name: SeeTrueDB
     image: postgres:latest
