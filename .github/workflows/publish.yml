@@ -2,13 +2,18 @@ name: ci
 
 on:
   push:
+    tags:        
+      - v**
     branches:
-      - 'release'
+      - "master"
 
 jobs:
   seetrueapi:
     runs-on: ubuntu-latest
     steps:
+      -
+        name: Get the tag name
+        run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -27,10 +32,13 @@ jobs:
         with:
           file: api.dockerfile
           push: true
-          tags: theonlybeardedbeast/seetrue.api:latest
+          tags: theonlybeardedbeast/seetrue.api:latest,theonlybeardedbeast/seetrue.api:${{ env.TAG }}
   seetrueadmin:
     runs-on: ubuntu-latest
     steps:
+      -
+        name: Get the tag name
+        run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -49,4 +57,4 @@ jobs:
         with:
           context: "{{defaultContext}}:SeeTrue.Admin"
           push: true
-          tags: theonlybeardedbeast/seetrue.admin:latest
+          tags: theonlybeardedbeast/seetrue.admin:latest,theonlybeardedbeast/seetrue.admin:${{ env.TAG }}
