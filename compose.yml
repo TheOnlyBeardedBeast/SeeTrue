@@ -24,9 +24,9 @@ services:
       SEETRUE_TOKEN_LIFETIME: 3600
       SEETRUE_INVITE_ENABLED: true
       SEETRUE_SMTP_PASS: 12345678
-      SEETRUE_LANGUAGES: en,hu,sk
       SEETRUE_ADMIN_ROLE: admin
       SEETRUE_SMTP_PORT: 1025
+      SEETRUE_LANGUAGES: en
     networks:
       - app
     depends_on:
@@ -40,6 +40,13 @@ services:
       - app
     depends_on:
       - db
+  mailhog:
+    image: mailhog/mailhog
+    networks:
+      - app
+    ports:
+      - "1025:1025"
+      - "8025:8025"
   db:
     container_name: SeeTrueDB
     image: postgres:latest
