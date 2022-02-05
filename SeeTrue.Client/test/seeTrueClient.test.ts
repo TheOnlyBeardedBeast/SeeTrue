@@ -12,7 +12,7 @@ const client = new SeeTrueClient(
   'http://localhost:5000'
 );
 
-const mails = mailhog();
+const mails = mailhog({ host: '192.168.64.2' });
 
 describe('health', () => {
   beforeAll(async () => {
