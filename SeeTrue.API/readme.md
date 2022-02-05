@@ -88,7 +88,7 @@ Optionally you can use and tweak the [`docker-compose`](https://github.com/TheOn
 ### Usage
 
 ```shell
-docker -e SEETRUE_SIGNING_KEY=... -e ...at least all the required env values... run theonlybeardedbeast/seetrue.api:latest -d
+docker run -e SEETRUE_SIGNING_KEY=... -e ...at least all the required env values... -p 9999:9999 theonlybeardedbeast/seetrue.api:latest -d
 ```
 
 Connect to your SeeTrue.API instance directly through REST endpoints [docs](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.API/docs#seetrueapi) or use [SeeTrue.Client](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client) if you want to use it in browser or in node and if you are a React developer, you can our [SeeTrue.Client.React](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client.React) which multi tab support, localstorage for refreshtokens, auto token refresh, user data access, React hooks... or manage your instance directly with [SeeTrue.Admin](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Admin)
