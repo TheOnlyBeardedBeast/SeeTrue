@@ -4,10 +4,13 @@ node_modules/
 dist/
 SeeTrue.Tests/
 SeeTrue.Client/
+SeeTrue.Client.React/
 SeeTrue.Admin/
+SeeTrue.Sample/
 .coverage/
 .vs/
 **/bin/
 **/obj/
 **/node_modules/
 **/dist/
+Screenshots/
