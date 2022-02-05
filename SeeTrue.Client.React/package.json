@@ -64,6 +64,6 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "seetrue.client": "../SeeTrue.Client"
+    "seetrue.client": "^0.3.3"
   }
 }

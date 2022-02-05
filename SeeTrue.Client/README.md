@@ -39,6 +39,18 @@
 
 SeeTrue.Client is an authentication service client, it contains endpoint mapping to communicate with a SeeTrue.API instance. This is a base class which is ideal to extend for your needs.
 
+Install
+
+```shell
+npm i seetrue.client
+```
+
+or
+
+```shell
+yarn add seetrue.client
+```
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
