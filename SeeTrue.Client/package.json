@@ -18,7 +18,8 @@
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "guard": "ts-auto-guard --export-all 'src/index.d.ts'"
+    "guard": "ts-auto-guard --export-all 'src/index.d.ts'",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --out docs src/client.ts src/types.ts"
   },
   "peerDependencies": {},
   "husky": {
@@ -63,6 +64,8 @@
   "dependencies": {
     "cross-fetch": "^3.1.5",
     "mailhog": "^4.16.0",
+    "typedoc": "^0.22.11",
+    "typedoc-plugin-markdown": "^3.11.13",
     "url-join": "^4.0.1"
   }
 }

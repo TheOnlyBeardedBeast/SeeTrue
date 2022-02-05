@@ -40,25 +40,57 @@ export enum Paths {
   INVITE = 'invite',
 }
 
+/**
+ * SeeTrue.API js client for browser and node
+ */
 export class SeeTrueClient {
+  /**
+   * SeeTrue.API instance host
+   */
   public readonly host: string;
+  /**
+   * Callback to minotir token changes
+   */
   public readonly onTokenChange: TokenChangeAction | undefined;
+  /**
+   * Callback to monitor user changes
+   */
   public readonly onUserChange: UserChangeAction | undefined;
+  /**
+   * Audience
+   */
   public readonly audince: string;
-
+  /**
+   * Access and Refresh token pair
+   */
   private _tokens: TokenPair | undefined;
+  /**
+   * Access and Refresh token pair getter
+   */
   public get tokens(): TokenPair | undefined {
     return this._tokens;
   }
+  /**
+   * Access and Refresh token pair setter
+   */
   public set tokens(v: TokenPair | undefined) {
     this._tokens = v;
     this.onTokenChange?.(v);
   }
 
+  /**
+   * Authenticated user
+   */
   private _authenticatedUser: UserResponse | undefined;
+  /**
+   * Authenticated user getter
+   */
   public get authenticatedUser(): UserResponse | undefined {
     return this._authenticatedUser;
   }
+  /**
+   * Authenticated setter
+   */
   public set authenticatedUser(v: UserResponse | undefined) {
     this._authenticatedUser = v;
     this.onUserChange?.(v);
@@ -450,6 +482,9 @@ export class SeeTrueClient {
     this.authenticatedUser = undefined;
   }
 
+  /**
+   * Token update without invoking the onTokenChangeCallback
+   */
   public silentTokenUpdate(tokens: Partial<TokenPair>): void {
     this._tokens = { ...this._tokens, ...tokens };
   }
