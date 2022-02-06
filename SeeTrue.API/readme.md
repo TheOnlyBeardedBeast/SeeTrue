@@ -123,6 +123,8 @@ Connect to your SeeTrue.API instance directly through REST endpoints [docs](http
 | SEETRUE_INVITE_ENABLED | string | false | false | Enables a user invite system. (If you want an invite only app you can disable signup and enable invites) |
 | SEETRUE_NAME_KEY | string | false | Name | A key which specifies a the UserMetaData key which is required in the signup process, this key is used in the email templates to address the user. |
 | SEETRUE_ALLOWED_HOSTS | string | true | - | Commaseparated list of hosts, required, you should list all the frontend applications which are using your SeeTrue.API instance so you dont get any CORS errors. |
+| SEETRUE_MAILFROM_EMAIL | string | true | - | Email address, specified as the `EmailAddress` of the sender of an email |
+| SEETRUE_MAILFROM_NAME | string | true | - | Name, specified as the `Name` of the sender of an email |
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

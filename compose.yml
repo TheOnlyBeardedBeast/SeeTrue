@@ -27,6 +27,8 @@ services:
       SEETRUE_ADMIN_ROLE: admin
       SEETRUE_SMTP_PORT: 1025
       SEETRUE_LANGUAGES: en
+      SEETRUE_MAILFROM_EMAIL: seetrue@seetrue.st
+      SEETRUE_MAILFROM_NAME: "SeeTrue"
     networks:
       - app
     depends_on:

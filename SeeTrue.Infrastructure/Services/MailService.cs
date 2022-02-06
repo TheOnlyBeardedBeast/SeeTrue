@@ -25,6 +25,7 @@ namespace SeeTrue.Utils.Services
         protected readonly SmtpClient client;
         private readonly IQueryService queries;
         protected readonly StubbleVisitorRenderer renderer;
+        protected readonly MailAddress from;
 
         public MailService(IQueryService queries)
         {
@@ -33,6 +34,8 @@ namespace SeeTrue.Utils.Services
                 Credentials = new NetworkCredential(Env.SmtpUser, Env.SmtpPass)
             };
 
+            this.from = new(Env.MailFromEmail, Env.MailFromName);
+
             this.renderer =  new StubbleBuilder().Build();
 
             this.queries = queries;
@@ -40,7 +43,6 @@ namespace SeeTrue.Utils.Services
 
         public async Task NotifyConfirmation(User user)
         {
-            MailAddress from = new("service@mailhog.example", "Confirm user registration");
             MailAddress to = new(user.Email);
 
             Mail mail = await queries.GetMailTemplate(NotificationType.Confirmation, user.Aud, user.Language);
@@ -57,7 +59,6 @@ namespace SeeTrue.Utils.Services
 
         public async Task NotifyEmailChange(User user, string email)
         {
-            MailAddress from = new("service@mailhog.example", "Confirm email change");
             MailAddress to = new(user.Email);
 
             Mail mail = await queries.GetMailTemplate(NotificationType.EmailChange, user.Aud, user.Language);
@@ -74,7 +75,6 @@ namespace SeeTrue.Utils.Services
 
         public async Task NotifyRecovery(User user)
         {
-            MailAddress from = new("service@mailhog.example", "Confirm email change");
             MailAddress to = new(user.Email);
 
             Mail mail = await queries.GetMailTemplate(NotificationType.Recovery, user.Aud, user.Language);
@@ -91,7 +91,6 @@ namespace SeeTrue.Utils.Services
 
         public async Task NotifyMagicLink(User user, string token)
         {
-            MailAddress from = new("service@mailhog.example", "Confirm email change");
             MailAddress to = new(user.Email);
 
             Mail mail = await queries.GetMailTemplate(NotificationType.MagicLink, user.Aud, user.Language);
@@ -108,7 +107,6 @@ namespace SeeTrue.Utils.Services
 
         public async Task NotifyInviteUser(User user)
         {
-            MailAddress from = new("service@mailhog.example", "Confirm user invitation");
             MailAddress to = new(user.Email);
 
             Mail mail = await queries.GetMailTemplate(NotificationType.InviteUser, user.Aud, user.Language);

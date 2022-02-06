@@ -36,6 +36,8 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly bool InviteEnabled;
         public static readonly string NameKey;
         public static readonly string[] AllowedHosts;
+        public static readonly string MailFromEmail;
+        public static readonly string MailFromName;
 
         static Env()
         {
@@ -74,6 +76,8 @@ namespace SeeTrue.Infrastructure.Utils
             InviteEnabled = Helpers.GetEnvironmentVariable<bool>("SEETRUE_INVITE_ENABLED", false);
             NameKey = Helpers.GetEnvironmentVariable<string>("SEETRUE_NAME_KEY", "Name");
             AllowedHosts = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_ALLOWED_HOSTS").Split(",").Select(e => e.ToLower()).ToArray();
+            MailFromEmail = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_MAILFROM_EMAIL");
+            MailFromName = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_MAILFROM_NAME");
         }
     }
 }

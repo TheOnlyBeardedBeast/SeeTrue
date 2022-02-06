@@ -27,7 +27,9 @@
         "SEETRUE_ADMIN_ROLE": "admin",
         "SEETRUE_DB_CONNECTION": "Host=192.168.64.2;Database=seetrue;Username=postgres;Password=postgres",
         "SEETRUE_LANGUAGES": "en,hu,sk",
-        "SEETRUE_ALLOWED_HOSTS": "http://localhost:3000,http://localhost:3001"
+        "SEETRUE_ALLOWED_HOSTS": "http://localhost:3000,http://localhost:3001",
+        "SEETRUE_MAILFROM_NAME": "SeeTrue",
+        "SEETRUE_MAILFROM_EMAIL": "seetrue@seetrue.st"
       }
     }
   }
