@@ -514,13 +514,6 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-iconv-lite@^0.6:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.6.3.tgz#a52f80bf38da1952eb5c681790719871a1a72501"
-  integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
-  dependencies:
-    safer-buffer ">= 2.1.2 < 3.0.0"
-
 is-core-module@^2.8.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.8.1.tgz#f59fdfca701d5879d0a6b100a40aa1560ce27211"
@@ -551,13 +544,6 @@ loose-envify@^1.1.0:
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
-
-mailhog@^4.16.0:
-  version "4.16.0"
-  resolved "https://registry.yarnpkg.com/mailhog/-/mailhog-4.16.0.tgz#1ad4dda104505399f3f17824737a962696e7d240"
-  integrity sha512-wXrGik+0MaAy4dbYTImxa8niX9a4aRpZTzC/b1GzCvQs09khhs0aKZgHjgScakI4Y18WInDvvF48hhEz9ifN4g==
-  optionalDependencies:
-    iconv-lite "^0.6"
 
 minimist@^1.2.5:
   version "1.2.5"
@@ -663,11 +649,6 @@ safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
-"safer-buffer@>= 2.1.2 < 3.0.0":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
-  integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
-
 scheduler@^0.20.2:
   version "0.20.2"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
@@ -677,15 +658,16 @@ scheduler@^0.20.2:
     object-assign "^4.1.1"
 
 seetrue.client.react@../SeeTrue.Client.React:
-  version "0.3.0"
+  version "0.3.1"
   dependencies:
-    seetrue.client "../SeeTrue.Client"
+    seetrue.client "^0.3.3"
 
-seetrue.client@../SeeTrue.Client:
-  version "0.3.2"
+seetrue.client@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/seetrue.client/-/seetrue.client-0.3.3.tgz#f3db2717304cf73b1e271c4c664b181fdd798951"
+  integrity sha512-XbAk+FDON3jJo+SDOv9sBs/FANHx3GGfiybR+zRK4yMBmaC/hdkHGgC51qDGqg6JZr5RithBuee5E5wPzYFhmg==
   dependencies:
     cross-fetch "^3.1.5"
-    mailhog "^4.16.0"
     url-join "^4.0.1"
 
 semver@^6.3.0:
