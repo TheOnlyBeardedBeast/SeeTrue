@@ -1,0 +1,8 @@
+test
+node_modules
+src
+tsconfig.json
+yarn-error.log
+.gitignore
+docs
+.github
