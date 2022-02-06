@@ -52,7 +52,6 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
@@ -104,16 +103,15 @@ Built with hard work, tears, sweat, dedication and love.
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-TODO: Add description
-
-### Prerequisites
-
-TODO: Add prerequisites description
-
 ### Installation
 
-TODO: Add Instalation description
+Setup a SeeTrue.API instance ([SeeTrue.API docs](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.API)), then connect your backend or frontend app ([Typescript client](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client)) ([React client](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Client.React)). In case you are getting you tokens directly in a frontend application and you would like to use em to access your backend too, please configure you backend tokenvalidation to the same values as configured for the SeeTrue.API instance.
+
+Before connectiong setting app your app connection to the SeeTrue.API instance, please make sure you created all the email templates ([Example email templates](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.MJML.Templates)). These email templates are written in MJML, if you are creating the email templates directly then you need to compile them to HTML. An Another option is to [SeeTrue.Admin](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.Admin). All the emails are using [Stubble](https://github.com/StubbleOrg/Stubble) as a templating engine. Make suru to use the same `Name` key for the users name, as specified in the `SeeTrue.API` instance configuration (The default key is `Name` ehich is used in the example templates). 
+
+In case you would like to implement a custom client please check out the [REST API specs](https://github.com/TheOnlyBeardedBeast/SeeTrue/tree/master/SeeTrue.API/docs#seetrueapi).
+
+The database migration are part o the SeeTrue.API application. To increase the speed, the migrations dont contain default email template data.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -122,7 +120,7 @@ TODO: Add Instalation description
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-TODO: Add usage description
+For a quick setup use the provided docker compose file. After your containers are running you have to create the email templates and after that you are up and running.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -131,8 +129,8 @@ TODO: Add usage description
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Publish docker images
-- [ ] Publish npm packages
+- [x] Publish docker images
+- [x] Publish npm packages
 - [ ] Implement webhooks
 - [ ] SQLite support
 
