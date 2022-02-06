@@ -6,7 +6,7 @@ import { SeeTrueProvider } from "seetrue.client.react";
 ReactDOM.render(
   <React.StrictMode>
     <SeeTrueProvider
-      host="http://localhost:9999"
+      host="http://192.168.64.2:9999"
       audience="http://localhost:5000"
     >
       <AppRouter />
