@@ -657,8 +657,10 @@ scheduler@^0.20.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-seetrue.client.react@../SeeTrue.Client.React:
+seetrue.client.react@^0.3.1:
   version "0.3.1"
+  resolved "https://registry.yarnpkg.com/seetrue.client.react/-/seetrue.client.react-0.3.1.tgz#58c092b73cec9dc651ec51121c54c6d72e07a119"
+  integrity sha512-MEdCZFBDFE2AgjtC3To+dbKFw/5gtmwm1ky4khZJfckfZ/jvvGkOIR0qedVEgv+5lYsSwV0GX42r8uoMXGpGMg==
   dependencies:
     seetrue.client "^0.3.3"
 
