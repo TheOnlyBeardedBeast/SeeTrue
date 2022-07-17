@@ -6,7 +6,7 @@ using MediatR;
 using SeeTrue.Infrastructure.Services;
 using SeeTrue.Infrastructure.Types;
 using SeeTrue.Models;
-using UserMetaData = System.Collections.Generic.Dictionary<string, object>;
+using UserMetaData = System.Collections.Generic.Dictionary<string, string>;
 
 namespace SeeTrue.Infrastructure.Commands
 {

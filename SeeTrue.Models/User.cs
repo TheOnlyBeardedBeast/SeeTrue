@@ -33,30 +33,8 @@ namespace SeeTrue.Models
         public string EmailChange { get; set; }
         public DateTime? EmailChangeSentAt { get; set; }
         public DateTime? LastSignInAt { get; set; }
-        [JsonIgnore]
-        [Column(TypeName = "jsonb")]
-        public string AppMetaDataJson
-        {
-            get => JsonSerializer.Serialize(this.AppMetaData);
-            init
-            {
-                this.AppMetaData = JsonSerializer.Deserialize<Dictionary<string, object>>(value);
-            }
-        }
-        [NotMapped]
-        public Dictionary<string, object> AppMetaData { get; set; }
-        [JsonIgnore]
-        [Column(TypeName = "jsonb")]
-        public string UserMetaDataJson
-        {
-            get => JsonSerializer.Serialize(this.UserMetaData);
-            init
-            {
-                this.UserMetaData = JsonSerializer.Deserialize<Dictionary<string, object>>(value);
-            }
-        }
-        [NotMapped]
-        public Dictionary<string, object> UserMetaData { get; set; }
+        public Dictionary<string, string> AppMetaData { get; set; }
+        public Dictionary<string, string> UserMetaData { get; set; }
         public bool? IsSuperAdmin { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

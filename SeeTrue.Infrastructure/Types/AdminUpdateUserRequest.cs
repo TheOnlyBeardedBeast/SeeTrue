@@ -19,6 +19,6 @@ namespace SeeTrue.Infrastructure.Types
         [JsonPropertyName("audience")]
         public string Audience { get; set; }
         [JsonPropertyName("userMetaData")]
-        public Dictionary<string, object> UserMetaData { get; set; }
+        public Dictionary<string, string> UserMetaData { get; set; }
     }
 }

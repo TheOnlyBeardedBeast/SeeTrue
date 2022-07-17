@@ -23,7 +23,7 @@ namespace SeeTrue.Infrastructure.Extensions
             return user.Role == role;
         }
 
-        public static void UpdateUserMetaData(this User user, Dictionary<string, object> userMetaData)
+        public static void UpdateUserMetaData(this User user, Dictionary<string, string> userMetaData)
         {
             if (user.UserMetaData is null)
             {
@@ -31,7 +31,7 @@ namespace SeeTrue.Infrastructure.Extensions
             }
             else if (userMetaData is not null)
             {
-                foreach (KeyValuePair<string, object> entry in userMetaData)
+                foreach (KeyValuePair<string, string> entry in userMetaData)
                 {
                     if (entry.Value != null)
                     {
@@ -45,7 +45,7 @@ namespace SeeTrue.Infrastructure.Extensions
             }
         }
 
-        public static void UpdateAppMetaData(this User user, Dictionary<string, object> appMetaData)
+        public static void UpdateAppMetaData(this User user, Dictionary<string, string> appMetaData)
         {
             if (user.AppMetaData is null)
             {
@@ -53,7 +53,7 @@ namespace SeeTrue.Infrastructure.Extensions
             }
             else if (appMetaData is not null)
             {
-                foreach (KeyValuePair<string, object> entry in appMetaData)
+                foreach (KeyValuePair<string, string> entry in appMetaData)
                 {
                     if (entry.Value != null)
                     {

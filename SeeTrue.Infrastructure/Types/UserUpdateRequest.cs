@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using UserMetaData = System.Collections.Generic.Dictionary<string, object>;
+using UserMetaData = System.Collections.Generic.Dictionary<string, string>;
 
 namespace SeeTrue.Infrastructure.Types
 {

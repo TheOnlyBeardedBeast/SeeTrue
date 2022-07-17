@@ -21,7 +21,7 @@ namespace SeeTrue.Tests
         [Fact, Priority(0)]
         public async Task SignUpNewUser()
         {
-            var user = await fixture.commands.SignUpNewUser("test@user.com", "12345678", "testaudience", "email", new Dictionary<string, object>(), true);
+            var user = await fixture.commands.SignUpNewUser("test@user.com", "12345678", "testaudience", "email", new Dictionary<string, string>(), "en", true);
 
             Assert.NotEqual(Guid.Empty, user.Id);
             Assert.Equal("test@user.com", user.Email);

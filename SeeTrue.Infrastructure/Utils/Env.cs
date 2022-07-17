@@ -30,7 +30,6 @@ namespace SeeTrue.Infrastructure.Utils
         public static readonly int MinimumPasswordLength;
         public static readonly IApiKey ApiKey;
         public static readonly string AdminRole;
-        public static readonly string ConnectionString;
         public static readonly List<string> Languages;
         public static readonly List<string> AvailableRoles;
         public static readonly bool InviteEnabled;
@@ -62,7 +61,6 @@ namespace SeeTrue.Infrastructure.Utils
             MinimumPasswordLength = Helpers.GetEnvironmentVariable<int>("SEETRUE_MINIMUM_PASSWORD_LENGTH", 8);
             AdminRole = Helpers.GetEnvironmentVariable<string>("SEETRUE_ADMIN_ROLE", null)?.ToLower();
             ApiKey = new ApiKey(Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_API_KEY"), Issuer, new List<Claim> { new Claim(ClaimTypes.Role, AdminRole) });
-            ConnectionString = Helpers.GetRequiredEnvironmentVariable<string>("SEETRUE_DB_CONNECTION");
             Languages = Helpers.GetEnvironmentVariable<string>("SEETRUE_LANGUAGES", null)?.Split(",").Select(e => e.ToLower()).ToList() ?? new List<string> { "en" };
             var roles = Helpers.GetEnvironmentVariable<string>("SEETRUE_ROLES", "").Split(",").ToList();
 

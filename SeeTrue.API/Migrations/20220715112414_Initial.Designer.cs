@@ -13,14 +13,14 @@ using SeeTrue.API.DB;
 namespace SeeTrue.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220129225135_Initial")]
+    [Migration("20220715112414_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -152,8 +152,8 @@ namespace SeeTrue.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AppMetaDataJson")
-                        .HasColumnType("jsonb");
+                    b.Property<Dictionary<string, string>>("AppMetaData")
+                        .HasColumnType("hstore");
 
                     b.Property<string>("Aud")
                         .HasColumnType("text");
@@ -212,8 +212,8 @@ namespace SeeTrue.API.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserMetaDataJson")
-                        .HasColumnType("jsonb");
+                    b.Property<Dictionary<string, string>>("UserMetaData")
+                        .HasColumnType("hstore");
 
                     b.HasKey("Id");
 

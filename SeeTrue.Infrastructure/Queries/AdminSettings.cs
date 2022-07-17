@@ -8,7 +8,7 @@ namespace SeeTrue.Infrastructure.Queries
 {
     public static class AdminSettings
     {
-        public record Query():IRequest<Response>;
+        public record Query(): IRequest<Response>;
 
         public class Handler : IRequestHandler<Query, Response>
         {

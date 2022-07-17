@@ -34,7 +34,7 @@ namespace SeeTrue.Tests
             {
                 Email = "test@user.com",
                 Password = "12345678",
-                UserMetaData = new System.Collections.Generic.Dictionary<string, object>
+                UserMetaData = new System.Collections.Generic.Dictionary<string, string>
                 {
                     { "name","test user" }
                 }
@@ -128,7 +128,7 @@ namespace SeeTrue.Tests
             var token = fixture.testCache.Get<string>("accessToken");
             var decoded = Jose.JWT.Decode<DecodedJWT>(token, Env.SigningKey.ToByteArray());
 
-            var metaCommand = new UserUpdate.Command(decoded.sub, null, null, new Dictionary<string, object> { { "name", "testUserUpdated" } });
+            var metaCommand = new UserUpdate.Command(decoded.sub, null, null, new Dictionary<string, string> { { "name", "testUserUpdated" } });
             var metaResponse = await handler.Handle(metaCommand, new System.Threading.CancellationToken());
 
             Assert.NotNull(metaResponse);

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using SeeTrue.Infrastructure.Utils;
-using SeeTrue.Models;
 
 #nullable disable
 
@@ -65,8 +63,8 @@ namespace SeeTrue.API.Migrations
                     EmailChange = table.Column<string>(type: "text", nullable: true),
                     EmailChangeSentAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastSignInAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    AppMetaDataJson = table.Column<string>(type: "jsonb", nullable: true),
-                    UserMetaDataJson = table.Column<string>(type: "jsonb", nullable: true),
+                    AppMetaData = table.Column<Dictionary<string, string>>(type: "hstore", nullable: true),
+                    UserMetaData = table.Column<Dictionary<string, string>>(type: "hstore", nullable: true),
                     IsSuperAdmin = table.Column<bool>(type: "boolean", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -153,10 +151,6 @@ namespace SeeTrue.API.Migrations
                 table: "Users",
                 columns: new[] { "Email", "InstanceID", "Aud" },
                 unique: true);
-
-            //migrationBuilder.InsertData("Mails",
-            //    new string[] {"Id", "InstanceId", "Type", "Language", "Audience", "Template", "Content", "Subject" },
-            //    new object[] {Guid.NewGuid(), Env.InstanceId, (int)NotificationType.Confirmation, "en", Env.Audiences[0], "Template", "Content", "Subject" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

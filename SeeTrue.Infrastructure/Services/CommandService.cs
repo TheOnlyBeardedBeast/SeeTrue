@@ -25,7 +25,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="userMetaData"></param>
         /// <param name="confirmed"></param>
         /// <returns></returns>
-        Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, string language, bool confirmed);
+        Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, string> userMetaData, string language, bool confirmed);
 
         /// <summary>
         /// Revokes the current refresh token and generates new tokens
@@ -80,7 +80,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="user"></param>
         /// <param name="userMetaData"></param>
         /// <returns></returns>
-        Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData);
+        Task UpdateUserMetaData(User user, Dictionary<string, string> userMetaData);
 
         /// <summary>
         /// Sends an email change token email to the user
@@ -174,7 +174,7 @@ namespace SeeTrue.Infrastructure.Services
         /// <param name="user"></param>
         /// <param name="appMetaData"></param>
         /// <returns></returns>
-        Task UpdateAppMetaData(User user, Dictionary<string, object> appMetaData);
+        Task UpdateAppMetaData(User user, Dictionary<string, string> appMetaData);
 
         /// <summary>
         /// Creates a user
@@ -213,9 +213,9 @@ namespace SeeTrue.Infrastructure.Services
             this.cache = cache;
         }
 
-        public async Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, object> userMetaData, string language, bool confirmed)
+        public async Task<User> SignUpNewUser(string email, string password, string audience, string provider, Dictionary<string, string> userMetaData, string language, bool confirmed)
         {
-            var appMetaData = new Dictionary<string, object>();
+            var appMetaData = new Dictionary<string, string>();
             appMetaData["provider"] = provider;
 
             var user = new User
@@ -289,7 +289,7 @@ namespace SeeTrue.Infrastructure.Services
             };
 
 
-            if (actor?.UserMetaData != null && actor.UserMetaData.TryGetValue(Env.NameKey, out object name))
+            if (actor?.UserMetaData != null && actor.UserMetaData.TryGetValue(Env.NameKey, out string name))
             {
                 entry.Payload.Add("actore_name", name.ToString());
             }
@@ -332,7 +332,7 @@ namespace SeeTrue.Infrastructure.Services
         }
 
 
-        public async Task UpdateUserMetaData(User user, Dictionary<string, object> userMetaData)
+        public async Task UpdateUserMetaData(User user, Dictionary<string, string> userMetaData)
         {
             user.UpdateUserMetaData(userMetaData);
             this.db.Update(user);
@@ -340,7 +340,7 @@ namespace SeeTrue.Infrastructure.Services
             await this.db.SaveChangesAsync();
         }
 
-        public async Task UpdateAppMetaData(User user, Dictionary<string, object> appMetaData)
+        public async Task UpdateAppMetaData(User user, Dictionary<string, string> appMetaData)
         {
             user.UpdateAppMetaData(appMetaData);
             this.db.Update(user);
@@ -487,7 +487,7 @@ namespace SeeTrue.Infrastructure.Services
         {
             if(user.UserMetaData is null)
             {
-                user.UserMetaData = new Dictionary<string, object>();
+                user.UserMetaData = new Dictionary<string, string>();
             }
 
             user.UserMetaData[Env.NameKey] = name;
@@ -497,7 +497,7 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task<User> CreateUser(AdminUpdateUserRequest userData, string provider = "email")
         {
-            var appMetaData = new Dictionary<string, object>();
+            var appMetaData = new Dictionary<string, string>();
             appMetaData["provider"] = provider;
 
             var user = new User
@@ -525,7 +525,7 @@ namespace SeeTrue.Infrastructure.Services
 
         public async Task<User> InviteUser(string email, string Aud, string provider)
         {
-            var appMetaData = new Dictionary<string, object>();
+            var appMetaData = new Dictionary<string, string>();
             appMetaData["provider"] = provider;
 
             var user = new User
