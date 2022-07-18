@@ -170,10 +170,14 @@ namespace SeeTrue.API.Controllers
         [SwaggerOperation(Summary = "Login | Refresh", Description = "Handles login via email and password, Handles Refresh token")]
         public async Task<IActionResult> token([FromBody] TokenRequest data)
         {
+
             if (!data.Validate())
             {
+                Console.WriteLine("GrantType:"+data.Email);
                 throw new SeeTrueException(HttpStatusCode.BadRequest, "Invalid data");
             }
+
+            Console.WriteLine("Email:"+data.Email);
 
             var aud = HttpContext.GetAudience();
             var result = await this.m.Send(new Infrastructure.Commands.Token.Command(data, aud, HttpContext.GetUserAgent()));

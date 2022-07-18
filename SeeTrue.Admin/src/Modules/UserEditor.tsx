@@ -32,7 +32,11 @@ export const UserEditor: React.FC<UserEditorProps> = ({ defaultData }) => {
             },
           ]
         : undefined,
-      userMetaData: JSON.stringify({ name: "name" }, null, 2),
+      userMetaData: JSON.stringify(
+        defaultData?.userMetaData ?? { name: "name" },
+        null,
+        2
+      ),
       confirm: !!defaultData?.confirmedAt ?? false,
     },
   });

@@ -11,7 +11,7 @@ namespace SeeTrue.API.DB
         public AppDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("SEETRUE_DB_CONNECTION"));
+            optionsBuilder.UseSqlite("Data Source=db.db");
 
             return new AppDbContext(optionsBuilder.Options);
         }
